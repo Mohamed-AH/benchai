@@ -130,38 +130,56 @@ class GeminiAgentSolver:
         return match.group(1).strip() if match else raw.strip()
 
 
+def _get_execution_output(res) -> str:
+    """Safely extract text output from RunCodeResult."""
+    for attr in ("output", "logs", "text", "result"):
+        val = getattr(res, attr, None)
+        if val is not None:
+            return str(val)
+    return str(res)
+
+
 class SolariBenchmarkRunner:
     def __init__(self, solari_api_key: str, gemini_api_key: str):
-        self.solari_client = SandboxClient(api_key=solari_api_key,base_url="https://api.getsolari.com")
+        self.solari_client = SandboxClient(
+            api_key=solari_api_key, 
+            base_url="https://api.getsolari.com"
+        )
         self.agent = GeminiAgentSolver(api_key=gemini_api_key)
 
     async def run_task(self, task: BenchmarkTask) -> TaskResult:
-        print(f'\n[VM] Provisioning MicroVM for {task.name}...')
+        print(f"\n[VM] Provisioning MicroVM for {task.name}...")
         start = time.time()
-        sb = await self.solari_client.create(template='base')
+        sb = await self.solari_client.create(template="base")
         await sb.connect()
         try:
             for cmd in task.setup_commands:
                 await sb.run_code(f'import subprocess; subprocess.getoutput("{cmd}")')
             code = await self.agent.solve_task(task.prompt, task.setup_commands)
             await sb.run_code(code)
+            
             assertions_detail = []
             passed_cnt = 0
             for a in task.assertions:
                 p = False
                 if a.type == 'file_exists':
                     res = await sb.run_code(f"import os; print(os.path.exists('{a.target}'))")
-                    p = res.stdout.strip() == 'True'
+                    p = 'True' in _get_execution_output(res)
                 elif a.type == 'file_contains':
                     res = await sb.run_code(f"import os; print(open('{a.target}').read() if os.path.exists('{a.target}') else '')")
-                    p = a.expected in res.stdout
+                    p = a.expected in _get_execution_output(res)
                 elif a.type == 'code_output':
                     res = await sb.run_code(f"import subprocess; print(subprocess.getoutput('{a.target}'))")
-                    p = a.expected in res.stdout.strip()
-                if p: passed_cnt += 1
+                    p = a.expected in _get_execution_output(res)
+                if p: 
+                    passed_cnt += 1
                 assertions_detail.append({'description': a.description, 'passed': p})
+                
             score = passed_cnt / len(task.assertions) if task.assertions else 1.0
-            return TaskResult(task.id, task.name, task.category, score == 1.0, score, (time.time()-start)*1000, [], assertions_detail)
+            return TaskResult(
+                task.id, task.name, task.category, score == 1.0, score, 
+                (time.time() - start) * 1000, [], assertions_detail
+            )
         finally:
             await sb.kill()
 
