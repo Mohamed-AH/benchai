@@ -1,0 +1,21 @@
+name: Agent Evaluation Suite
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install solari-sandbox google-genai
+      - run: python solari_eval_harness.py
+        env:
+          SOLARI_API_KEY: ${{ secrets.SOLARI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}

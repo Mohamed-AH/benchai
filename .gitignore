@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.env
+benchmark_results.json
+solari-agent-eval/
+*.zip
