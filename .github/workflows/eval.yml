@@ -17,5 +17,5 @@ jobs:
       - run: pip install solari-sandbox google-genai
       - run: python solari_eval_harness.py
         env:
-          SOLARI_API_KEY: ${{ secrets.SOLARI_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SOLARI_API_KEY: ${{ vars.SOLARI_API_KEY }}
+          GEMINI_API_KEY: ${{ vars.GEMINI_API_KEY }}
