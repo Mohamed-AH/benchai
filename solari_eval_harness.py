@@ -147,6 +147,15 @@ class SolariBenchmarkRunner:
         )
         self.agent = GeminiAgentSolver(api_key=gemini_api_key)
 
+    async def cleanup_existing_sandboxes(self):
+        """Terminate active sessions to prevent ConcurrencyLimitError."""
+        try:
+            active_sandboxes = await self.solari_client.list()
+            for sb in active_sandboxes:
+                await sb.kill()
+        except Exception as e:
+            print(f"[!] Active sandbox cleanup skipped or failed: {e}")
+
     async def run_task(self, task: BenchmarkTask) -> TaskResult:
         print(f"\n[VM] Provisioning MicroVM for {task.name}...")
         start = time.time()
@@ -184,6 +193,7 @@ class SolariBenchmarkRunner:
             await sb.kill()
 
     async def run_suite(self, suite: List[BenchmarkTask]) -> Dict[str, Any]:
+        await self.cleanup_existing_sandboxes()
         results = [await self.run_task(t) for t in suite]
         return {
             'total': len(suite),
