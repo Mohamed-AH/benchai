@@ -132,7 +132,7 @@ class GeminiAgentSolver:
 
 class SolariBenchmarkRunner:
     def __init__(self, solari_api_key: str, gemini_api_key: str):
-        self.solari_client = SandboxClient(api_key=solari_api_key)
+        self.solari_client = SandboxClient(api_key=solari_api_key,base_url="https://api.getsolari.com")
         self.agent = GeminiAgentSolver(api_key=gemini_api_key)
 
     async def run_task(self, task: BenchmarkTask) -> TaskResult:
