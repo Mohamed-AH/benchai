@@ -6,7 +6,7 @@
 
 - **Sub-Second MicroVM Provisioning:** Fast spin-up via `solari-sandbox` SDK.
 - **Deterministic Assertions:** Verifies outcomes directly against sandbox filesystem state.
-- **Zero Compute Cost:** Powered by Gemini 2.0 Flash ($0 free tier) and Solari free monthly VM credits.
+- **Zero Compute Cost:** Powered by Gemini 2.0 Flash ($0 free tier) and Solari free monthly V M credits.
 
 ## Quickstart
 
