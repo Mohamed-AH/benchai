@@ -114,10 +114,10 @@ class GeminiAgentSolver:
         prompt = f'Solve this python task. Return ONLY valid executable python code inside markdown block.\nTask: {task_prompt}\nContext: {context}'
         if self.use_official_sdk:
             loop = asyncio.get_running_loop()
-            res = await loop.run_in_executor(None, lambda: self.client.models.generate_content(model='gemini-2.0-flash', contents=prompt))
+            res = await loop.run_in_executor(None, lambda: self.client.models.generate_content(model='gemini-flash-lite-latest', contents=prompt))
             raw = res.text
         else:
-            url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={self.api_key}'
+            url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key={self.api_key}'
             payload = json.dumps({'contents': [{'parts': [{'text': prompt}]}]}).encode('utf-8')
             req = urllib.request.Request(url, data=payload, headers={'Content-Type': 'application/json'})
             loop = asyncio.get_running_loop()
