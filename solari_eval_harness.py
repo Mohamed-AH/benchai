@@ -87,12 +87,12 @@ BENCHMARK_SUITE: List[BenchmarkTask] = [
         difficulty='Medium',
         description='Fix edge case bug without altering signature.',
         prompt=(
-            'In /workspace/calculator.py, fix ZeroDivisionError on empty input arrays. '
-            'Ensure running python3 /workspace/calculator.py prints AVERAGE: 0.0 on empty data.'
+            'Write a Python script that modifies /workspace/calculator.py on disk to fix the ZeroDivisionError on empty input arrays. '
+            'Ensure that running python3 /workspace/calculator.py prints "AVERAGE: 0.0" on empty data.'
         ),
         setup_commands=[
             'mkdir -p /workspace',
-            "echo 'def calculate_avg(numbers):\n    return sum(numbers) / len(numbers) if numbers else 0.0\n\ndata = []\nprint(f\"AVERAGE: {calculate_avg(data)}\")' > /workspace/calculator.py"
+            "echo 'def calculate_avg(numbers):\n    return sum(numbers) / len(numbers)\n\ndata = []\nprint(f\"AVERAGE: {calculate_avg(data)}\")' > /workspace/calculator.py"
         ],
         assertions=[
             Assertion(type='code_output', target='python3 /workspace/calculator.py', expected='AVERAGE: 0.0', description='No ZeroDivisionError')
