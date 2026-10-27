@@ -39,7 +39,7 @@ Each paragraph in a chapter ends with a hidden note such as `{% comment %}F058 F
 
 See `research/README.md` for how to add a new source and how to run the checks.
 
-Note: if this repository is public, anyone can still read the `research/` folder on GitHub. Make the repository private (needs a paid GitHub plan for Pages) if that matters.
+Note: if this repository is public, anyone can still read the `research/` folder on GitHub. Cloudflare Pages works with private repositories on the free plan, so you can make the repository private if that matters.
 
 ## Hosting (Cloudflare Pages, free)
 
