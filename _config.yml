@@ -1,4 +1,4 @@
-# Site settings. GitHub Pages builds this site automatically with Jekyll.
+# Site settings. Cloudflare Pages builds this site with Jekyll on every push to main.
 title_en: "King Abdulaziz: A History"
 title_ar: "الملك عبدالعزيز: سيرة وتاريخ"
 markdown: kramdown
@@ -11,4 +11,5 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - vendor/
-baseurl: "/benchai"
+# The site is served from the root of its domain.
+baseurl: ""

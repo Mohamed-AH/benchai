@@ -1,6 +1,6 @@
 # King Abdulaziz: A History · الملك عبدالعزيز: سيرة وتاريخ
 
-A bilingual (English / Arabic) history website, published free with GitHub Pages.
+A bilingual (English / Arabic) history website, published free with Cloudflare Pages.
 
 ## How to edit the text
 
@@ -41,14 +41,22 @@ See `research/README.md` for how to add a new source and how to run the checks.
 
 Note: if this repository is public, anyone can still read the `research/` folder on GitHub. Make the repository private (needs a paid GitHub plan for Pages) if that matters.
 
-## Turning on the website (one time)
+## Hosting (Cloudflare Pages, free)
 
-Repository **Settings → Pages → Build and deployment**: Source **Deploy from a branch**, Branch **main**, folder **/ (root)**, Save.
-The site will be at `https://mohamed-ah.github.io/benchai/`.
+The site is built by Cloudflare Pages from the `main` branch. Every commit to `main`, including edits made on GitHub in the browser, republishes the site within a minute or two.
+
+Settings used in Cloudflare (Workers & Pages → the project → Settings → Build):
+
+| Setting | Value |
+|---|---|
+| Production branch | `main` |
+| Framework preset | Jekyll |
+| Build command | `jekyll build` |
+| Build output directory | `_site` |
 
 ## Preview locally (optional)
 
 ```bash
-gem install bundler jekyll
-jekyll serve --baseurl /benchai
+bundle install
+bundle exec jekyll serve
 ```
