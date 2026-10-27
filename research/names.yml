@@ -1,0 +1,131 @@
+# Names of people and places as written on the site, in English and Arabic.
+# Internal only. The podcast is in Arabic but our transcript is the English
+# translation, so Arabic spellings were reconstructed. Entries with
+# `check: true` are ones I am not sure of; please confirm against the audio.
+#
+#   en:          spelling used on the English site
+#   ar:          spelling used on the Arabic site
+#   transcript:  spelling in the English transcript, if different
+#   check:       true = please verify the Arabic (and English) spelling
+#   note:        why it needs checking
+
+people:
+  - {en: "Saleh ibn Rakhees", ar: "صالح بن رخيص", transcript: "Saleh Ibn Rakhees", check: true, note: "Arabic spelling reconstructed from the translation."}
+  - {en: "Ali Al-Mejrad", ar: "علي المجراد", transcript: "Ali Al-Mejrad / Ali ibn Mejradi", check: true, note: "Transcript gives two forms."}
+  - {en: "Sheikh Abdullah ibn Abdul-Latif", ar: "الشيخ عبدالله بن عبداللطيف"}
+  - {en: "Sheikh Essa Al-Khalifa", ar: "الشيخ عيسى آل خليفة"}
+  - {en: "Mohammed ibn Sabah", ar: "محمد بن صباح"}
+  - {en: "Mubarak Al-Sabah", ar: "مبارك الصباح"}
+  - {en: "Yusuf Al-Ibrahim", ar: "يوسف الإبراهيم", transcript: "Yusuf Albrahim"}
+  - {en: "Princess Noura bint Abdulrahman", ar: "الأميرة نورة بنت عبدالرحمن"}
+  - {en: "Abdulaziz ibn Mutib ibn Rashid", ar: "عبدالعزيز بن متعب بن رشيد", transcript: "Abdulaziz ibn Muteb"}
+  - {en: "Abdulrahman ibn Dab'an", ar: "عبدالرحمن بن ضبعان", check: true, note: "Spelling reconstructed."}
+  - {en: "Ajlan", ar: "عجلان"}
+  - {en: "Joyser", ar: "جويسر", check: true, note: "Spelling reconstructed."}
+  - {en: "Ibn Mutref", ar: "ابن مطرف", check: true, note: "Spelling reconstructed."}
+  - {en: "Abdullah ibn Jiluwi", ar: "عبدالله بن جلوي"}
+  - {en: "Fahd ibn Jiluwi", ar: "فهد بن جلوي", check: true, note: "Podcast says Fahd threw the spear; not named on the site until checked (see F074)."}
+  - {en: "Prince Naser ibn Saud", ar: "الأمير ناصر بن سعود"}
+  - {en: "Mohammad ibn Abdulrahman", ar: "محمد بن عبدالرحمن"}
+  - {en: "Ismail Agha", ar: "إسماعيل آغا"}
+  - {en: "Qassim ibn Thani", ar: "قاسم بن ثاني"}
+  - {en: "Al Muhanna", ar: "آل مهنا"}
+  - {en: "Al Selaim", ar: "آل سليم"}
+  - {en: "Fuhaid ibn Sibhan", ar: "فهيد بن سبهان", transcript: "Fuhaid ibn Sibhan / Fahad ibn Sibhan", check: true, note: "Transcript gives two forms."}
+  - {en: "Majed ibn Hamoud Al-Obaid Al-Rasheed", ar: "ماجد بن حمود العبيد الرشيد", transcript: "Majed Al-Obaid Al-Rasheed / Majed ibn Humoud", check: true, note: "I combined the two forms in the transcript."}
+  - {en: "Fahad Al-Rushodi", ar: "فهد الرشودي", check: true}
+  - {en: "Mutib (son of Abdulaziz ibn Rashid)", ar: "متعب"}
+  - {en: "Sultan Al-Hamoud Al-Obaid Al-Rasheed", ar: "سلطان الحمود العبيد الرشيد"}
+  - {en: "Saud ibn Abdulaziz ibn Rashid", ar: "سعود بن عبدالعزيز بن رشيد"}
+  - {en: "Zamil ibn Sibhan", ar: "زامل بن سبهان", note: "Transcript says 'his uncle'; Arabic uses خاله (maternal uncle) because Al-Sibhan were his mother's family per 2:12:05. Check."}
+  - {en: "Sharif Hussein bin Ali", ar: "الشريف حسين بن علي"}
+  - {en: "Prince Sa'd ibn Abdulrahman", ar: "الأمير سعد بن عبدالرحمن"}
+  - {en: "Ahmad Nadeem", ar: "أحمد نديم", check: true}
+  - {en: "Sheikh Abdul-Latif Al-Mulla", ar: "الشيخ عبداللطيف الملا"}
+  - {en: "Midhat Pasha", ar: "مدحت باشا"}
+  - {en: "Abdulrahman ibn Swailim", ar: "عبدالرحمن بن سويلم", transcript: "Abdulrahman ibn Swialim"}
+  - {en: "Saud Al-Saleh Al-Sibhan", ar: "سعود الصالح السبهان"}
+  - {en: "Captain Shakespeare", ar: "الكابتن شكسبير"}
+  - {en: "Fakhri Pasha", ar: "فخري باشا"}
+  - {en: "Khalid ibn Luai", ar: "خالد بن لؤي", transcript: "Khalid ibn Loai"}
+  - {en: "Abdullah ibn Hussein", ar: "عبدالله بن الحسين"}
+  - {en: "Abdullah Al-Talal", ar: "عبدالله الطلال"}
+  - {en: "Abdullah Al-Mutib", ar: "عبدالله المتعب", transcript: "Abdullah Al-Muteb"}
+  - {en: "Mohammed ibn Talal", ar: "محمد بن طلال"}
+  - {en: "Aidh ibn Mar'i", ar: "عائض بن مرعي", transcript: "Aidh ibn Meri"}
+  - {en: "Hasan ibn Aidh", ar: "حسن بن عائض", transcript: "Hasan ibn Aidh / Hasan ibn Meri"}
+  - {en: "Prince Faisal ibn Abdulaziz", ar: "الأمير فيصل بن عبدالعزيز"}
+  - {en: "Abdul-Wahhab Abu Nuqta", ar: "عبدالوهاب أبو نقطة", transcript: "Abdul-Wahhab Abu Nokta"}
+  - {en: "Ali ibn Hussein", ar: "علي بن الحسين"}
+  - {en: "Prince Mohammed ibn Abdulaziz", ar: "الأمير محمد بن عبدالعزيز"}
+  - {en: "Mohammed ibn Ali Al-Idrisi", ar: "محمد بن علي الإدريسي"}
+  - {en: "Hasan Al-Idrisi", ar: "حسن الإدريسي"}
+  - {en: "Abdullah Philby", ar: "عبدالله فيلبي"}
+  - {en: "Yusuf Yasin", ar: "يوسف ياسين"}
+  - {en: "Hafiz Wahba", ar: "حافظ وهبة"}
+  - {en: "Rashid Ali Al-Gaylani", ar: "رشيد عالي الكيلاني"}
+  - {en: "Obaid ibn Tha'laba", ar: "عبيد بن ثعلبة"}
+  - {en: "Mani Al-Muraydi", ar: "مانع المريدي"}
+  - {en: "Dr. Abdulfattah Abu Aliyah", ar: "الدكتور عبدالفتاح أبو علية"}
+  - {en: "Munir Al-Ajlani", ar: "منير العجلاني"}
+  - {en: "Ibn Bishr", ar: "ابن بشر"}
+  - {en: "Muqbil Al-Dhukair", ar: "مقبل الذكير"}
+  - {en: "Ibn Ghannam", ar: "ابن غنام"}
+  - {en: "Fathullah Al-Saygh", ar: "فتح الله الصايغ"}
+  - {en: "Sheikh Mansour (Omani)", ar: "الشيخ منصور العُماني", check: true, note: "Full name not given in the podcast."}
+  - {en: "Burckhardt", ar: "بوركهارت"}
+  - {en: "John Lewis Gaddis, The Landscape of History", ar: "جون لويس غاديس، «مشهد التاريخ»", check: true, note: "Arabic book title is my translation."}
+  - {en: "Asawer Min Wahm Attarikh (book)", ar: "«أساور من وهم التاريخ»", check: true, note: "Book title reconstructed from transliteration."}
+
+places:
+  - {en: "Al-Mulayda", ar: "المليداء"}
+  - {en: "Al-Sarif", ar: "الصريف"}
+  - {en: "Al-Hejlan (reserve units)", ar: "الهجلان", check: true, note: "Term reconstructed from transliteration."}
+  - {en: "Al-Masmak", ar: "المصمك"}
+  - {en: "Abu Jifan", ar: "أبا جفان / أبو جفان", transcript: "Abu Jfan"}
+  - {en: "Al-Shuqaib", ar: "الشقيب", transcript: "Al-Shegaib / Al-Shugaib", check: true}
+  - {en: "Al-Duhairah", ar: "الضحيرة", check: true, note: "Unsure of the Arabic; please check."}
+  - {en: "Manakh park", ar: "منتزه المنّاخ"}
+  - {en: "khokha (small door in the gate)", ar: "الخوخة"}
+  - {en: "Al-Hawtah, Al-Helwa", ar: "الحوطة، الحلوة"}
+  - {en: "Al-Hariq, Al-Kharj, Al-Dalam", ar: "الحريق، الخرج، الدلم"}
+  - {en: "Al-Silmiyah", ar: "السلمية"}
+  - {en: "Olayya", ar: "عُليّة", check: true, note: "Unsure which place is meant; please check."}
+  - {en: "Ghar Al-Rum", ar: "غار الروم"}
+  - {en: "Al-Swaidi", ar: "السويدي"}
+  - {en: "Al-Washm, Sudair, Shaqra", ar: "الوشم، سدير، شقراء"}
+  - {en: "Tharmada", ar: "ثرمداء", transcript: "Tharmuda"}
+  - {en: "Faidhat Al-Ser", ar: "فيضة السر"}
+  - {en: "Unaizah, Buraidah", ar: "عنيزة، بريدة"}
+  - {en: "Al-Bukairiyah", ar: "البكيرية"}
+  - {en: "Al-Shaihiyah", ar: "الشيحية", check: true}
+  - {en: "Al-Shananah", ar: "الشنانة"}
+  - {en: "Al-Rass", ar: "الرس"}
+  - {en: "Ibn Agail palace", ar: "قصر ابن عقيل", check: true}
+  - {en: "Rawdat Muhanna", ar: "روضة مهنا"}
+  - {en: "Al-Tarfiyah", ar: "الطرفية"}
+  - {en: "Al-Quwai'iyah", ar: "القويعية"}
+  - {en: "Al-Artawiyah", ar: "الأرطاوية"}
+  - {en: "Al-Ghatghat", ar: "الغطغط"}
+  - {en: "Sulaymani Mikhlaf", ar: "المخلاف السليماني"}
+  - {en: "Ibrahim's Palace", ar: "قصر إبراهيم"}
+  - {en: "Al-Uqair", ar: "العقير"}
+  - {en: "Al-Qatif", ar: "القطيف"}
+  - {en: "Jarrab", ar: "جراب"}
+  - {en: "Darin", ar: "دارين"}
+  - {en: "Kanzan", ar: "كنزان"}
+  - {en: "Turabah", ar: "تربة"}
+  - {en: "Al-Khurmah", ar: "الخرمة"}
+  - {en: "Abha", ar: "أبها"}
+  - {en: "Hajla", ar: "حجلة", check: true}
+  - {en: "Harmala palace", ar: "قصر حرملة", check: true}
+  - {en: "Al-Hawiyah", ar: "الهوية"}
+  - {en: "Hijr Al-Yamamah", ar: "حجر اليمامة"}
+
+quotations:
+  note: >
+    The site quotes several sayings in Arabic (for example "خف على كرسيك من رجل واحد",
+    "موعدنا الرياض", "الحكم لله ثم لعبدالعزيز بن عبدالرحمن", "ثلاثة أرماح").
+    Apart from the well-known call "الحكم لله ثم لعبدالعزيز", these were translated
+    back into Arabic from the English transcript, so the wording may differ from what is
+    said in the episode. Please check them against the audio.

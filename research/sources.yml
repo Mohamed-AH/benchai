@@ -1,0 +1,15 @@
+# Every source the site draws on. Internal only: this folder is not published.
+# To add a source, copy a block, give it the next id (S2, S3, ...) and fill it in.
+
+- id: S1
+  type: podcast
+  title: "الحكم لله ثم لعبدالعزيز | بودكاست فنجان"
+  title_en: "Al-Hukm Lillah Thumma Li-Abdulaziz | Fnjan Podcast"
+  publisher: "Thmanyah (ثمانية)"
+  guest: "Dr. Talal Al-Tarifi (د. طلال الطريفي), professor of modern and contemporary history, Imam Muhammad bin Saud Islamic University"
+  url: "https://www.youtube.com/watch?v=HwVwgIBFj_4"
+  published: 2024-09-22
+  language: ar
+  length: "3:13:57"
+  transcript: "transcripts/S1-fnjan-en.txt"
+  transcript_note: "English translation by Thmanyah (translator credited: Latifa Alharbi), uploaded to the project on 2026-10-27. The episode itself is in Arabic."

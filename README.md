@@ -1,19 +1,54 @@
-# Solari Sandbox Agent Evaluation Harness
+# King Abdulaziz: A History · الملك عبدالعزيز: سيرة وتاريخ
 
-> An isolated agent evaluation framework built with **Solari MicroVM Sandboxes** and **Gemini 2.0 Flash**.
+A bilingual (English / Arabic) history website, published free with GitHub Pages.
 
-## Features
+## How to edit the text
 
-- **Sub-Second MicroVM Provisioning:** Fast spin-up via `solari-sandbox` SDK.
-- **Deterministic Assertions:** Verifies outcomes directly against sandbox filesystem state.
-- **Zero Compute Cost:** Powered by Gemini 2.0 Flash ($0 free tier) and Solari free monthly V M credits.
+Every chapter is a plain Markdown file:
 
-## Quickstart
+- English: `en/chapters/`
+- Arabic: `ar/chapters/`
+
+To edit on GitHub: open the file, click the pencil icon, change the text, then click **Commit changes**. The site updates by itself within a minute or two.
+
+The block at the top of each file (between the `---` lines) holds settings:
+
+| Field | Meaning |
+|---|---|
+| `title` | Chapter title shown on the site |
+| `order` | Position in the chapter list |
+| `ref` | Links the English and Arabic versions of the same chapter. Keep it identical in both. |
+| `period` | Optional dates shown under the title, e.g. `1319–1320 AH` |
+
+Markdown basics: `## Heading`, `**bold**`, `*italic*`, `> quotation`, a blank line starts a new paragraph.
+
+### Adding a chapter
+
+Copy an existing chapter file in both `en/chapters/` and `ar/chapters/`, give both copies the same new `ref`, and set `order`.
+
+## Sources (internal, not shown on the site)
+
+The `research/` folder is kept in the repository but is not published on the website.
+
+- `research/sources.yml`: every source, with an id (S1, S2, ...).
+- `research/facts.yml`: one entry per claim, each with the source, timestamp, an exact quote, and a status (`from-source`, `check`, `disputed`, `opinion`, `verified`).
+- `research/names.yml`: English and Arabic spellings of names and places, with the ones to check.
+- `research/transcripts/`: source transcripts.
+
+Each paragraph in a chapter ends with a hidden note such as `{% comment %}F058 F059{% endcomment %}` listing the facts it is based on. The website strips these out, so visitors never see them. If you rewrite a paragraph, keep the note (or update it).
+
+See `research/README.md` for how to add a new source and how to run the checks.
+
+Note: if this repository is public, anyone can still read the `research/` folder on GitHub. Make the repository private (needs a paid GitHub plan for Pages) if that matters.
+
+## Turning on the website (one time)
+
+Repository **Settings → Pages → Build and deployment**: Source **Deploy from a branch**, Branch **main**, folder **/ (root)**, Save.
+The site will be at `https://mohamed-ah.github.io/benchai/`.
+
+## Preview locally (optional)
 
 ```bash
-export SOLARI_API_KEY="slr_live_your_key"
-export GEMINI_API_KEY="your_gemini_key"
-
-pip install solari-sandbox google-genai
-python3 solari_eval_harness.py
+gem install bundler jekyll
+jekyll serve --baseurl /benchai
 ```

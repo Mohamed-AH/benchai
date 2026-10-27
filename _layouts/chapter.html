@@ -1,0 +1,23 @@
+---
+layout: default
+---
+{%- assign lang = page.lang | default: "en" -%}
+{%- assign chapters = site.pages | where: "lang", lang | where: "layout", "chapter" | sort: "order" -%}
+<article class="chapter">
+  <p class="eyebrow">{% if lang == "ar" %}الفصل {{ page.order }}{% else %}Chapter {{ page.order }}{% endif %}</p>
+  <h1>{{ page.title }}</h1>
+  {%- if page.period %}<p class="period">{{ page.period }}</p>{% endif %}
+  {{ content }}
+</article>
+
+<nav class="pager">
+  {%- for c in chapters -%}
+    {%- if c.url == page.url -%}
+      {%- assign i = forloop.index0 -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign prev_i = i | minus: 1 -%}
+  {%- assign next_i = i | plus: 1 -%}
+  {%- if i > 0 -%}{%- assign prev = chapters[prev_i] -%}<a class="prev" href="{{ prev.url | relative_url }}">{% if lang == "ar" %}→ {% else %}← {% endif %}{{ prev.title }}</a>{%- else -%}<span></span>{%- endif -%}
+  {%- if next_i < chapters.size -%}{%- assign next = chapters[next_i] -%}<a class="next" href="{{ next.url | relative_url }}">{{ next.title }}{% if lang == "ar" %} ←{% else %} →{% endif %}</a>{%- endif -%}
+</nav>
