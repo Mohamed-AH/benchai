@@ -36,6 +36,10 @@
         <li{% if c.url == page.url %} class="current"{% endif %}><a href="{{ c.url | relative_url }}">{{ c.title }}</a></li>
         {%- endfor -%}
       </ol>
+      {%- assign tl = site.pages | where: "lang", lang | where: "ref", "timeline" | first -%}
+      {%- if tl %}
+      <p class="toc-extra"><a href="{{ tl.url | relative_url }}">{% if lang == "ar" %}الخط الزمني{% else %}Timeline{% endif %}</a></p>
+      {%- endif %}
     </aside>
 
     <main class="content">

@@ -50,6 +50,11 @@ a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset:
 .toc li { margin: 6px 0; }
 .toc li.current a { color: var(--text); font-weight: 600; }
 .toc a { text-decoration: none; }
+.toc-extra { margin: 16px 0 0; font-size: .95rem; font-weight: 600; }
+.content table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+.content th, .content td { text-align: start; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+.content td:first-child { white-space: nowrap; color: var(--gold); font-weight: 600; }
+@media (max-width: 600px) { .content td:first-child { white-space: normal; } }
 
 .content { min-width: 0; max-width: 720px; }
 .content h1 { font-size: 2.2rem; line-height: 1.25; margin: 0 0 12px; }

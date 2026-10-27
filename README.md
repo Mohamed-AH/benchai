@@ -18,7 +18,7 @@ The block at the top of each file (between the `---` lines) holds settings:
 | `title` | Chapter title shown on the site |
 | `order` | Position in the chapter list |
 | `ref` | Links the English and Arabic versions of the same chapter. Keep it identical in both. |
-| `period` | Optional dates shown under the title, e.g. `1902 – 1906` |
+| `period` | Optional dates shown under the title, e.g. `1319–1320 AH` |
 
 Markdown basics: `## Heading`, `**bold**`, `*italic*`, `> quotation`, a blank line starts a new paragraph.
 
@@ -31,10 +31,13 @@ Copy an existing chapter file in both `en/chapters/` and `ar/chapters/`, give bo
 The `research/` folder is kept in the repository but is not published on the website.
 
 - `research/sources.yml`: every source, with an id (S1, S2, ...).
-- `research/facts.yml`: one entry per claim, each with the source and timestamp it came from and a status (`from-source`, `verified`, `disputed`, `check`).
+- `research/facts.yml`: one entry per claim, each with the source, timestamp, an exact quote, and a status (`from-source`, `check`, `disputed`, `opinion`, `verified`).
+- `research/names.yml`: English and Arabic spellings of names and places, with the ones to check.
 - `research/transcripts/`: source transcripts.
 
-To add a new source, add it to `sources.yml`, put its transcript in `research/transcripts/`, then add or update fact entries.
+Each paragraph in a chapter ends with a hidden note such as `{% comment %}F058 F059{% endcomment %}` listing the facts it is based on. The website strips these out, so visitors never see them. If you rewrite a paragraph, keep the note (or update it).
+
+See `research/README.md` for how to add a new source and how to run the checks.
 
 Note: if this repository is public, anyone can still read the `research/` folder on GitHub. Make the repository private (needs a paid GitHub plan for Pages) if that matters.
 

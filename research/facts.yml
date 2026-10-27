@@ -1,30 +1,1923 @@
-# The fact base: one entry per claim used on the site. Internal only.
+# The fact base: one entry per claim used on the site. Internal only (not published).
 #
 # Fields:
-#   id:       F001, F002, ... (never reuse an id)
-#   chapter:  the chapter's ref (background, leaving-riyadh, kuwait, riyadh,
-#             qassim, hail, hijaz, asir, kingdom)
-#   date:     as precise as the source allows, e.g. "1902-01-15", "1902", "c. 1891"
-#   date_hijri: optional, e.g. "5 Shawwal 1319"
-#   claim_en / claim_ar: the fact in one sentence
-#   people / places: names as they appear on the site
-#   sources:  list of "SOURCE_ID@timestamp", e.g. "S1@01:12:30"
-#   status:   from-source  (stated in a source, not yet checked elsewhere)
-#             verified     (confirmed against a second source)
-#             disputed     (sources disagree: explain in note)
-#             check        (needs checking: name spelling, date, or number)
-#   note:     anything a reviewer should know
+#   id:      F001, F002, ... (never reuse an id; new facts get the next free number)
+#   chapter: the site chapter's ref (see the `ref:` line at the top of each chapter file)
+#   hijri / gregorian: the date as the source gives it ("" if none)
+#   claim:   the fact in one sentence, in English
+#   source:  "SOURCE_ID@h:mm:ss" (source ids are in sources.yml)
+#   quote:   words copied exactly from the transcript at that timestamp, so the
+#            claim can be checked. `python3 research/check_facts.py` verifies them.
+#   status:  from-source  stated by the source, not yet checked elsewhere
+#            check        needs checking (unclear translation, name, date or number)
+#            disputed     the source itself, or sources, disagree (see note)
+#            opinion      the speaker's view, not a fact; site presents it as his view
+#            verified     confirmed against a second source (say which in note)
+#   note:    anything a reviewer should know
 #
-# Example (delete once real entries exist):
-# - id: F001
-#   chapter: riyadh
-#   date: ""
-#   claim_en: ""
-#   claim_ar: ""
-#   people: []
-#   places: []
-#   sources: ["S1@00:00:00"]
-#   status: from-source
-#   note: ""
+# S1 = Fnjan podcast with Dr. Talal Al-Tarifi (English translation by Thmanyah).
 
-[]
+# ---------------------------------------------------------------- writing-history
+- id: F001
+  chapter: writing-history
+  hijri: ""
+  gregorian: ""
+  claim: "Al-Tarifi says a historian's job is not to memorise names and dates but to approach history methodologically, judge which information is reliable, and handle diverse and contradictory sources objectively."
+  source: "S1@0:05:35"
+  quote: "As a historian, I'm not expected to memorize names and dates"
+  status: opinion
+  note: ""
+
+- id: F002
+  chapter: writing-history
+  hijri: ""
+  gregorian: ""
+  claim: "He argues that documents and sources never give the full picture of history; they offer hints to deduce from."
+  source: "S1@0:06:50"
+  quote: "documents don't give history's full picture"
+  status: opinion
+  note: ""
+
+- id: F003
+  chapter: writing-history
+  hijri: ""
+  gregorian: ""
+  claim: "In his book Asawer Min Wahm Attarikh he wrote a chapter applying the theory of relativity to history, and says the highest level of factuality in history reaches about 70%."
+  source: "S1@0:07:18"
+  quote: "Asawer Min Wahm Attarikh (book title) There was a chapter about history and the Theory of Relativity"
+  status: opinion
+  note: "70% figure at 0:07:30."
+
+- id: F004
+  chapter: writing-history
+  hijri: ""
+  gregorian: ""
+  claim: "He cites Gaddis's The Landscape of History, which pictures the historian as a man on a hill describing a scene others cannot see."
+  source: "S1@0:07:48"
+  quote: "Gaddis, in his book The Landscape of History"
+  status: from-source
+  note: ""
+
+- id: F005
+  chapter: writing-history
+  hijri: ""
+  gregorian: ""
+  claim: "He defines national history as the history of the Saudi person and place within Saudi geography, reaching back to civilizations on this land such as Al-Ahyan, the Nabataeans, the Minaeans, Madian and Kindah."
+  source: "S1@0:10:02"
+  quote: "National history is the history of the Saudi person and place within the Saudi geography"
+  status: opinion
+  note: "Civilizations listed at 0:10:14 and 0:10:21. 'Al-Ahyan' is probably Lihyan (لحيان); check."
+
+- id: F006
+  chapter: writing-history
+  hijri: ""
+  gregorian: "5th century AD"
+  claim: "He says the claim that Saudi history is 100 years old is false; Saudi history goes back about 1,600 years, to Obaid ibn Tha'laba's migration from the west of the Arabian Peninsula to settle in Hijr Al-Yamamah in the fifth century AD."
+  source: "S1@0:11:33"
+  quote: "Since Obaid ibn Tha’laba’s migration from the west of the Arabian Peninsula to settle in Hijr Al-Yamamah"
+  status: opinion
+  note: "1600 years at 0:11:23; fifth century AD at 0:11:41."
+
+- id: F007
+  chapter: writing-history
+  hijri: ""
+  gregorian: ""
+  claim: "He sees a single line of similar projects, gathering Bani Hanifa and building a community in this area, from Obaid ibn Tha'laba through Mani Al-Muraydi, Imam Mohammed ibn Saud and Imam Turki ibn Abdullah to King Abdulaziz."
+  source: "S1@0:11:50"
+  quote: "up until Mani Almuraydi, Imam Mohammed Ibn Saud, Imam Turki ibn Abdullah, and King Abdulaziz"
+  status: opinion
+  note: ""
+
+- id: F008
+  chapter: writing-history
+  hijri: "850"
+  gregorian: "1446"
+  claim: "Saying the Saudi project is 600 years old is also correct: Mani Al-Muraydi moved to the region in 850 AH (1446 AD), and Diriyah was founded."
+  source: "S1@0:12:47"
+  quote: "It marks Mani Almuraydi’s move to the region in 850 AH (1446 AD)"
+  status: from-source
+  note: "Labeed and Ghasiba lands, summoned by Ibn Dir, at 0:12:14."
+
+- id: F009
+  chapter: writing-history
+  hijri: ""
+  gregorian: ""
+  claim: "The rise of the First Saudi State was about 300 years ago."
+  source: "S1@0:13:03"
+  quote: "The rise of the First Saudi state was 300 years ago"
+  status: from-source
+  note: ""
+
+- id: F010
+  chapter: writing-history
+  hijri: "1233, 1240, 1309, 1319"
+  gregorian: ""
+  claim: "The usual account says the First Saudi State fell in 1233 AH and the second rose in 1240 AH, and the Second fell in 1309 AH with the third rising in 1319 AH. Al-Tarifi says neither state 'fell': these were interruptions, not falls."
+  source: "S1@0:13:37"
+  quote: "The claim that the First Saudi state fell in 1233 AH"
+  status: opinion
+  note: "Dates continue at 0:13:46; 'discontinuation stages' at 0:14:01."
+
+- id: F011
+  chapter: writing-history
+  hijri: "1259"
+  gregorian: ""
+  claim: "Historians even disagreed over when the Second State rose: Dr. Abdulfattah Abu Aliyah dated it to Imam Faisal's second reign in 1259 AH, and Munir Al-Ajlani said he was mistaken. Al-Tarifi calls this a debate about a non-existent issue."
+  source: "S1@0:14:33"
+  quote: "dr. Abdulfattah Abu Aliyah He said that the Second Saudi state rose"
+  status: opinion
+  note: "1259 AH and Al-Ajlani at 0:14:40."
+
+- id: F012
+  chapter: writing-history
+  hijri: "805"
+  gregorian: "1402-1413"
+  claim: "He compares it with the Ottoman state: after Tamerlane defeated and captured Bayezid I at Ankara, Ottoman rule was interrupted from 1402 to 1413 AD until Mehmed I, yet nobody speaks of a 'second Ottoman state'."
+  source: "S1@0:15:16"
+  quote: "fell in 805 AH in the Battle of Ankara when Tamerlane attacked them"
+  status: from-source
+  note: "1402-1413 at 0:15:23."
+
+- id: F013
+  chapter: writing-history
+  hijri: ""
+  gregorian: ""
+  claim: "After Diriyah was taken, Imam Turki made a tactical withdrawal and began resisting; Ibrahim Pasha stayed in Diriyah less than a year and the Ottoman army could not settle because people did not welcome them."
+  source: "S1@0:15:56"
+  quote: "Imam Turki was defending Diriyah Ok He executed a tactical withdrawal"
+  status: from-source
+  note: "Ibrahim Pasha: 0:17:50-0:18:14."
+
+- id: F014
+  chapter: writing-history
+  hijri: ""
+  gregorian: ""
+  claim: "A story he often tells: Imam Turki went to buy dates from a woman in Al-Helwa, and when he went to pay she told him to pay by reclaiming Riyadh, showing people still believed in the state."
+  source: "S1@0:17:22"
+  quote: "Imam Turki went to buy dates from a woman in Al-Helwa town"
+  status: from-source
+  note: ""
+
+- id: F015
+  chapter: writing-history
+  hijri: ""
+  gregorian: ""
+  claim: "Likewise the Second State was taken down while its Imam, Abdulrahman, was still alive, and ten years later he returned."
+  source: "S1@0:18:22"
+  quote: "The state was taken down while its Imam was still alive Imam Abdulrahman Ten years later, Imam Abdulrahman returned"
+  status: from-source
+  note: ""
+
+- id: F016
+  chapter: writing-history
+  hijri: ""
+  gregorian: ""
+  claim: "He traces the 'fall and rise' framing to the annalistic style of the Saudi chronicles, such as Ibn Bishr and Muqbil Al-Dhukair, which recorded events year by year; he says this was not intentional."
+  source: "S1@0:19:26"
+  quote: "The issue stems from the sources Like Ibn Bishr and Muqbil Al-Dhukaier"
+  status: opinion
+  note: ""
+
+- id: F017
+  chapter: writing-history
+  hijri: ""
+  gregorian: ""
+  claim: "He presents the terms First, Second and Third Saudi State as a point of view he has justified, which other historians may consider wrong, and still uses the terms so people understand."
+  source: "S1@0:21:35"
+  quote: "This is a point of view"
+  status: opinion
+  note: "Use of terms despite not believing in a fall: 2:22:41."
+
+- id: F018
+  chapter: writing-history
+  hijri: ""
+  gregorian: ""
+  claim: "Sources on the First Saudi State are scarce. Its main official source is Ibn Ghannam, a contemporary, on whom later writers mostly relied, so his mistakes could be repeated."
+  source: "S1@0:22:51"
+  quote: "Such as Ibn Ghannam who is a prominent source contemporary to the First Saudi state"
+  status: from-source
+  note: ""
+
+- id: F019
+  chapter: writing-history
+  hijri: ""
+  gregorian: ""
+  claim: "Other sources on the First State include Fathullah Al-Saygh (who came with the French expedition; whether he visited Diriyah is disputed), the Omani Sheikh Mansour (who wrote from merchants and pearl traders), the traveller Burckhardt, a report in the Paris Army Museum, and three or four reports in the British archives."
+  source: "S1@0:23:09"
+  quote: "Fathullah Al-Saiygh He came with the French expedition"
+  status: from-source
+  note: "Sheikh Mansour 0:23:26; Burckhardt 0:23:48; Paris and British archives 0:24:32-0:24:40."
+
+- id: F020
+  chapter: writing-history
+  hijri: ""
+  gregorian: ""
+  claim: "Sources on the Second Saudi State are more detailed and locally documented; for the Kingdom there are many: local sources, consultants' writings and documents, and archives worldwide hold many documents on King Abdulaziz, some still unstudied."
+  source: "S1@0:26:00"
+  quote: "As for the sources about the Second Saudi state, they were more elaborate and locally documented"
+  status: from-source
+  note: "Local sources, consultants, documents at 0:26:14; unstudied documents 0:26:36."
+
+- id: F021
+  chapter: writing-history
+  hijri: ""
+  gregorian: ""
+  claim: "In Japan, King Abdulaziz was written about as 'the Arab Samurai', and there are animations about him."
+  source: "S1@0:26:40"
+  quote: "In Japan, they wrote about the Arab Samurai referring to King Abdulaziz?"
+  status: check
+  note: "Stated briefly in passing (0:26:54, 0:26:58); no details given. Needs a second source before use."
+
+# ---------------------------------------------------------------- early-life
+- id: F022
+  chapter: early-life
+  hijri: ""
+  gregorian: ""
+  claim: "Al-Tarifi has read and researched King Abdulaziz's history for almost three decades."
+  source: "S1@0:27:37"
+  quote: "reading King Abdulaziz's history for almost 3 decades"
+  status: from-source
+  note: "Quote is at 0:27:47 line; starts at 0:27:37."
+
+- id: F023
+  chapter: early-life
+  hijri: "1293"
+  gregorian: "1876 or 1877"
+  claim: "King Abdulaziz was born during the Second Saudi State, in 1293 AH according to the most probable and official account (1876 or 1877 AD)."
+  source: "S1@0:28:08"
+  quote: "King Abdulaziz was born, according to the most probable claim"
+  status: from-source
+  note: "1293 AH at 0:28:16 and 0:28:40; Gregorian at 0:28:26. Other dates exist; the speaker chose not to list them."
+
+- id: F024
+  chapter: early-life
+  hijri: ""
+  gregorian: ""
+  claim: "He grew up in a period of rapid events near the end of the Second State, hearing and seeing the dynamics within his family."
+  source: "S1@0:29:06"
+  quote: "So, King Abdulaziz grew up during a period of rapid events"
+  status: from-source
+  note: ""
+
+- id: F025
+  chapter: early-life
+  hijri: "1307"
+  gregorian: ""
+  claim: "Imam Abdullah died in 1307 AH and Imam Abdulrahman's reign began, along with the conflict with Mohammad ibn Rasheed."
+  source: "S1@0:29:39"
+  quote: "Until Imam Abdullah died in 1307 AH and then Imam Abdulrahman's reign began"
+  status: from-source
+  note: ""
+
+- id: F026
+  chapter: early-life
+  hijri: ""
+  gregorian: ""
+  claim: "There were political entities in Al-Qassim, Ha'il and Riyadh, all belonging to the Second Saudi State, which began to shift their allegiances."
+  source: "S1@0:29:54"
+  quote: "There was a political entity in Al-Qasim Ok And another in Hail and another in Riyadh"
+  status: from-source
+  note: ""
+
+- id: F027
+  chapter: early-life
+  hijri: "1308"
+  gregorian: ""
+  claim: "In 1308 AH, when Abdulaziz was 15, Mohammad ibn Rasheed came to Al-Mulayda, the Battle of Al-Mulayda took place, and he then marched on Riyadh and besieged it."
+  source: "S1@0:30:27"
+  quote: "In 1308 AH, King Abdulaziz was 15 years old"
+  status: from-source
+  note: "Mulayda and siege at 0:30:39."
+
+- id: F028
+  chapter: early-life
+  hijri: "1308"
+  gregorian: ""
+  claim: "The delegation sent to negotiate with Ibn Rasheed included the 15-year-old Abdulaziz and Sheikh Abdullah ibn Abdul-Latif."
+  source: "S1@0:30:46"
+  quote: "there were the 15-year-old King Abdulaziz and Sheikh Abdullah ibn Abdu-Latif"
+  status: from-source
+  note: ""
+
+- id: F029
+  chapter: early-life
+  hijri: ""
+  gregorian: ""
+  claim: "Even at 15 Abdulaziz was noticeable: broad, tall and impressive."
+  source: "S1@0:31:03"
+  quote: "He was wide and tall"
+  status: from-source
+  note: ""
+
+- id: F030
+  chapter: early-life
+  hijri: "1308"
+  gregorian: ""
+  claim: "After the delegation left, Saleh ibn Rakhees, one of Ibn Rasheed's advisers known for his farasah (intuition), told him in private council that rule would most likely pass to 'this boy' after him; Ibn Rasheed hushed him, but the remark stayed with him."
+  source: "S1@0:31:22"
+  quote: "one of Ibn Rasheed’s consultants turned to him"
+  status: from-source
+  note: "Quote of the remark at 0:31:31; name Saleh Ibn Rakhees at 0:31:46. Spelling of 'Rakhees' (رخيص) to check."
+
+# ---------------------------------------------------------------- leaving-riyadh
+- id: F031
+  chapter: leaving-riyadh
+  hijri: "1309-1311"
+  gregorian: ""
+  claim: "After Mohammad ibn Rasheed left, the Saudi family left Riyadh; their departure and unsettled period lasted from 1309 to 1311 AH."
+  source: "S1@0:35:28"
+  quote: "after Mohammad ibn Rasheed left, the Saudi family exited"
+  status: from-source
+  note: "Dates at 0:35:37."
+
+- id: F032
+  chapter: leaving-riyadh
+  hijri: ""
+  gregorian: ""
+  claim: "Imam Abdulrahman could not stay in any political entity because of his political status; he stayed with the Al-Murrah and Ajman tribes for a transitional period of a few months to a year."
+  source: "S1@0:36:04"
+  quote: "He stayed with Al-Murrah and Ajman tribes in a transitional period"
+  status: from-source
+  note: ""
+
+- id: F033
+  chapter: leaving-riyadh
+  hijri: "1309"
+  gregorian: ""
+  claim: "Imam Abdulrahman sent the women of the family, with Abdulaziz, to Bahrain to stay with Sheikh Essa Al-Khalifa in 1309 AH."
+  source: "S1@0:36:12"
+  quote: "the women of the family with King Abdulaziz to Bahrain at Sheikh Essa Al-Khalifa's"
+  status: from-source
+  note: "1309 AH at 0:36:30."
+
+- id: F034
+  chapter: leaving-riyadh
+  hijri: ""
+  gregorian: ""
+  claim: "He could not go to Al-Ahsa because it was under Ottoman authority."
+  source: "S1@0:36:41"
+  quote: "Because there was Ottoman authority in Al-Ahsa"
+  status: from-source
+  note: ""
+
+- id: F035
+  chapter: leaving-riyadh
+  hijri: "1311"
+  gregorian: ""
+  claim: "Kuwait was the most suitable refuge, but its ruler Mohammed ibn Sabah needed approval from both the Ottoman state and Britain; once granted, Imam Abdulrahman settled in Kuwait in 1311 AH."
+  source: "S1@0:36:44"
+  quote: "In Kuwait, Mohammed ibn Sabah had to secure a double approval"
+  status: from-source
+  note: "Settled 1311 AH at 0:37:04."
+
+- id: F036
+  chapter: leaving-riyadh
+  hijri: ""
+  gregorian: ""
+  claim: "While they were in Kuwait, Mubarak Al-Sabah came to power after the conflict with his brothers, and their uncle Yusuf Al-Ibrahim left."
+  source: "S1@0:37:28"
+  quote: "After staying in Kuwait, Mubarak ibn Sabah came"
+  status: from-source
+  note: "Yusuf Albrahim at 0:37:36. 'Their uncle' as translated; check relationship."
+
+- id: F037
+  chapter: leaving-riyadh
+  hijri: ""
+  gregorian: ""
+  claim: "Still troubled by Ibn Rakhees's remark, Mohammad ibn Rasheed sent Ali Al-Mejrad, a man of Ha'il close to him and also skilled in farasah, who had not heard the remark, to deliver a message to Mubarak Al-Sabah and then visit Imam Abdulrahman and observe him and his sons."
+  source: "S1@0:38:37"
+  quote: "Ali Al-Mejrad was one of Hail's people and close to its leader Mohammad ibn Rasheed"
+  status: from-source
+  note: "Mission details 0:38:47-0:39:23. Spelling Al-Mejrad (المجراد?) to check."
+
+- id: F038
+  chapter: leaving-riyadh
+  hijri: ""
+  gregorian: ""
+  claim: "Mubarak Al-Sabah realised the message was not the real purpose. On the third day Al-Mejrad asked permission to visit 'our Imam', showing the regard in which Imam Abdulrahman was held even by Ibn Rasheed's men."
+  source: "S1@0:39:58"
+  quote: "He said, “I need your permission to visit our Imam”"
+  status: from-source
+  note: ""
+
+- id: F039
+  chapter: leaving-riyadh
+  hijri: ""
+  gregorian: ""
+  claim: "Al-Mejrad frequented the Imam's council for about ten days; the Imam's sons in Kuwait at that point were Mohammed and Abdulaziz."
+  source: "S1@0:40:59"
+  quote: "A few days, almost 10 days"
+  status: from-source
+  note: "Sons at 0:41:28."
+
+- id: F040
+  chapter: leaving-riyadh
+  hijri: ""
+  gregorian: ""
+  claim: "Back in Ha'il he told Ibn Rasheed: 'Fear for your chair from one person: Abdulaziz ibn Abdulrahman', not Mohammad or Imam Abdulrahman, because 'I saw a brilliant heart between his shoulders, a character with limitless ambition, and a soul that embodies all aspects of leadership.'"
+  source: "S1@0:41:39"
+  quote: "He said, “Fear for your chair from one person”"
+  status: from-source
+  note: "Continues 0:41:47-0:41:58."
+
+- id: F041
+  chapter: leaving-riyadh
+  hijri: "1315"
+  gregorian: ""
+  claim: "The Mehjan story: in Kuwait, around 1315 AH, Abdulaziz sat drawing in the sand with his stick while the other young men talked; asked why, he said he was thinking how he would rule Najd from east to west and south to north."
+  source: "S1@0:43:13"
+  quote: "There is a story called the Mehjan"
+  status: check
+  note: "His age is given inconsistently: 'Almost 15 … I mean in 1315 AH' (0:43:38) then 'around 20' (0:43:46). Born 1293, he would be about 22 in 1315. Site avoids stating an age."
+
+- id: F042
+  chapter: leaving-riyadh
+  hijri: ""
+  gregorian: ""
+  claim: "As a boy, when teams were divided he would ask 'Who will join me?'; Al-Tarifi says he was a leader and never accepted being led."
+  source: "S1@0:44:21"
+  quote: "Even when King Abdulaziz used to play as a boy"
+  status: from-source
+  note: ""
+
+- id: F043
+  chapter: leaving-riyadh
+  hijri: "1311-1318"
+  gregorian: ""
+  claim: "He lived in Kuwait for almost seven years and was about 22 or 23 by 1318 AH."
+  source: "S1@0:45:01"
+  quote: "He lived in Kuwait for almost seven years"
+  status: from-source
+  note: "Age at 0:45:07."
+
+- id: F044
+  chapter: leaving-riyadh
+  hijri: ""
+  gregorian: ""
+  claim: "He would leave the house at night; servants sent by Imam Abdulrahman found he sat alone on a hill in Kuwait to think. Asked the next day, he said he was thinking how to reclaim Riyadh."
+  source: "S1@0:45:17"
+  quote: "He used to leave the house at night and stroll away"
+  status: from-source
+  note: "Answer at 0:46:03."
+
+- id: F045
+  chapter: leaving-riyadh
+  hijri: ""
+  gregorian: ""
+  claim: "His sister Princess Noura bint Abdulrahman was close to him and encouraged his ambition, and he was proud of her name."
+  source: "S1@0:46:29"
+  quote: "With his sister Noura bint Abdulrahman Who was encouraging him"
+  status: from-source
+  note: ""
+
+- id: F046
+  chapter: leaving-riyadh
+  hijri: "until 1318"
+  gregorian: ""
+  claim: "Imam Abdulrahman used to raid within Ibn Rasheed's territory until 1318 AH; Abdulaziz pressed him to act, but the Imam, not wanting to risk his son, told him to wait until they had gathered men and guns."
+  source: "S1@0:47:29"
+  quote: "Imam Abdulrahman used to oversee operations within Ibn Rasheed’s borders"
+  status: from-source
+  note: "0:47:38-0:47:58."
+
+# ---------------------------------------------------------------- sarif
+- id: F047
+  chapter: sarif
+  hijri: "1315"
+  gregorian: ""
+  claim: "Mohammad ibn Rasheed died in 1315 AH; by 1318 AH his nephew Abdulaziz ibn Mutib ruled Ha'il."
+  source: "S1@0:48:24"
+  quote: "Mohammad ibn Rasheed died in 1315 AH Now, it's 1318 AH when Abdulaziz ibn Muteb was ruling"
+  status: from-source
+  note: ""
+
+- id: F048
+  chapter: sarif
+  hijri: "1318"
+  gregorian: ""
+  claim: "Ibn Rasheed used Yusuf Al-Ibrahim's presence to pressure Mubarak Al-Sabah; peaceful efforts failed and war followed."
+  source: "S1@0:48:33"
+  quote: "He exploited Yusuf Albrahim's presence to leverage Mubarak Al-Sabah"
+  status: from-source
+  note: ""
+
+- id: F049
+  chapter: sarif
+  hijri: "1318"
+  gregorian: ""
+  claim: "Mubarak Al-Sabah marched and gave Abdulaziz command of part of the army, but Abdulaziz proposed instead to open a second front in Riyadh while Mubarak fought Ibn Rasheed; everyone agreed."
+  source: "S1@0:48:50"
+  quote: "Al-Sabah moved with his army along with King Abdulaziz"
+  status: from-source
+  note: "Plan at 0:49:25."
+
+- id: F050
+  chapter: sarif
+  hijri: "1318"
+  gregorian: ""
+  claim: "Abdulaziz reportedly had 1,000 men supplied from Al-Sabah's army; Imam Abdulrahman went with Mubarak and advised him on plans, such as dividing the army to fight Bedouin and settled forces, which Mubarak did not follow."
+  source: "S1@0:49:42"
+  quote: "It was said he had 1000 men supplied by the army of Al-Sabah"
+  status: from-source
+  note: "Imam's advice at 0:49:53-0:50:01."
+
+- id: F051
+  chapter: sarif
+  hijri: "1318"
+  gregorian: ""
+  claim: "Mohammad ibn Rasheed had earlier demolished part of Riyadh's walls so no one could take cover there, which let Abdulaziz enter Riyadh immediately in 1318 AH."
+  source: "S1@0:50:20"
+  quote: "Part of its walls were demolished by Mohammad ibn Rasheed"
+  status: from-source
+  note: "Entry 1318 AH at 0:50:28."
+
+- id: F052
+  chapter: sarif
+  hijri: "1318"
+  gregorian: ""
+  claim: "The people of Riyadh joined him naturally, since Al Saud were their Imams; he surrounded Al-Masmak, besieged Ibn Rasheed's garrison for forty days and began digging a tunnel."
+  source: "S1@0:50:51"
+  quote: "He immediately surrounded Al-Masmak He besieged it for forty days"
+  status: from-source
+  note: "Tunnel at 0:51:09."
+
+- id: F053
+  chapter: sarif
+  hijri: "1318"
+  gregorian: ""
+  claim: "Who was Ibn Rasheed's deputy in Al-Masmak during this 1318 siege is disputed: some say Abdulrahman ibn Dab'an, others Ajlan; Ajlan came a year after Ibn Dab'an."
+  source: "S1@0:51:00"
+  quote: "It is controversial; some say Abdulrahman ibn Dab’an, while others say he was Ajlan"
+  status: disputed
+  note: "Later (1:30:04) the speaker says Ibn Dab'an, then in Buraidah, was the one besieged in 1318. Site states the dispute."
+
+- id: F054
+  chapter: sarif
+  hijri: "1318"
+  gregorian: ""
+  claim: "At Al-Sarif the armies were unevenly structured: Al-Sabah's army of Kuwaitis and tribes was not organised or experienced, while Ibn Rasheed's was experienced, with reserve units called Al-Hejlan that joined late to secure victory. Numbers were similar, differing by a few thousand."
+  source: "S1@0:51:41"
+  quote: "In short, Sarif was a battle where the armies were unevenly structured"
+  status: from-source
+  note: "Hejlan at 0:52:45; numbers at 0:53:22."
+
+- id: F055
+  chapter: sarif
+  hijri: "1318"
+  gregorian: ""
+  claim: "The Ottomans were not yet militarily involved at Al-Sarif, though they supplied Ibn Rasheed; the main reason for the defeat was the lack of uniformity in Mubarak's army."
+  source: "S1@0:53:30"
+  quote: "The Ottomans weren’t involved yet"
+  status: from-source
+  note: "Main reason at 0:53:55."
+
+- id: F056
+  chapter: sarif
+  hijri: "1318"
+  gregorian: ""
+  claim: "On news of Mubarak's defeat, Abdulaziz withdrew from Riyadh: Al-Masmak could not hold his army, and Riyadh would need time to fortify. He returned to Kuwait determined to come back."
+  source: "S1@0:54:05"
+  quote: "That Mubarak Al-Sabah was defeated So, logically, King Abdulaziz had to retreat"
+  status: from-source
+  note: "Return to Kuwait at 0:54:57."
+
+# ---------------------------------------------------------------- riyadh
+- id: F057
+  chapter: riyadh
+  hijri: ""
+  gregorian: ""
+  claim: "Abdulaziz pressed Imam Abdulrahman until he agreed; the Imam urged discipline and building military strength first, but Abdulaziz insisted."
+  source: "S1@0:55:09"
+  quote: "He pressed Imam Abdulrahman Until he agreed because King Abdulaziz was determined"
+  status: from-source
+  note: ""
+
+- id: F058
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "He left Kuwait with forty men toward the east of the peninsula around Al-Ahsa and the Empty Quarter; 20 or 23 more joined (sources differ), making 60 to 63, with simple rifles."
+  source: "S1@0:56:20"
+  quote: "Forty men - Only? - Yes 23 more joined him, or 20 in some other sources"
+  status: from-source
+  note: "Region at 0:56:09; armament at 0:56:31."
+
+- id: F059
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "In 1319 AH he drew tribes to join him; reportedly, though the numbers are questionable, he gathered 1,500 camel riders (hejjan) and 600 cavalry."
+  source: "S1@0:57:02"
+  quote: "In 1319 AH Ibn Rasheed got the news"
+  status: from-source
+  note: "Numbers at 0:57:11 with 'even though questionable'."
+
+- id: F060
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "Ibn Rasheed pressed the ruler of Basra, Qassim ibn Thani and the Ottoman deputy in Al-Ahsa; they threatened the tribes with reprisals and with cutting off their supplies, and the tribes withdrew, leaving about 60 men. This was in Rajab 1319 AH."
+  source: "S1@0:57:25"
+  quote: "He contacted the Basrah ruler, Qassim ibn Thani, and the Ottoman deputy"
+  status: from-source
+  note: "Withdrawal and Rajab 1319 at 0:58:17-0:58:31. Qassim ibn Thani = ruler of Qatar (not stated in podcast)."
+
+- id: F061
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "Ibn Rasheed's garrisons in Najd towns (Qassim, Sudair, Shaqra) had been readied for his arrival."
+  source: "S1@0:57:46"
+  quote: "Garrisons in towns of Najd region in Qasim, Sudair, and Shaqra"
+  status: from-source
+  note: ""
+
+- id: F062
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "Imam Abdulrahman sent two messengers asking him to return to Kuwait. Abdulaziz told his men that whoever wished to go home could go left with the messengers, and whoever would stay should go right; all went right. He told the messengers: 'Send my greeting to the Imam and tell him we will meet in Riyadh.'"
+  source: "S1@0:58:42"
+  quote: "Imam Abdulrahman heard of it So he sent two to King Abdulaziz"
+  status: from-source
+  note: "Speech 0:59:03-0:59:38."
+
+- id: F063
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "Believing the threat over, Ibn Rasheed's garrisons around Riyadh pulled back and he returned to Ha'il, while Abdulaziz camped hidden west of Al-Ahsa for a month and twenty days, as a deliberate strategy to make them think the project had ended."
+  source: "S1@1:00:01"
+  quote: "So, his garrisons that camped around Riyadh started to retreat And he went back to Hail"
+  status: from-source
+  note: "Month and 20 days at 1:00:26; strategy 1:00:36."
+
+- id: F064
+  chapter: riyadh
+  hijri: "Ramadan-Shawwal 1319"
+  gregorian: ""
+  claim: "After Sha'ban and twenty days of Ramadan he moved toward Riyadh, reaching Abu Jifan around the eve of Eid; he told his companions to wear their best clothes, for it would be one of two: die, or celebrate Eid in Riyadh."
+  source: "S1@1:00:51"
+  quote: "After Sha’ban month and 20 days of Ramadan passed, he moved towards Riyadh"
+  status: from-source
+  note: "Abu Jfan (transcript spelling) at 1:00:59; Arabic أبو جفان; check."
+
+- id: F065
+  chapter: riyadh
+  hijri: "4 Shawwal 1319"
+  gregorian: ""
+  claim: "On 4 Shawwal he reached a ridge called Al-Shuqaib, east of today's Riyadh railway near Omar ibn Al-Khattab Road and the Manakh park, where he left 23 of his 63 men with the mounts and equipment and went on with 40."
+  source: "S1@1:01:20"
+  quote: "In Shawwal 4th, he reached a ridge called Al-Shegaib"
+  status: from-source
+  note: "Location 1:01:29; 23 of 63 at 1:01:40. Spelled Al-Shegaib and Al-Shugaib in transcript; Arabic الشقيب? check."
+
+- id: F066
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "At Al-Duhairah, outside Riyadh, he left 33 men under his brother Mohammad ibn Abdulrahman, telling him: if you do not hear from us by morning, leave, for we will have been martyred."
+  source: "S1@1:02:04"
+  quote: "When he reached Al-Duhairah, he asked 33 men to stay outside"
+  status: from-source
+  note: "Instructions 1:02:13-1:02:21. That leaves 7 men entering (1:05:06)."
+
+- id: F067
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "He knocked at night on the house of Joyser, a livestock trader, claiming Ajlan had sent him for two cows; Joyser recognised it was not Ibn Mutref's voice but Abdulaziz's, opened, and Abdulaziz held him so word would not get out."
+  source: "S1@1:02:38"
+  quote: "There was a house of a man called Joyser"
+  status: from-source
+  note: "1:02:45-1:03:14. Name spelling 'Joyser' (جويسر) to check."
+
+- id: F068
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "Joyser's house was part of a cluster of houses connected to Ajlan's, so he could reach Ajlan quietly without using the street; the plan was to take the head of the garrison."
+  source: "S1@1:03:29"
+  quote: "Because his house is connected to a cluster of houses - connected to Ajlan’s house"
+  status: from-source
+  note: ""
+
+- id: F069
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "In Ajlan's house he tied up the servants and found Ajlan's wife and her sister; she said Ajlan spent every night in Al-Masmak with his garrison and returned 'three spears after sunrise'. He locked them in."
+  source: "S1@1:04:18"
+  quote: "he tied the servants He went to Ajlan’s room with the rifle"
+  status: from-source
+  note: "1:04:30-1:04:56."
+
+- id: F070
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "He sent for the 33 men; they waited in the house, watching Al-Masmak's gate from an upstairs room, drinking coffee and discussing their plan."
+  source: "S1@1:05:06"
+  quote: "He sat with the 7 men and asked them to call for the 33 to come"
+  status: from-source
+  note: ""
+
+- id: F071
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "In the morning Al-Masmak's gate opened, servants and soldiers left for their homes, and Ajlan came out with the horses; Ajlan sensed unease and was surprised to find Abdulaziz before him with a rifle."
+  source: "S1@1:05:41"
+  quote: "In the morning, Al-Masmak gate opened and the servants and soldiers exited"
+  status: from-source
+  note: "Horses tale presented as 'one of the tales' (1:06:05)."
+
+- id: F072
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "Ajlan drew his sword, Abdulaziz shot him in the hand, and Ajlan's men fled into the fort through the khokha, a small door in the gate that lets one man through and is still in Al-Masmak's gate today."
+  source: "S1@1:06:22"
+  quote: "Ajlan drew his sword to attack King Abdulaziz"
+  status: from-source
+  note: "Khokha 1:06:35-1:06:50."
+
+- id: F073
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "Ajlan got half through the khokha and Abdulaziz grabbed him; Ajlan kicked his legs and Abdulaziz later said he nearly fainted."
+  source: "S1@1:06:57"
+  quote: "Ajlan, after he was shot by King Abdulaziz, entered via Khokha"
+  status: from-source
+  note: "Abdulaziz's own account at 1:07:09."
+
+- id: F074
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "A spear was thrown at Ajlan; its broken spearhead is still lodged in Al-Masmak's door."
+  source: "S1@1:07:18"
+  quote: "There’s a broken spearhead in Al-Masmak's door"
+  status: check
+  note: "The podcast says the spear was thrown by Fahd ibn Jiluwi (1:07:18, 1:07:26). Popular accounts usually credit Abdullah ibn Jiluwi; check before naming."
+
+- id: F075
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "The whole clash lasted seconds, under a minute. Abdulaziz tried to follow Ajlan through the khokha but his men held him back; Abdullah ibn Jiluwi entered and shot Ajlan."
+  source: "S1@1:07:42"
+  quote: "This entire event might have occurred in less than a minute"
+  status: from-source
+  note: "Ibn Jiluwi shot Ajlan at 1:08:08."
+
+- id: F076
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "His men opened the gates and exchanged fire with the garrison of 100 to 150 men, not all of them soldiers; 20 took refuge west of Al-Masmak and were besieged until allowed to leave safely."
+  source: "S1@1:09:00"
+  quote: "40 men were against a garrison King Abdulaziz's men entered and opened the gates"
+  status: from-source
+  note: "Garrison size 1:09:17; 20 men 1:09:48-1:09:58. Speaker notes Ottoman policy of 150-200 men per fort (1:09:28)."
+
+- id: F077
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "Riyadh was then a small cluster of houses; people stayed indoors at the gunfire until the call went out: 'Allah rules first, then Abdulaziz ibn Abdulrahman.' They celebrated and pledged allegiance to him in Al-Masmak."
+  source: "S1@1:10:33"
+  quote: "Until the calls: Allah rules first, then Abdulaziz ibn Abdulrahman"
+  status: from-source
+  note: "Allegiance at 1:10:51."
+
+- id: F078
+  chapter: riyadh
+  hijri: "1319"
+  gregorian: ""
+  claim: "He sent Prince Naser ibn Saud to Kuwait to bring Imam Abdulrahman."
+  source: "S1@1:11:15"
+  quote: "he asked Prince Naser ibn Saud to head to Kuwait"
+  status: from-source
+  note: ""
+
+- id: F079
+  chapter: riyadh
+  hijri: "1319-1320"
+  gregorian: ""
+  claim: "He summoned the men left at Al-Shuqaib; within days, as people of Riyadh and the nearby villages, Al-Washm and Sudair heard he had come, his force grew by hundreds to about 1,000."
+  source: "S1@1:12:27"
+  quote: "Then, King Abdulaziz summoned those who camped at Al-Shugaib"
+  status: from-source
+  note: "1,000 at 1:12:34; 'by hundreds' 1:13:20."
+
+- id: F080
+  chapter: riyadh
+  hijri: "1320"
+  gregorian: ""
+  claim: "Imam Abdulrahman arrived in 1320 AH; Abdulaziz camped outside Riyadh to receive him out of respect."
+  source: "S1@1:13:27"
+  quote: "Until Imam Abdulrahman arrived in 1320 AH"
+  status: from-source
+  note: ""
+
+- id: F081
+  chapter: riyadh
+  hijri: "1320"
+  gregorian: ""
+  claim: "Abdulaziz told his father 'I am your servant and you are the Imam again'; Imam Abdulrahman refused, holding that his son was the rightful ruler. Scholars were drawn in, and Abdulaziz finally accepted on condition that his father's word would always come first."
+  source: "S1@1:13:44"
+  quote: "King Abdulaziz sent to the Imam “I’m your servant and you are the Imam again”"
+  status: from-source
+  note: "1:13:53-1:14:35."
+
+- id: F082
+  chapter: riyadh
+  hijri: "1346"
+  gregorian: ""
+  claim: "This arrangement held until Imam Abdulrahman died in 1346 AH."
+  source: "S1@1:14:45"
+  quote: "Indeed, until 1346 AH when Imam Abdulrahman died"
+  status: from-source
+  note: ""
+
+- id: F083
+  chapter: riyadh
+  hijri: "1320"
+  gregorian: ""
+  claim: "Expecting Ibn Rasheed to besiege Riyadh, he used his whole force to rebuild Riyadh's walls within five weeks."
+  source: "S1@1:15:30"
+  quote: "Within 5 weeks of reclaiming Riyadh"
+  status: from-source
+  note: ""
+
+- id: F084
+  chapter: riyadh
+  hijri: "1320"
+  gregorian: ""
+  claim: "He left 1,000 men in Riyadh with Imam Abdulrahman and withdrew south with about 2,000 men of the south who had pledged to him, where Ibn Rasheed was weaker (Bani Tamim in Al-Hawtah and Al-Helwa, Al-Hariq, Al-Kharj, Al-Dalam)."
+  source: "S1@1:16:02"
+  quote: "He left 1000 men in Riyadh with Imam Abdulrahman He retreated to the south of Riyadh"
+  status: from-source
+  note: "2000 at 1:16:10; places 1:16:42-1:16:48."
+
+- id: F085
+  chapter: riyadh
+  hijri: "1253"
+  gregorian: ""
+  claim: "The people of the south were known for their fierceness: in 1253 AH, under Imam Faisal, Ismail Agha's attack on Al-Hawtah and Al-Helwa cost his army 2,400 dead against 70; the skeletons were burned in a cave in Al-Helwa called Ghar Al-Rum."
+  source: "S1@1:17:10"
+  quote: "In 1253 AH, during Imam Faisal reign"
+  status: from-source
+  note: "1:17:18-1:17:48."
+
+- id: F086
+  chapter: riyadh
+  hijri: "1320"
+  gregorian: ""
+  claim: "He spread his garrisons across Al-Dalam, Al-Silmiyyah, Al-Kharj and Olayya, and spread a rumour that he and his father had quarrelled, confusing Ibn Rasheed about whether to attack Riyadh or pursue him."
+  source: "S1@1:18:12"
+  quote: "in Al-Dalam, Al-Silmiyyah, Al-Kharj, and Olayya"
+  status: from-source
+  note: "Rumour at 1:18:33."
+
+- id: F087
+  chapter: riyadh
+  hijri: "1320"
+  gregorian: ""
+  claim: "Ibn Rasheed besieged Riyadh's fortified walls for a few days, then followed Abdulaziz south, where he met farmers among palm trees rather than an army; the people of Al-Kharj and Al-Dalam rejected his gifts."
+  source: "S1@1:19:17"
+  quote: "So, he ordered his army to follow Abdulaziz South of Riyadh"
+  status: from-source
+  note: "Gifts 1:19:53-1:20:09."
+
+- id: F088
+  chapter: riyadh
+  hijri: "1320"
+  gregorian: ""
+  claim: "Abdulaziz's swift strikes over a month and a half caused heavy losses in Ibn Rasheed's army."
+  source: "S1@1:20:17"
+  quote: "King Abdulaziz did swift strikes against him"
+  status: from-source
+  note: ""
+
+- id: F089
+  chapter: riyadh
+  hijri: "1320"
+  gregorian: ""
+  claim: "An epidemic then struck the army, causing confusion and a retreat."
+  source: "S1@1:20:46"
+  quote: "A disease unexpectedly struck part of the army Historians suggest it was an epidemic"
+  status: check
+  note: "Translation says it 'spread within King Abdulaziz's forces' (1:20:53), but the context is Ibn Rasheed's army ('their plight worsened'). Check the Arabic audio. Site says 'his army' referring to Ibn Rasheed only after check; currently written neutrally."
+
+- id: F090
+  chapter: riyadh
+  hijri: "1320"
+  gregorian: ""
+  claim: "Ibn Rasheed feigned a march on Kuwait; Abdulaziz set out to support Ibn Sabah, but Ibn Rasheed turned back and besieged Riyadh. Abdulaziz learned of it early and caught him between his force and the defenders."
+  source: "S1@1:21:07"
+  quote: "Ibn Rasheed attempted to replicate King Abdulaziz's tactics He claimed he was headed to Kuwait"
+  status: from-source
+  note: "1:21:44-1:22:14."
+
+- id: F091
+  chapter: riyadh
+  hijri: "1320"
+  gregorian: ""
+  claim: "Ibn Rasheed withdrew through Al-Swaidi, cutting down palm trees to pressure the town, until the people of Riyadh attacked and drove him off."
+  source: "S1@1:22:22"
+  quote: "He retreated through Al-Swaidi"
+  status: from-source
+  note: "Riyadh people expelled him at 1:23:00."
+
+# ---------------------------------------------------------------- qassim
+- id: F092
+  chapter: qassim
+  hijri: ""
+  gregorian: ""
+  claim: "Ibn Rasheed was left with one strategic lever, Al-Qassim; the areas north of Riyadh (Al-Washm, Sudair) leaned toward Abdulaziz after Riyadh and his successes at Al-Dalam and Al-Silmiyyah."
+  source: "S1@1:23:10"
+  quote: "he had only one strategic leverage"
+  status: from-source
+  note: "1:23:18-1:23:46."
+
+- id: F093
+  chapter: qassim
+  hijri: ""
+  gregorian: ""
+  claim: "The leaders of Buraidah (Al Muhanna) and Unaizah (Al Selaim) were in exile in Kuwait."
+  source: "S1@1:23:55"
+  quote: "Buraida’s leaders, Al Muhanna and Al Selaim in Unaizah"
+  status: from-source
+  note: ""
+
+- id: F094
+  chapter: qassim
+  hijri: "1309-1320"
+  gregorian: ""
+  claim: "Ibn Rasheed's garrisons resisted at Shaqra and Tharmuda, but his rule over the region, from 1309 to 1320 AH, had never been accepted, at least psychologically, after almost two centuries under Al Saud."
+  source: "S1@1:24:51"
+  quote: "Ibn Rasheed’s garrisons started to resist Shaqra, Tharmuda"
+  status: from-source
+  note: "Rule dates 1:25:17; two centuries 1:25:43."
+
+- id: F095
+  chapter: qassim
+  hijri: ""
+  gregorian: ""
+  claim: "Ibn Rasheed went to southern Iraq and pressed the Ottoman ruler of Basra until the Ottomans gave him 11 military battalions of 800 to 1,000 soldiers each, armed with the German Mauser rifle known as 'Um Khams'."
+  source: "S1@1:26:02"
+  quote: "He went to the south of Iraq"
+  status: from-source
+  note: "11 lines 1:26:30-1:26:35; Um Khams 1:26:53."
+
+- id: F096
+  chapter: qassim
+  hijri: "1321"
+  gregorian: ""
+  claim: "In 1321 AH Abdulaziz set out as if heading to Kuwait, then turned toward Al-Qassim with Al Selaim and Al Muhanna."
+  source: "S1@1:27:29"
+  quote: "King Abdulaziz moved as if he were headed to Kuwait In 1321 AH"
+  status: from-source
+  note: ""
+
+- id: F097
+  chapter: qassim
+  hijri: "1321"
+  gregorian: ""
+  claim: "The first action, in 1321 AH, was at Faidhat Al-Ser, against Ibn Rasheed's garrison."
+  source: "S1@1:30:37"
+  quote: "Before Buraidah and Unaizah, in 1321 AH, was Faidhat Al-Ser"
+  status: from-source
+  note: "Speaker corrects himself here: Unaizah was 1322, not 1321."
+
+- id: F098
+  chapter: qassim
+  hijri: "1322"
+  gregorian: ""
+  claim: "At Unaizah's southern walls, its people, loyal to the Saudi state, opened the gates and besieged the fort held by Ibn Rasheed's deputy Fuhaid ibn Sibhan, who was granted safety for his men's lives and guns and left for Ha'il."
+  source: "S1@1:28:16"
+  quote: "It was Fuhaid ibn Sibhan"
+  status: check
+  note: "Speaker first says Ibn Dab'an then corrects to Fuhaid ibn Sibhan; later called 'Fahad ibn Sibhan' (1:28:30). Check name. Safety terms 1:29:14."
+
+- id: F099
+  chapter: qassim
+  hijri: "1322"
+  gregorian: ""
+  claim: "Abdulaziz was not vengeful: force was his last resort, and he sought to win over his enemies."
+  source: "S1@1:28:43"
+  quote: "King Abdulaziz was not vengeful"
+  status: opinion
+  note: ""
+
+- id: F100
+  chapter: qassim
+  hijri: "1322"
+  gregorian: ""
+  claim: "Majed Al-Obaid Al-Rasheed, camped near Buraidah, tried to escape to Ha'il when Unaizah fell; Abdulaziz attacked him and he withdrew."
+  source: "S1@1:29:23"
+  quote: "Majed Al-Obaid Al-Rasheed was camping next to Buraidah"
+  status: check
+  note: "Later called 'Majed ibn Humoud' (1:31:12). Check name."
+
+- id: F101
+  chapter: qassim
+  hijri: "1322"
+  gregorian: ""
+  claim: "Al Muhanna sent a delegation inviting him to Buraidah; he besieged Ibn Rasheed's garrison under Abdulrahman ibn Dab'an until it surrendered. By 1322 AH Buraidah and Unaizah were his, but Al-Qassim was still divided."
+  source: "S1@1:29:57"
+  quote: "Al Muhanna immediately sent a Buraidah delegation to invite him"
+  status: from-source
+  note: "1:30:12-1:30:57."
+
+- id: F102
+  chapter: qassim
+  hijri: "1322"
+  gregorian: ""
+  claim: "Ibn Rasheed camped at Al-Shaihiyyah, north of Al-Bukairiyyah, and Abdulaziz was at Al-Bukairiyyah. Al-Tarifi prefers the word 'skirmish' to 'battle' for fights between Muslims."
+  source: "S1@1:31:31"
+  quote: "Ibn Rasheed camped in Al-Shaihiyyah It was north of Al-Bukairiyyah"
+  status: from-source
+  note: "Terminology 1:31:43-1:32:10."
+
+- id: F103
+  chapter: qassim
+  hijri: "1322"
+  gregorian: ""
+  claim: "The Ottoman force alone was roughly 8,800 to 11,000 men, with better rifles and a cannon; Abdulaziz's army was perhaps about 4,000, though sources give 4,000, 5,000 or 10,000 and numbers are unreliable. Ibn Rasheed's army was larger."
+  source: "S1@1:32:47"
+  quote: "Let’s assume every military line had 800 soldiers Multiply by 11, there were 8800 soldiers"
+  status: from-source
+  note: "Cannon 1:33:25; 4000 at 1:33:50; variation 1:34:06-1:34:13; larger 1:34:45."
+
+- id: F104
+  chapter: qassim
+  hijri: "1322"
+  gregorian: ""
+  claim: "Abdulaziz split his army: he led one part against the Ottoman battalions, and the people of Unaizah and Buraidah led the other against Ibn Rasheed and Ha'il, with the Al-Bukairiyyah hills between them."
+  source: "S1@1:33:31"
+  quote: "King Abdulaziz divided his army into two sections"
+  status: from-source
+  note: ""
+
+- id: F105
+  chapter: qassim
+  hijri: "1322"
+  gregorian: ""
+  claim: "The Qassim force beat Ibn Rasheed's men, while Abdulaziz's section broke against the Ottomans and he was shot in his left arm."
+  source: "S1@1:34:57"
+  quote: "King Abdulaziz was shot in his left arm"
+  status: from-source
+  note: "Line at 1:34:57 continues to 1:35:06."
+
+- id: F106
+  chapter: qassim
+  hijri: "1322"
+  gregorian: ""
+  claim: "When the Qassim force came over the hill behind the Ottomans pursuing Abdulaziz, the Ottomans thought it was an ambush; caught between two fronts and even firing on each other, many were killed or captured, turning a near defeat into a sweeping victory that hit about half of Ibn Rasheed's forces."
+  source: "S1@1:37:08"
+  quote: "When Al-Qasim people passed the hill"
+  status: from-source
+  note: "1:37:16-1:38:32."
+
+- id: F107
+  chapter: qassim
+  hijri: ""
+  gregorian: ""
+  claim: "Tribes changing sides mid-battle was normal at the time, which later led Abdulaziz to the Hijar project in 1330 AH."
+  source: "S1@1:35:43"
+  quote: "In battles, tribes would start on one front and later shift sides"
+  status: from-source
+  note: "Hijar link at 1:36:47."
+
+- id: F108
+  chapter: qassim
+  hijri: "1322"
+  gregorian: ""
+  claim: "Ibn Rasheed withdrew to Al-Shananah near Al-Rass; the two sides camped there for two months with skirmishes. Abdulaziz sent Fahad Al-Rushodi of Al-Qassim to propose a truce, which Ibn Rasheed dismissed."
+  source: "S1@1:38:52"
+  quote: "He returned to Bikairiyya and retreated to Al-Shananah"
+  status: from-source
+  note: "Two months 1:38:58; Al-Rushodi 1:39:08-1:39:16."
+
+- id: F109
+  chapter: qassim
+  hijri: "1322"
+  gregorian: ""
+  claim: "With his soldiers starving and the tribes restless, Ibn Rasheed began to move off, and Abdulaziz attacked and won the Battle of Al-Shananah; Ibn Rasheed's army fell back to Ibn Agail's palace."
+  source: "S1@1:40:16"
+  quote: "When they started the move, King Abdulaziz struck him in Al-Shananah battle"
+  status: from-source
+  note: "Starving 1:39:47; Ibn Agail palace 1:40:39."
+
+- id: F110
+  chapter: qassim
+  hijri: "1323"
+  gregorian: ""
+  claim: "1323 AH was a year of recovery for both sides; the Ottomans, seeing Ibn Rasheed had not brought victory, partly withdrew their support, and Abdulaziz made contact with the Ottoman state."
+  source: "S1@1:41:18"
+  quote: "The year 1323 AH was a recovery year for both parties"
+  status: from-source
+  note: "1:41:38-1:42:08."
+
+- id: F111
+  chapter: qassim
+  hijri: "1324"
+  gregorian: ""
+  claim: "In 1324 AH they met at Rawdat Muhanna during a dust storm; in the engagement Abdulaziz ibn Mutib ibn Rasheed was killed, ending serious resistance."
+  source: "S1@1:42:48"
+  quote: "They met in 1324 AH, a year and a few months later"
+  status: from-source
+  note: "Dust storm 1:42:55; killed 1:43:23."
+
+- id: F112
+  chapter: qassim
+  hijri: "1324-1325"
+  gregorian: ""
+  claim: "His son Mutib succeeded him in 1324 AH and was killed; Sultan Al-Hamoud Al-Obaid Al-Rasheed then ruled. Abdulaziz won the Battle of Al-Tarfiyyah in 1325 AH."
+  source: "S1@1:44:00"
+  quote: "his son Muteb took charge Muteb was taken down by his brothers"
+  status: check
+  note: "Transcript says Mutib was killed by 'his brothers'; other accounts say by his cousins (Al-Hamoud). Check. Tarfiyyah 1325 at 1:44:35."
+
+- id: F113
+  chapter: qassim
+  hijri: "1326-1332"
+  gregorian: ""
+  claim: "Sultan was in turn killed and the young Saud ibn Abdulaziz ibn Rasheed became ruler, with his uncle Zamil ibn Sibhan as regent; a truce with few clashes lasted from 1326 to 1332 AH."
+  source: "S1@1:45:01"
+  quote: "Sultan succeeded them and was killed by Saud’s uncles"
+  status: from-source
+  note: "Regent 1:45:12; truce 1:45:19-1:45:33."
+
+- id: F114
+  chapter: qassim
+  hijri: "1324"
+  gregorian: ""
+  claim: "After Rawdat Muhanna, Al-Qassim belonged to Abdulaziz; the Ottomans held Al-Ahsa but had no authority in Al-Qassim. By 1324 AH Riyadh, the regions north and south of it, and Al-Qassim were his."
+  source: "S1@1:45:41"
+  quote: "The Turks were in Al-Ahsa What about Al-Qasim?"
+  status: from-source
+  note: "1:45:50-1:46:09."
+
+# ---------------------------------------------------------------- hijar
+- id: F115
+  chapter: hijar
+  hijri: "1327"
+  gregorian: "1909"
+  claim: "Sharif Hussein bin Ali had begun ruling Makkah around 1909 AD (about 1327 AH), appointed by the Ottoman state to rule the Hijaz."
+  source: "S1@1:46:48"
+  quote: "he ruled in 1909 AD"
+  status: check
+  note: "Speaker hesitates between 1324-1327 AH (1:47:00-1:47:09). Commonly given as 1908 (1326 AH). Check."
+
+- id: F116
+  chapter: hijar
+  hijri: ""
+  gregorian: ""
+  claim: "The Ottoman state hoped to end Abdulaziz's power, but its bet on Ibn Rasheed had failed and its small garrison in Al-Ahsa could not act; the Sharif, for his part, had his own ambitions to be more than an Ottoman governor, later leading the Arab Revolt."
+  source: "S1@1:47:36"
+  quote: "The Ottoman state was not compatible with King Abdulaziz"
+  status: from-source
+  note: "1:47:50-1:48:23."
+
+- id: F117
+  chapter: hijar
+  hijri: ""
+  gregorian: ""
+  claim: "The balance of power: Abdulaziz in Najd, the Sharif in the Hijaz, Ibn Rasheed in Ha'il, an Ottoman garrison in Al-Ahsa, Al Aidh in Asir, and the Idrisis in the Sulaymani Mikhlaf (Jazan)."
+  source: "S1@1:50:02"
+  quote: "King Abdulaziz was in Najd and Al-Sharif was in Hejaz"
+  status: from-source
+  note: "1:50:11-1:50:25."
+
+- id: F118
+  chapter: hijar
+  hijri: ""
+  gregorian: ""
+  claim: "The Ottomans cared about the Hijaz above other parts of the peninsula because it gave them religious authority, especially under Abdul-Hamid when the idea of an Islamic caliphate was revived."
+  source: "S1@1:50:58"
+  quote: "Because Hejaz grants them a religious authority status"
+  status: from-source
+  note: ""
+
+- id: F119
+  chapter: hijar
+  hijri: ""
+  gregorian: ""
+  claim: "The Sharif supported Abdulaziz's adversaries, including Ibn Rasheed, with whom he corresponded constantly."
+  source: "S1@1:51:36"
+  quote: "He also supported King Abdulaziz’s adversaries including ibn Rasheed"
+  status: from-source
+  note: ""
+
+- id: F120
+  chapter: hijar
+  hijri: ""
+  gregorian: ""
+  claim: "Attacks on Najd from the Hijaz had occurred since the 10th century; before Imam Mohammad ibn Saud organised the state, the region was a set of city-states."
+  source: "S1@1:52:04"
+  quote: "The attacks on Najd have been occurring since the 10th century"
+  status: check
+  note: "Unclear whether 10th century AH or AD. Check."
+
+- id: F121
+  chapter: hijar
+  hijri: "1328"
+  gregorian: ""
+  claim: "In 1328 AH the Sharif attacked Al-Quwai'iyah and captured Prince Sa'd ibn Abdulrahman, Abdulaziz's brother, who was released after negotiations."
+  source: "S1@1:52:28"
+  quote: "When he attacked Al-Quwayiyah in 1328 AH"
+  status: from-source
+  note: "Capture 1:52:38."
+
+- id: F122
+  chapter: hijar
+  hijri: "1330"
+  gregorian: ""
+  claim: "In 1330 AH Abdulaziz began founding the Hijar (settlements), starting with Al-Artawiya and Al-Ghutghut; Al-Artawiya was the first."
+  source: "S1@1:53:36"
+  quote: "When he established Hejrat Al-Artawiya and Al-Ghutghut"
+  status: from-source
+  note: "First = Al-Artawiya at 1:56:51."
+
+- id: F123
+  chapter: hijar
+  hijri: "1330"
+  gregorian: ""
+  claim: "The Hijar were a civilisational, not military, project to unify society's mindset. A hijra was a grant to a specific tribe: its sheikh settled, his people gathered round him, and scholars were sent to teach them."
+  source: "S1@1:53:48"
+  quote: "It was a project of civilization, not military"
+  status: from-source
+  note: "Definition 1:54:26-1:54:42."
+
+- id: F124
+  chapter: hijar
+  hijri: ""
+  gregorian: ""
+  claim: "Such large groups could not be absorbed into existing towns (he compares the founding of Samarra for Turkish troops), so new settlements were built with wells, kuttab schools and houses."
+  source: "S1@1:55:22"
+  quote: "It wasn’t possible to include such large groups"
+  status: from-source
+  note: "Samarra 1:55:31; wells and katateeb 1:56:13."
+
+- id: F125
+  chapter: hijar
+  hijri: ""
+  gregorian: ""
+  claim: "Settling tribes in fixed places brought stability and security: if, for example, a caravan was attacked, the source could be traced. The name hijra (migration) reflects the tribe's move to one place."
+  source: "S1@1:57:00"
+  quote: "the source of the problem would be traceable Like an attack on a caravan"
+  status: from-source
+  note: "Name 1:57:32-1:57:46."
+
+- id: F126
+  chapter: turabah
+  hijri: ""
+  gregorian: ""
+  claim: "The people of the Hijar called themselves Al-Ikhwan (the Brothers), meaning brothers of those who obey Allah."
+  source: "S1@2:24:53"
+  quote: "Who called themselves Al-Ikhwan (the brothers)"
+  status: from-source
+  note: ""
+
+# ---------------------------------------------------------------- ahsa
+- id: F127
+  chapter: ahsa
+  hijri: "1331"
+  gregorian: "1913"
+  claim: "In 1331 AH (1913 AD) Abdulaziz decided to settle the matter of Al-Ahsa. He had delayed, though its garrison was small, so as not to provoke the Ottomans or open several fronts while they backed Ibn Rasheed."
+  source: "S1@1:59:32"
+  quote: "In 1331 AH, King Abdulaziz realized that Al-Ahsa matter must be settled"
+  status: from-source
+  note: "1913 AD at 1:59:21; reasons 1:59:54-2:00:19."
+
+- id: F128
+  chapter: ahsa
+  hijri: "1331"
+  gregorian: ""
+  claim: "He sent men into Al-Ahsa, ostensibly to buy supplies, to survey the situation; the people of Al-Ahsa had been writing to him asking what took him so long."
+  source: "S1@2:01:46"
+  quote: "He sent a group to pretend they were buying goods from Al-Ahsa"
+  status: from-source
+  note: "Correspondence 2:01:53-2:02:01."
+
+- id: F129
+  chapter: ahsa
+  hijri: "1331"
+  gregorian: ""
+  claim: "His forces entered Al-Ahsa, to the shock of the Ottoman garrison under Ahmad Nadeem; the soldiers took refuge in Ibrahim's Palace. Apart from slight skirmishes, no blood was shed."
+  source: "S1@2:02:55"
+  quote: "King Abdulaziz forces reached Al-Ahsa The Ottoman garrison was surprised"
+  status: from-source
+  note: "Ahmad Nadeem 2:03:04; Ibrahim's palace 2:03:49; skirmishes 2:04:06."
+
+- id: F130
+  chapter: ahsa
+  hijri: "1331"
+  gregorian: ""
+  claim: "The people of Al-Ahsa pledged allegiance at the house of Sheikh Abdul-Latif Al-Mulla, calling 'Allah rules first, then Abdulaziz'. Al-Mulla negotiated with Ahmad Nadeem, who agreed to surrender and leave with arms and belongings via Al-Uqair to Bahrain."
+  source: "S1@2:05:23"
+  quote: "The residents of Al-Ahsa swore him allegiance in Abdul-Latif Al-Mulla's house"
+  status: from-source
+  note: "Surrender 2:05:38-2:05:55."
+
+- id: F131
+  chapter: ahsa
+  hijri: "1331"
+  gregorian: ""
+  claim: "At Al-Uqair the garrison tried to attack a force Abdulaziz had sent ahead, but a second force he had sent behind them appeared, and they boarded ships for Bahrain."
+  source: "S1@2:06:01"
+  quote: "In Al-Oqair, they were preceded by a force of King Abdulaziz"
+  status: from-source
+  note: ""
+
+- id: F132
+  chapter: ahsa
+  hijri: "1288-1331"
+  gregorian: ""
+  claim: "This ended Ottoman rule in Al-Ahsa, which began with Midhat Pasha's campaign in 1288 AH and lasted about 43 years."
+  source: "S1@2:06:37"
+  quote: "This marked the end of the Ottoman presence in Al-Ahsa The Ottomans came in 1288 AH"
+  status: from-source
+  note: "Midhat Pasha 2:06:47; 43 years 2:07:09."
+
+- id: F133
+  chapter: ahsa
+  hijri: "1331"
+  gregorian: ""
+  claim: "Abdulaziz became Sultan of Najd and its Dependencies."
+  source: "S1@2:07:27"
+  quote: "King Abdulaziz became the Sultan of Najd and its dependencies"
+  status: check
+  note: "Stated as following Al-Ahsa. The title 'Sultan of Najd' is commonly dated to 1921 (1339 AH); check timing."
+
+- id: F134
+  chapter: ahsa
+  hijri: "1331"
+  gregorian: ""
+  claim: "He then sent a force under Abdulrahman ibn Swailim, which immediately took Al-Qatif."
+  source: "S1@2:10:39"
+  quote: "he sent a platoon led by Abdulrahman ibn Swialim It immediately annexed Al-Qatif"
+  status: from-source
+  note: "Spelling Swialim/Swailim (سويلم) to check."
+
+- id: F135
+  chapter: ahsa
+  hijri: "1331"
+  gregorian: "1913"
+  claim: "Al-Ahsa, a 'food basket' of farming, water and trade, opened the Gulf to him and made him a neighbour of the Gulf sheikhdoms and British interests, beginning his dealings with Britain on the eve of the First World War, while the Ottomans were weakened by losses in the Balkans."
+  source: "S1@2:08:02"
+  quote: "Al-Ahsa opened the Gulf for King Abdulaziz"
+  status: from-source
+  note: "Britain 2:08:15; WWI 2:08:41; Balkans 2:08:59; food basket 2:10:57."
+
+# ---------------------------------------------------------------- jarrab-kanzan
+- id: F136
+  chapter: jarrab-kanzan
+  hijri: "1332-1333"
+  gregorian: ""
+  claim: "In Ha'il, the regent Zamil ibn Sibhan was assassinated by Saud Al-Saleh Al-Sibhan, a young member of the same family, who took charge in 1332 AH and aligned himself with the Ottoman state."
+  source: "S1@2:12:05"
+  quote: "Zamil ibn Sibhan was assassinated By Saud Al-Saleh Al-Sibhan"
+  status: from-source
+  note: "Dates at 2:12:38: 'In 1333 AH But he took charge in 1332 AH'."
+
+- id: F137
+  chapter: jarrab-kanzan
+  hijri: "1333"
+  gregorian: ""
+  claim: "During the First World War the Ottomans armed Ha'il with longer-range rifles than Abdulaziz's army had, and the two sides met at the Battle of Jarrab, about eight years after Al-Tarfiyyah."
+  source: "S1@2:13:25"
+  quote: "They granted them military force stronger than the one in"
+  status: from-source
+  note: "Jarrab 2:13:55; 8 years 2:14:13."
+
+- id: F138
+  chapter: jarrab-kanzan
+  hijri: "1333"
+  gregorian: ""
+  claim: "Captain Shakespeare, the British agent in Kuwait, was killed at Jarrab while photographing the battle; Abdulaziz had told him to go back to Kuwait."
+  source: "S1@2:14:28"
+  quote: "Also, Shakespeare was killed!"
+  status: from-source
+  note: "Agent in Kuwait 2:14:39; camera 2:14:55."
+
+- id: F139
+  chapter: jarrab-kanzan
+  hijri: "1333"
+  gregorian: ""
+  claim: "The podcast says Abdulaziz's brother Sa'd was killed in this battle."
+  source: "S1@2:14:28"
+  quote: "King Abdulaziz’s brother, Saad was killed in this battle"
+  status: check
+  note: "Many accounts place Sa'd ibn Abdulrahman's death at Kanzan, not Jarrab. Not used on site until checked."
+
+- id: F140
+  chapter: jarrab-kanzan
+  hijri: ""
+  gregorian: ""
+  claim: "Shakespeare believed Britain should align with Abdulaziz and drafted the terms of the Darin treaty with him, but it was only approved after Jarrab, after his death; Britain had hesitated for fear of provoking the Ottomans, until the war made that moot."
+  source: "S1@2:15:02"
+  quote: "He believed that King Abdulaziz was the leader Britain should align with"
+  status: from-source
+  note: "Darin 2:15:14-2:15:24; Britain's hesitation 2:15:44-2:16:23."
+
+- id: F141
+  chapter: jarrab-kanzan
+  hijri: ""
+  gregorian: ""
+  claim: "At Jarrab, as the battle tipped toward Ibn Rasheed, one tribe took camels and withdrew; both sides then retreated."
+  source: "S1@2:17:06"
+  quote: "One tribe, as the battle was tipping in ibn Rasheed’s favor"
+  status: from-source
+  note: "Tribe not named."
+
+- id: F142
+  chapter: jarrab-kanzan
+  hijri: ""
+  gregorian: ""
+  claim: "At the Battle of Kanzan, in the east of the peninsula, Abdulaziz was badly wounded when a bullet struck the bandolier at his waist and set it off, injuring his abdomen; recovery took three months."
+  source: "S1@2:17:34"
+  quote: "He was severely injured in the Kanzan battle"
+  status: from-source
+  note: "Bandolier 2:17:46-2:17:54."
+
+- id: F143
+  chapter: jarrab-kanzan
+  hijri: ""
+  gregorian: ""
+  claim: "He withdrew to Al-Ahsa and was besieged there for three months until his brother Mohammad ibn Abdulrahman came from Riyadh and lifted the siege."
+  source: "S1@2:17:54"
+  quote: "He retreated to Al-Ahsa and was besieged there for 3 months"
+  status: from-source
+  note: ""
+
+- id: F144
+  chapter: jarrab-kanzan
+  hijri: ""
+  gregorian: ""
+  claim: "To deny his adversaries the taste of victory at Kanzan, he announced his marriage that same night."
+  source: "S1@2:18:34"
+  quote: "To deny the adversary the taste of victory in Kanzan"
+  status: from-source
+  note: ""
+
+- id: F145
+  chapter: jarrab-kanzan
+  hijri: ""
+  gregorian: ""
+  claim: "Later, he surprised Britain by bringing in the Americans for oil, shifting the international oil balance from Britain to the United States."
+  source: "S1@2:19:18"
+  quote: "He stunned Britain when he brought the Americans for oil"
+  status: from-source
+  note: ""
+
+- id: F146
+  chapter: jarrab-kanzan
+  hijri: "1336-1337"
+  gregorian: "1918"
+  claim: "After the First World War ended (1336 AH, 1918 AD), Sharif Hussein expelled the last Ottoman garrisons, in Medina and Asir. In 1337 AH Fakhri Pasha left Medina, and the Sharif's forces obtained the large arsenal he had stored there; he had threatened to blow up the Prophet's Chamber."
+  source: "S1@2:20:32"
+  quote: "It was 1336 AH, 1918 AD after WWI ended"
+  status: from-source
+  note: "Fakhri 2:21:17-2:21:52."
+
+# ---------------------------------------------------------------- turabah
+- id: F147
+  chapter: turabah
+  hijri: ""
+  gregorian: ""
+  claim: "A dispute arose between Sharif Hussein and Khalid ibn Luai, governor of Al-Khurmah near Turabah; both towns had long been loyal to the Saudi state."
+  source: "S1@2:22:01"
+  quote: "An issue occurred between Sharif Hussein and Khalid ibn Loai"
+  status: from-source
+  note: "Spelling Loai/Luai (لؤي) check."
+
+- id: F148
+  chapter: turabah
+  hijri: ""
+  gregorian: ""
+  claim: "Khalid ibn Luai, connected to the people of the Hijar, declared himself against the Sharif and for Abdulaziz, and Al-Khurmah followed him."
+  source: "S1@2:23:25"
+  quote: "And Al-Hijar people were connected to Khalid ibn Loai"
+  status: from-source
+  note: ""
+
+- id: F149
+  chapter: turabah
+  hijri: "1337"
+  gregorian: ""
+  claim: "The Sharif sent his son Abdullah ibn Hussein to Turabah with an organised, well-armed army whose officers came from Iraq, the Levant and Egypt, former Ottoman officers who had joined the Arab Revolt; he was harsh on the people of Turabah."
+  source: "S1@2:23:53"
+  quote: "But Al-Sharif sent his son, Abdullah ibn Hussein to Trubah"
+  status: from-source
+  note: "2:24:07-2:24:28."
+
+- id: F150
+  chapter: turabah
+  hijri: "1337"
+  gregorian: ""
+  claim: "Abdulaziz sent forces of the Ikhwan; when Abdullah dismissed their approach, they and Khalid ibn Luai launched a sudden attack in 1337 AH that cost him heavy losses in men and arms."
+  source: "S1@2:25:21"
+  quote: "he was surprised by a sweeping, unexpected attack in 1337 AH"
+  status: from-source
+  note: "Line at 2:25:21 continues to 2:25:31."
+
+- id: F151
+  chapter: turabah
+  hijri: "1337"
+  gregorian: ""
+  claim: "Abdulaziz came to Turabah and stayed ten days while Britain tried to mediate; judging the time not ripe, he withdrew."
+  source: "S1@2:25:47"
+  quote: "King Abdulaziz came to Trubah and stayed there for 10 days"
+  status: from-source
+  note: ""
+
+- id: F152
+  chapter: turabah
+  hijri: "1337-1340"
+  gregorian: ""
+  claim: "In response, Abdulaziz's followers were banned from entering Makkah for Hajj and trade, until around 1340 AH, when restrictions loosened and they were allowed Hajj, though it could be withdrawn at any time."
+  source: "S1@2:26:36"
+  quote: "King Abdulaziz's followers and Saudis were banned"
+  status: from-source
+  note: "1340 at 2:27:16."
+
+# ---------------------------------------------------------------- hail
+- id: F153
+  chapter: hail
+  hijri: "1335"
+  gregorian: ""
+  claim: "In 1335 AH Saud Al-Saleh Al-Sibhan, exposed as seeking the emirate for himself, fled Ha'il to Iraq, where he was in contact with Britain."
+  source: "S1@2:27:55"
+  quote: "In 1335 AH, Saud Al-Saleh, who was involved in the Jarrab battle, escaped"
+  status: from-source
+  note: ""
+
+- id: F154
+  chapter: hail
+  hijri: ""
+  gregorian: ""
+  claim: "Saud ibn Rasheed, now grown but still with regents, was killed by his cousin Abdullah Al-Talal, who was killed the same day; Abdullah Al-Mutib was then appointed."
+  source: "S1@2:28:35"
+  quote: "He was killed by his cousin, Abdullah Al-Talal"
+  status: check
+  note: "Transcript at 2:28:14 is confusing ('The rule went to Saud's brother-in-law'). Year not given; commonly 1338 AH (1920). Check."
+
+- id: F155
+  chapter: hail
+  hijri: "1338-1340"
+  gregorian: ""
+  claim: "From 1338 to 1340 AH Abdulaziz focused on Ha'il through raids, campaigns and negotiation; some Hijar belonged to Ha'il's tribes, and settling them shifted their loyalty."
+  source: "S1@2:28:54"
+  quote: "From 1338 AH to 1340 AH, the focus was shifted"
+  status: from-source
+  note: "Hijar 2:29:18."
+
+- id: F156
+  chapter: hail
+  hijri: ""
+  gregorian: ""
+  claim: "Al-Tarifi frames this as recovering land, not annexing it for the first time, since these regions had belonged to the First Saudi State."
+  source: "S1@2:29:35"
+  quote: "He wasn’t annexing the land for the first time"
+  status: opinion
+  note: ""
+
+- id: F157
+  chapter: hail
+  hijri: "1340"
+  gregorian: ""
+  claim: "Amid internal strife, Abdullah Al-Mutib fled Ha'il and took refuge with Abdulaziz; then in 1340 AH Mohammed ibn Talal surrendered Ha'il, ending the Al-Rasheed emirate."
+  source: "S1@2:30:00"
+  quote: "That Abdullah Al-Muteb escaped Hail and took refuge at King Abdulaziz’s"
+  status: from-source
+  note: "1340 at 2:30:08."
+
+- id: F158
+  chapter: hail
+  hijri: "1340"
+  gregorian: ""
+  claim: "There was no decisive battle like Jarrab or Al-Tarfiyyah; it was a collapsing power. The surrendering ruler asked for safety and to keep ruling Ha'il; Abdulaziz granted safety but refused, appointing a man of Ha'il instead."
+  source: "S1@2:30:31"
+  quote: "But there was no battle as Jarrab or Al-Tarfiyyah"
+  status: from-source
+  note: "Terms 2:31:34-2:31:42."
+
+- id: F159
+  chapter: hail
+  hijri: "1309-1340"
+  gregorian: ""
+  claim: "This ended a crisis that had begun in 1309 AH."
+  source: "S1@2:31:42"
+  quote: "This marked the end of a crisis that lasted from 1309 AH"
+  status: check
+  note: "The speaker then says Abdulaziz ended it 'in 21 years' (2:31:54); 1309 to 1340 is 31 years, while 1319 to 1340 is 21. Site gives only the start year."
+
+- id: F160
+  chapter: hail
+  hijri: ""
+  gregorian: ""
+  claim: "Al-Tarifi says Abdulaziz was skilled at turning adversaries into allies."
+  source: "S1@2:31:12"
+  quote: "But King Abdulaziz was skilled in turning adversaries into allies"
+  status: opinion
+  note: ""
+
+# ---------------------------------------------------------------- asir
+- id: F161
+  chapter: asir
+  hijri: "1289?"
+  gregorian: ""
+  claim: "Asir had an Ottoman governor after events in the year '89' (presumably 1289 AH) put it under Ottoman control in place of Aidh ibn Mar'i."
+  source: "S1@2:42:46"
+  quote: "Asir had an Ottoman governor"
+  status: check
+  note: "'Aidh ibn Meri in the year 89' (2:42:53). Century not stated. Check."
+
+- id: F162
+  chapter: asir
+  hijri: "until 1337"
+  gregorian: ""
+  claim: "After clashes, Al Aidh under Hasan ibn Aidh reached an agreement with the Ottomans: a member of the family advised the governor and kept local authority under Ottoman rule. This lasted until 1337 AH, when the Ottoman garrison left Asir."
+  source: "S1@2:43:24"
+  quote: "They reached an agreement where a member of the Aidh family became a consultant for the governor"
+  status: from-source
+  note: "1337 at 2:43:48-2:44:03."
+
+- id: F163
+  chapter: asir
+  hijri: "1337"
+  gregorian: ""
+  claim: "Hasan ibn Aidh then took charge; he was loyal to the Sharif, though never in direct conflict with Abdulaziz, while many Asiri tribes had been loyal to Al Saud since the First State."
+  source: "S1@2:44:21"
+  quote: "Who took charge? Hasan ibn Aidh Hasan ibn Aidh was loyal to Al-Sharif"
+  status: from-source
+  note: "Tribes 2:44:55."
+
+- id: F164
+  chapter: asir
+  hijri: "1338"
+  gregorian: ""
+  claim: "In 1338 AH Abdulaziz offered to mediate a clash between Hasan and the tribes; Hasan refused, siding with Sharif Hussein, and relations turned hostile."
+  source: "S1@2:45:28"
+  quote: "This was in 1338 AH Upon King Abdulaziz’s attempt to mediate"
+  status: from-source
+  note: ""
+
+- id: F165
+  chapter: asir
+  hijri: "1338"
+  gregorian: ""
+  claim: "In 1338 AH Abdulaziz sent a force that drove Hasan from Abha at the Battle of Hajla; Al Aidh's habit when cornered was to retreat to their Harmala palace."
+  source: "S1@2:46:12"
+  quote: "So, in 1338 AH, King Abdulaziz sent a platoon after him"
+  status: from-source
+  note: "Hajla and Harmala 2:46:27."
+
+- id: F166
+  chapter: asir
+  hijri: ""
+  gregorian: ""
+  claim: "Hasan agreed to visit Abdulaziz in Riyadh, was received with gifts and returned; Abdulaziz appointed an emir, but complaints led him to replace his deputies often."
+  source: "S1@2:46:52"
+  quote: "But negotiations led him to accept visiting Riyadh to meet King Abdulaziz"
+  status: from-source
+  note: "2:47:03-2:47:23."
+
+- id: F167
+  chapter: asir
+  hijri: "1341"
+  gregorian: ""
+  claim: "Encouraged by the Sharif, Hasan's side expelled Abdulaziz's emir from Abha; Prince Faisal ibn Abdulaziz came with a campaign, besieged Hasan in Harmala until he surrendered and went to Riyadh, and by 1341 AH Asir was settled."
+  source: "S1@2:48:27"
+  quote: "So, they attacked king Abdulaziz’s Amir in Abha and expelled him"
+  status: from-source
+  note: "Faisal 2:48:32-2:48:42; 1341 at 2:48:56."
+
+- id: F168
+  chapter: asir
+  hijri: ""
+  gregorian: ""
+  claim: "Asir had resisted the Ottomans fiercely until they made a truce, and had been loyal since the days of Abdul-Wahhab Abu Nuqta in the First State; Al-Tarifi attributes its acceptance of Abdulaziz to a sense of watan (homeland)."
+  source: "S1@2:49:07"
+  quote: "Asir didn’t want the Ottoman and gave them hell"
+  status: opinion
+  note: "Abu Nokta at 2:49:43."
+
+- id: F169
+  chapter: asir
+  hijri: ""
+  gregorian: ""
+  claim: "Before unification, people could not travel even a kilometre without protection, and one could die without knowing why, because there was no law or homeland."
+  source: "S1@2:51:13"
+  quote: "People couldn’t go as far as a kilometer Unless they were protected"
+  status: opinion
+  note: ""
+
+# ---------------------------------------------------------------- hijaz
+- id: F170
+  chapter: hijaz
+  hijri: "1343"
+  gregorian: ""
+  claim: "With Asir, Ha'il and Al-Ahsa joined, only the Hijaz remained. In 1343 AH an Ikhwan-led campaign entered Taif via Al-Hawiyah and took it; the Sharif's power collapsed."
+  source: "S1@2:54:14"
+  quote: "So, he recruited a campaign led by Al-Ikhwan"
+  status: from-source
+  note: "Al-Hawiyah 2:54:21; 1343 AH 2:55:00."
+
+- id: F171
+  chapter: hijaz
+  hijri: ""
+  gregorian: ""
+  claim: "Taif was the key to the Hijaz, which is why the Sharif had tried to stop Abdulaziz at Turabah in 1337 AH."
+  source: "S1@2:54:41"
+  quote: "Because if he took Taif, he took Hijaz"
+  status: from-source
+  note: ""
+
+- id: F172
+  chapter: hijaz
+  hijri: "1343"
+  gregorian: ""
+  claim: "The Sharif's sons were scattered (Abdullah in eastern Jordan, Faisal in Syria then Iraq), leaving only Ali; the Hijazi National Party, which wanted an Ottoman-style constitution, pressed Hussein to abdicate in favour of his son Ali at a gathering in Jeddah."
+  source: "S1@2:55:16"
+  quote: "Especially since Sharif’s powers were distributed His sons were in different regions"
+  status: from-source
+  note: "Party 2:55:43; abdication 2:56:31-2:56:43."
+
+- id: F173
+  chapter: hijaz
+  hijri: "1343"
+  gregorian: ""
+  claim: "Hussein agreed under pressure and left via Aqaba to his son Abdullah. Ali did not dare go to Makkah."
+  source: "S1@2:56:55"
+  quote: "He left through Aqabah to his son Abdullah"
+  status: from-source
+  note: ""
+
+- id: F174
+  chapter: hijaz
+  hijri: "1343"
+  gregorian: ""
+  claim: "The people of Makkah sent a delegation to Abdulaziz in Taif inviting him to enter Makkah in ihram; in 1343 AH he entered Makkah in ihram without bloodshed."
+  source: "S1@2:57:11"
+  quote: "They sent a delegation to King Abdulaziz, inviting him to enter Makkah in his Ihram"
+  status: from-source
+  note: "1343 entry 2:58:21."
+
+- id: F175
+  chapter: hijaz
+  hijri: "1344"
+  gregorian: ""
+  claim: "Only Jeddah remained, held by Ali ibn Hussein. Abdulaziz besieged it, preferring to avoid bloodshed, until Ali agreed to leave with his people, completing the Hijaz."
+  source: "S1@2:58:28"
+  quote: "Because Ali ibn Hussein was there King Abdulaziz simply wanted him to leave"
+  status: from-source
+  note: "Siege 2:58:50; Ali leaves 2:59:03. Year of Jeddah's surrender not stated separately."
+
+- id: F176
+  chapter: hijaz
+  hijri: "1344"
+  gregorian: ""
+  claim: "In 1344 AH Abdulaziz sent a campaign to Medina, already besieged by Prince Mohammed ibn Abdulaziz; it joined peacefully, and with it the dependencies up to Aqaba."
+  source: "S1@2:59:10"
+  quote: "In 1344 AH, King Abdulaziz sent a campaign to Medina"
+  status: from-source
+  note: "Aqaba 2:59:30."
+
+- id: F177
+  chapter: hijaz
+  hijri: "1338"
+  gregorian: ""
+  claim: "In Jazan, when Asir was annexed (1338 AH), Mohammed ibn Ali Al-Idrisi signed a protection agreement with Abdulaziz. Under his successors (Ali, then Hasan) the Imam of Yemen attacked; Hasan invoked the agreement, and in the end came to Abdulaziz, completing the country."
+  source: "S1@2:59:40"
+  quote: "As for the Adaresah family in Jazan, When Asir was annexed in 1338 AH"
+  status: check
+  note: "Translation at 3:00:13 says 'Hasan went to the Imam'; context suggests he came to King Abdulaziz. Check Arabic audio."
+
+- id: F178
+  chapter: hijaz
+  hijri: ""
+  gregorian: "1932"
+  claim: "The state's names evolved: Sultanate of Najd and its Dependencies; then King of the Hijaz and Sultan of Najd and its Dependencies; then King of the Hijaz and Najd and their Dependencies; and finally, in 1932, the Kingdom of Saudi Arabia, celebrated on National Day, 23 September."
+  source: "S1@3:00:30"
+  quote: "It was the Sultanate of Najd and its dependencies"
+  status: from-source
+  note: "3:00:40-3:00:57; repeated 3:10:53-3:11:23."
+
+# ---------------------------------------------------------------- kingdom
+- id: F179
+  chapter: kingdom
+  hijri: ""
+  gregorian: ""
+  claim: "Asked why he chose a kingdom when republics were taking shape, Al-Tarifi argues that monarchies better preserve citizens' rights, citing Saudi care for citizens during COVID at home and abroad."
+  source: "S1@3:01:12"
+  quote: "Why kingdom? Back then, there were republics emerging"
+  status: opinion
+  note: "COVID 3:02:18-3:03:01."
+
+- id: F180
+  chapter: kingdom
+  hijri: ""
+  gregorian: ""
+  claim: "He argues the king stands above parties and ideologies, and rejects the charge that monarchies are one-man states, pointing to Hitler, Mussolini and Napoleon as one-man rulers who overthrew monarchies."
+  source: "S1@3:03:23"
+  quote: "In Kingdoms, the King is above all classifications"
+  status: opinion
+  note: "3:03:56-3:04:06."
+
+- id: F181
+  chapter: kingdom
+  hijri: ""
+  gregorian: ""
+  claim: "He points to the Arab Spring, after which, he says, the monarchies are the countries still standing and growing, and says many of the Arab world's brightest minds were products of monarchies and left when their countries became republics."
+  source: "S1@3:04:51"
+  quote: "Which countries still stand and grow? Kingdoms!"
+  status: opinion
+  note: "Minds 3:06:34-3:06:42."
+
+- id: F182
+  chapter: kingdom
+  hijri: ""
+  gregorian: ""
+  claim: "The title evolved with the size of the state: after Al-Ahsa, 'Najd and its Dependencies'; earlier titles included Imam and Emir."
+  source: "S1@3:11:05"
+  quote: "That is, according to the size after annexing Al-Ahsa"
+  status: from-source
+  note: "Titles 3:11:14."
+
+- id: F183
+  chapter: kingdom
+  hijri: ""
+  gregorian: ""
+  claim: "Abdulaziz was skilled at recruiting capable people from many countries, such as Shakespeare, Abdullah Philby (who resigned from his government to join him), Yusuf Yasin and Hafiz Wahba."
+  source: "S1@3:11:39"
+  quote: "He was a man who could properly hire capabilities"
+  status: from-source
+  note: "Names 3:12:07-3:12:27."
+
+- id: F184
+  chapter: kingdom
+  hijri: ""
+  gregorian: ""
+  claim: "Rashid Ali Al-Gaylani fled Iraq, went via France to Germany, and after Hitler's defeat in the Second World War sought refuge with Abdulaziz, presented at first as a Syrian. Abdulaziz refused to hand him to Britain even at the risk of war; he stayed until Abdulaziz died and King Saud succeeded, then went to Egypt and back to Iraq."
+  source: "S1@3:12:51"
+  quote: "He escaped Iraq during the Iraqi Revolt"
+  status: from-source
+  note: "3:13:03-3:13:48."
+
+# ---------------------------------------------------------------- added in coverage review
+- id: F185
+  chapter: hijar
+  hijri: "1328"
+  gregorian: ""
+  claim: "The Sharif's army was partly organised and partly tribal: like any Ottoman province, it had a garrison alongside local forces and tribes whose loyalty to the governor varied."
+  source: "S1@1:48:44"
+  quote: "His army was different and partially organized Another part was tribal"
+  status: from-source
+  note: ""
+
+- id: F186
+  chapter: ahsa
+  hijri: "1331"
+  gregorian: ""
+  claim: "The timing suited him: the Ottomans were being defeated and distracted, the Sharif had overstepped at Al-Quwai'iyah, and Ha'il was absorbed in internal troubles. His priority was to end the Ottoman presence, leaving the Hijaz as the only Ottoman-aligned power."
+  source: "S1@2:11:14"
+  quote: "But he waited for the best time As the Ottomans were being defeated and distracted"
+  status: from-source
+  note: "Priority at 2:00:50-2:01:00; Sharif and Ha'il at 2:11:24."
+
+- id: F187
+  chapter: asir
+  hijri: ""
+  gregorian: ""
+  claim: "The Sharif sent forces too weak to decide matters in Asir, while Abdulaziz sent serious campaigns and was more generous to his adversaries than to his own followers."
+  source: "S1@2:47:51"
+  quote: "Sharif sent platoons too weak to settle matters"
+  status: from-source
+  note: "Generosity at 2:48:06."
+
+- id: F188
+  chapter: asir
+  hijri: ""
+  gregorian: ""
+  claim: "Relations between the people of the Hijaz and the Ottoman authorities were tense; a joking tale has Hijazis greeting Ottoman soldiers with 'Khan the Sultan', using the Turkish title 'Khan', which in Arabic means 'betrayed'."
+  source: "S1@2:52:53"
+  quote: "A funny tale about Hijaz people in the past They used to pass by the Turks"
+  status: from-source
+  note: "Tension at 2:52:34-2:52:42."
+
+- id: F189
+  chapter: hijaz
+  hijri: ""
+  gregorian: ""
+  claim: "For the Hijazi notables, with the Ottoman state gone, the Hijaz had become 'the Kingdom of Al-Hussein', which Al-Tarifi calls 'the kingdom that never was'."
+  source: "S1@2:56:07"
+  quote: "It was considered Al-Hussein Kingdom"
+  status: from-source
+  note: ""
