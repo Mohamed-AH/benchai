@@ -1,0 +1,30 @@
+# The fact base: one entry per claim used on the site. Internal only.
+#
+# Fields:
+#   id:       F001, F002, ... (never reuse an id)
+#   chapter:  the chapter's ref (background, leaving-riyadh, kuwait, riyadh,
+#             qassim, hail, hijaz, asir, kingdom)
+#   date:     as precise as the source allows, e.g. "1902-01-15", "1902", "c. 1891"
+#   date_hijri: optional, e.g. "5 Shawwal 1319"
+#   claim_en / claim_ar: the fact in one sentence
+#   people / places: names as they appear on the site
+#   sources:  list of "SOURCE_ID@timestamp", e.g. "S1@01:12:30"
+#   status:   from-source  (stated in a source, not yet checked elsewhere)
+#             verified     (confirmed against a second source)
+#             disputed     (sources disagree: explain in note)
+#             check        (needs checking: name spelling, date, or number)
+#   note:     anything a reviewer should know
+#
+# Example (delete once real entries exist):
+# - id: F001
+#   chapter: riyadh
+#   date: ""
+#   claim_en: ""
+#   claim_ar: ""
+#   people: []
+#   places: []
+#   sources: ["S1@00:00:00"]
+#   status: from-source
+#   note: ""
+
+[]

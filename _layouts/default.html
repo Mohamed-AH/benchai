@@ -1,0 +1,50 @@
+{%- assign lang = page.lang | default: "en" -%}
+{%- if lang == "ar" -%}{%- assign other = "en" -%}{%- assign dir = "rtl" -%}{%- assign site_title = site.title_ar -%}
+{%- else -%}{%- assign other = "ar" -%}{%- assign dir = "ltr" -%}{%- assign site_title = site.title_en -%}{%- endif -%}
+{%- assign chapters = site.pages | where: "lang", lang | where: "layout", "chapter" | sort: "order" -%}
+{%- assign twin = site.pages | where: "lang", other | where: "ref", page.ref | first -%}
+<!doctype html>
+<html lang="{{ lang }}" dir="{{ dir }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site_title }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="brand" href="{{ '/' | append: lang | append: '/' | relative_url }}">{{ site_title }}</a>
+      <nav class="lang-switch">
+        {%- if twin -%}
+        <a href="{{ twin.url | relative_url }}" lang="{{ other }}">{% if other == "ar" %}العربية{% else %}English{% endif %}</a>
+        {%- else -%}
+        <a href="{{ '/' | append: other | append: '/' | relative_url }}" lang="{{ other }}">{% if other == "ar" %}العربية{% else %}English{% endif %}</a>
+        {%- endif -%}
+      </nav>
+    </div>
+  </header>
+
+  <div class="wrap layout">
+    <aside class="toc">
+      <h2>{% if lang == "ar" %}الفصول{% else %}Chapters{% endif %}</h2>
+      <ol>
+        {%- for c in chapters -%}
+        <li{% if c.url == page.url %} class="current"{% endif %}><a href="{{ c.url | relative_url }}">{{ c.title }}</a></li>
+        {%- endfor -%}
+      </ol>
+    </aside>
+
+    <main class="content">
+      {{ content }}
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap">{{ site_title }}</div>
+  </footer>
+</body>
+</html>
