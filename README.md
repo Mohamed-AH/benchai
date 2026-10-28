@@ -26,6 +26,18 @@ Markdown basics: `## Heading`, `**bold**`, `*italic*`, `> quotation`, a blank li
 
 The King's name and the honorific (رحمه الله / may Allah have mercy on him) are set once in `_config.yml` under `king:`. They appear on the landing page, the home pages and the header. `title_en` and `title_ar` in the same file set the browser tab and footer text.
 
+### Chapter maps
+
+The maps (coming in the next phases) are driven by three files in `_data/`:
+
+| File | What it holds |
+| --- | --- |
+| `places.yml` | Each place's English and Arabic name, its position, and where the position comes from. `approximate: true` draws it as an area, not a point. |
+| `maps.yml` | For each chapter: the places, events (battles, sieges and so on, with captions in both languages) and routes to show. Every item lists the fact codes it rests on. |
+| `regions.yml` | The historical regions and the year each joined, for the overview map. |
+
+After editing them, run `python3 research/check_maps.py`. It checks that every item has fact codes, that those facts are cited in the chapter text in both languages, that no left-out fact is used, and that every place exists.
+
 ### Adding a chapter
 
 Copy an existing chapter file in both `en/chapters/` and `ar/chapters/`, give both copies the same new `ref`, and set `order`.

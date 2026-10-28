@@ -1,0 +1,128 @@
+# What each chapter's map shows. Keyed by the chapter's `ref`.
+#
+#   places: towns and sites to label. `facts` = the fact codes (research/facts.yml)
+#           that make the place part of this chapter's story.
+#   events: markers with a caption.
+#             kind:  battle | siege | taken | surrender | settlement | event
+#             year:  Hijri year as the chapter gives it ("" if the chapter gives none)
+#             en / ar: the caption, worded like the chapter (never stronger)
+#   routes: lines between places, in order. approximate: true = drawn dashed and
+#           labelled approximate, because the podcast names the ends but not the path.
+#
+# Every item needs facts, and those facts must be cited in the chapter text.
+# `python3 research/check_maps.py` checks this.
+# Place positions are in places.yml.
+
+writing-history:
+  places:
+    - {id: hijr-yamamah, facts: [F006]}
+    - {id: diriyah, facts: [F008, F013]}
+
+early-life:
+  places:
+    - {id: riyadh, facts: [F027]}
+    - {id: hail, facts: [F026]}
+  events:
+    - {kind: battle, place: mulayda, year: "1308", facts: [F027], en: "Battle of Al-Mulayda", ar: "معركة المليداء"}
+    - {kind: siege, place: riyadh, year: "1308", facts: [F027], en: "Ibn Rashid besieges Riyadh", ar: "ابن رشيد يحاصر الرياض"}
+
+exile:
+  places:
+    - {id: riyadh, facts: [F031]}
+    - {id: ahsa, facts: [F034]}
+  events:
+    - {kind: event, place: bahrain, year: "1309", facts: [F033], en: "The family's women and Abdulaziz go to Bahrain", ar: "نساء الأسرة وعبدالعزيز إلى البحرين"}
+    - {kind: event, place: kuwait, year: "1311", facts: [F035], en: "Imam Abdulrahman settles in Kuwait", ar: "استقرار الإمام عبدالرحمن في الكويت"}
+  routes:
+    - {path: [riyadh, bahrain], approximate: true, facts: [F033]}
+    - {path: [riyadh, kuwait], approximate: true, facts: [F035]}
+
+sarif:
+  places:
+    - {id: kuwait, facts: [F049]}
+  events:
+    - {kind: siege, place: masmak, year: "1318", facts: [F051, F052], en: "Abdulaziz enters Riyadh and besieges Al-Masmak", ar: "عبدالعزيز يدخل الرياض ويحاصر المصمك"}
+    - {kind: battle, place: sarif, year: "1318", facts: [F054, F056], en: "Battle of Al-Sarif", ar: "معركة الصريف"}
+  routes:
+    - {path: [kuwait, riyadh], approximate: true, facts: [F049, F051]}
+    - {path: [riyadh, kuwait], approximate: true, facts: [F056]}
+
+riyadh:
+  places:
+    - {id: abu-jifan, facts: [F064]}
+    - {id: shuqaib, facts: [F065]}
+    - {id: sudair, facts: [F079]}
+    - {id: hawtah, facts: [F084]}
+    - {id: helwa, facts: [F084]}
+    - {id: kharj, facts: [F084, F087]}
+    - {id: dalam, facts: [F084, F087]}
+    - {id: swaidi, facts: [F091]}
+  events:
+    - {kind: taken, place: masmak, year: "1319", facts: [F071, F075, F077], en: "Riyadh recovered at Al-Masmak", ar: "استرداد الرياض عند المصمك"}
+    - {kind: siege, place: riyadh, year: "1320", facts: [F087, F090], en: "Ibn Rashid besieges Riyadh", ar: "ابن رشيد يحاصر الرياض"}
+  routes:
+    - {path: [kuwait, ahsa, abu-jifan, shuqaib, riyadh], approximate: true, facts: [F058, F064, F065]}
+
+qassim:
+  places:
+    - {id: shaqra, facts: [F094]}
+    - {id: tharmada, facts: [F094]}
+    - {id: shaihiyah, facts: [F102]}
+    - {id: rass, facts: [F108]}
+  events:
+    - {kind: battle, place: faidhat-alser, year: "1321", facts: [F097], en: "Faidhat Al-Ser", ar: "فيضة السر"}
+    - {kind: taken, place: unaizah, year: "1322", facts: [F098], en: "Unaizah opens its gates", ar: "عنيزة تفتح أبوابها"}
+    - {kind: siege, place: buraidah, year: "1322", facts: [F101], en: "Buraidah's garrison surrenders", ar: "استسلام حامية بريدة"}
+    - {kind: battle, place: bukairiyah, year: "1322", facts: [F104, F105, F106], en: "Al-Bukairiyah", ar: "البكيرية"}
+    - {kind: battle, place: shananah, year: "1322", facts: [F108, F109], en: "Battle of Al-Shananah", ar: "معركة الشنانة"}
+    - {kind: battle, place: rawdat-muhanna, year: "1324", facts: [F111], en: "Rawdat Muhanna", ar: "روضة مهنا"}
+    - {kind: battle, place: tarfiyah, year: "1325", facts: [F112], en: "Battle of Al-Tarfiyah", ar: "معركة الطرفية"}
+
+hijar:
+  events:
+    - {kind: event, place: quwaiiyah, year: "1328", facts: [F121], en: "The Sharif attacks Al-Quwai'iyah", ar: "الشريف يهاجم القويعية"}
+    - {kind: settlement, place: artawiyah, year: "1330", facts: [F122], en: "Al-Artawiyah, the first hijra", ar: "الأرطاوية، أول هجرة"}
+    - {kind: settlement, place: ghatghat, year: "1330", facts: [F122], en: "Al-Ghatghat", ar: "الغطغط"}
+
+ahsa:
+  events:
+    - {kind: taken, place: ibrahim-palace, year: "1331", facts: [F129, F130], en: "Al-Ahsa: the garrison surrenders at Ibrahim's Palace", ar: "الأحساء: استسلام الحامية في قصر إبراهيم"}
+    - {kind: event, place: uqair, year: "1331", facts: [F131], en: "Al-Uqair: the garrison leaves for Bahrain", ar: "العقير: الحامية تغادر إلى البحرين"}
+    - {kind: taken, place: qatif, year: "1331", facts: [F134], en: "Al-Qatif", ar: "القطيف"}
+
+jarrab-kanzan:
+  places:
+    - {id: darin, facts: [F140]}
+  events:
+    - {kind: battle, place: jarrab, year: "", facts: [F137, F141], en: "Battle of Jarrab", ar: "معركة جراب"}
+    - {kind: battle, place: kanzan, year: "", facts: [F142], en: "Battle of Kanzan", ar: "معركة كنزان"}
+    - {kind: siege, place: ahsa, year: "", facts: [F143], en: "Besieged in Al-Ahsa for three months", ar: "حصار في الأحساء ثلاثة أشهر"}
+
+turabah:
+  places:
+    - {id: khurmah, facts: [F147, F148]}
+  events:
+    - {kind: battle, place: turabah, year: "1337", facts: [F149, F150], en: "Turabah", ar: "تربة"}
+
+hail:
+  events:
+    - {kind: surrender, place: hail, year: "1340", facts: [F157, F158], en: "Ha'il surrenders", ar: "تسليم حائل"}
+
+asir:
+  places:
+    - {id: abha, facts: [F165, F167]}
+  events:
+    - {kind: battle, place: hajla, year: "1338", facts: [F165], en: "Battle of Hajla", ar: "معركة حجلة"}
+    - {kind: siege, place: harmala, year: "1341", facts: [F167], en: "Siege of Harmala", ar: "حصار حرملة"}
+
+hijaz:
+  events:
+    - {kind: taken, place: taif, year: "1343", facts: [F170], en: "Taif", ar: "الطائف"}
+    - {kind: taken, place: makkah, year: "1343", facts: [F174], en: "Entry into Makkah in ihram", ar: "دخول مكة محرمًا"}
+    - {kind: siege, place: jeddah, year: "1344", facts: [F175], en: "Siege of Jeddah", ar: "حصار جدة"}
+    - {kind: taken, place: medina, year: "1344", facts: [F176], en: "Medina joins", ar: "انضمام المدينة"}
+  routes:
+    - {path: [hawiyah, taif], approximate: true, facts: [F170]}
+
+kingdom:
+  overview: true
