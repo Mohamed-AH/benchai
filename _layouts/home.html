@@ -7,6 +7,7 @@ layout: default
   <span class="hero-ghost" aria-hidden="true">عبدالعزيز</span>
   <div class="wrap hero-inner">
     <p class="eyebrow">{% if lang == "ar" %}الرياض · 1319هـ{% else %}Riyadh · 1319 AH{% endif %}</p>
+    <h1 class="king-name">{% include king-name.html lang=lang %}</h1>
     <div class="hero-text">
       {{ content }}
     </div>

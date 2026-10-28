@@ -1,0 +1,3 @@
+{%- comment -%} The King's full name with the honorific. Pass lang="en" or lang="ar". {%- endcomment -%}
+{%- assign k = site.king[include.lang] -%}
+<span class="kn-first">{{ k.first }}</span> <span class="kn-rest">{{ k.rest }}</span> <span class="kn-hon">{{ k.honorific }}</span>

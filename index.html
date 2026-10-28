@@ -6,7 +6,7 @@ layout: null
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ site.title_ar }} · {{ site.title_en }}</title>
+  <title>{{ site.title_ar }} · {{ site.subtitle_ar }}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gloock&family=Markazi+Text:wght@400..700&family=Reem+Kufi:wght@400..700&display=swap" rel="stylesheet">
@@ -15,8 +15,9 @@ layout: null
 <body>
   <div class="landing">
     <div class="landing-inner">
-      <h1 class="t-ar">{{ site.title_ar }}</h1>
-      <p class="t-en" dir="ltr" lang="en">{{ site.title_en }}</p>
+      <h1 class="t-ar king-name">{% include king-name.html lang="ar" %}</h1>
+      <p class="t-en king-name" dir="ltr" lang="en">{% include king-name.html lang="en" %}</p>
+      <p class="t-sub">{{ site.subtitle_ar }} · <span lang="en">{{ site.subtitle_en }}</span></p>
       <div class="choices">
         <a href="{{ '/ar/' | relative_url }}" lang="ar">العربية</a>
         <a href="{{ '/en/' | relative_url }}" lang="en">English</a>

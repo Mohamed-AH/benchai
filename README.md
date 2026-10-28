@@ -22,6 +22,10 @@ The block at the top of each file (between the `---` lines) holds settings:
 
 Markdown basics: `## Heading`, `**bold**`, `*italic*`, `> quotation`, a blank line starts a new paragraph.
 
+### The main title
+
+The King's name and the honorific (رحمه الله / may Allah have mercy on him) are set once in `_config.yml` under `king:`. They appear on the landing page, the home pages and the header. `title_en` and `title_ar` in the same file set the browser tab and footer text.
+
 ### Adding a chapter
 
 Copy an existing chapter file in both `en/chapters/` and `ar/chapters/`, give both copies the same new `ref`, and set `order`.
