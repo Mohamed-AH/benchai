@@ -19,7 +19,7 @@ layout: default
   <h2 class="section-title">{% if lang == "ar" %}الفصول{% else %}Chapters{% endif %}</h2>
   <ol class="chapter-grid">
     {%- for c in chapters %}
-    <li style="--i: {{ forloop.index }}">
+    <li>
       <a href="{{ c.url | relative_url }}">
         <span class="tile-n">{{ c.order }}</span>
         <span class="tile-t">{{ c.title }}</span>

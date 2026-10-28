@@ -16,10 +16,10 @@ const BASE = new URL('.', import.meta.url).pathname;
 const TEXT = {
   en: { approx: 'approximate', reset: 'Reset view', hint: 'Drag to turn the map. Dashed lines and ≈ mark approximate routes and positions. Grey names are today\'s cities, for orientation.',
         hintTouch: 'Use two fingers to turn the map. Dashed lines and ≈ mark approximate routes and positions. Grey names are today\'s cities, for orientation.',
-        credit: 'Terrain: AWS Terrain Tiles (SRTM, ETOPO1)', year: y => `${y} AH` },
+        credit: 'Terrain: AWS Terrain Tiles (SRTM, ETOPO1); places: GeoNames', year: y => `${y} AH` },
   ar: { approx: 'تقريبي', reset: 'إعادة العرض', hint: 'اسحب لتدوير الخريطة. الخطوط المتقطعة وعلامة ≈ تعني مسارًا أو موقعًا تقريبيًا. الأسماء الرمادية مدن اليوم، للاسترشاد.',
         hintTouch: 'استخدم إصبعين لتدوير الخريطة. الخطوط المتقطعة وعلامة ≈ تعني مسارًا أو موقعًا تقريبيًا. الأسماء الرمادية مدن اليوم، للاسترشاد.',
-        credit: 'التضاريس: AWS Terrain Tiles (SRTM, ETOPO1)', year: y => `${y}هـ` },
+        credit: 'التضاريس: AWS Terrain Tiles (SRTM, ETOPO1)؛ الأماكن: GeoNames', year: y => `${y}هـ` },
 };
 
 const KIND_COLOUR = { battle: '--adobe', siege: '--gold', taken: '--palm', surrender: '--palm', settlement: '--palm', event: '--ink' };

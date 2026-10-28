@@ -1,0 +1,61 @@
+{%- comment -%}
+  Everything in <head> shared by all pages: title, description, link previews,
+  English/Arabic page pairing, icons, fonts and styles.
+  Pass lang= and, optionally, twin= (the same page in the other language).
+{%- endcomment -%}
+{%- assign lang = include.lang | default: "en" -%}
+{%- if lang == "ar" -%}{%- assign short = site.short_title_ar -%}{%- assign full = site.title_ar | append: " · " | append: site.subtitle_ar -%}{%- assign locale = "ar_SA" -%}{%- assign other_locale = "en_US" -%}
+{%- else -%}{%- assign short = site.short_title_en -%}{%- assign full = site.title_en | append: " · " | append: site.subtitle_en -%}{%- assign locale = "en_US" -%}{%- assign other_locale = "ar_SA" -%}{%- endif -%}
+{%- if page.ref == "home" or page.url == "/" -%}
+  {%- if lang == "ar" -%}{%- capture title -%}{{ site.king.ar.first }} {{ site.king.ar.rest }} · {{ site.subtitle_ar }}{%- endcapture -%}
+  {%- else -%}{%- capture title -%}{{ site.king.en.first }} {{ site.king.en.rest }} · {{ site.subtitle_en }}{%- endcapture -%}{%- endif -%}
+{%- elsif page.title -%}{%- capture title -%}{{ page.title }} · {{ short }}{%- endcapture -%}
+{%- else -%}{%- assign title = short -%}{%- endif -%}
+{%- if page.description -%}{%- assign desc = page.description -%}
+{%- else -%}{%- comment -%} The opening of the rendered text (page.content is still unrendered here). {%- endcomment -%}
+{%- assign body = content | split: '<div class="prose">' | last -%}{%- assign desc = body | strip_html | normalize_whitespace | truncate: 158 -%}{%- endif -%}
+{%- assign canonical = page.url | replace: "index.html", "" | absolute_url -%}
+  <title>{{ title | escape }}</title>
+  <meta name="description" content="{{ desc | strip | escape }}">
+  {%- if page.noindex %}
+  <meta name="robots" content="noindex">
+  {%- else %}
+  <link rel="canonical" href="{{ canonical }}">
+  {%- endif %}
+  {%- if include.twin %}
+  <link rel="alternate" hreflang="{{ lang }}" href="{{ canonical }}">
+  <link rel="alternate" hreflang="{% if lang == 'ar' %}en{% else %}ar{% endif %}" href="{{ include.twin.url | replace: 'index.html', '' | absolute_url }}">
+  <link rel="alternate" hreflang="x-default" href="{{ '/' | absolute_url }}">
+  {%- endif %}
+  <meta property="og:type" content="{% if page.layout == 'chapter' %}article{% else %}website{% endif %}">
+  <meta property="og:site_name" content="{{ short }}">
+  <meta property="og:title" content="{{ title | escape }}">
+  <meta property="og:description" content="{{ desc | strip | escape }}">
+  <meta property="og:url" content="{{ canonical }}">
+  <meta property="og:image" content="{{ '/assets/share.jpg' | absolute_url }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{ full | escape }}">
+  <meta property="og:locale" content="{{ locale }}">
+  <meta property="og:locale:alternate" content="{{ other_locale }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#a63c22">
+  <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="32x32">
+  <link rel="icon" href="{{ '/assets/icon.svg' | relative_url }}" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="{{ '/assets/apple-touch-icon.png' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/fonts/fonts.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+  {%- if page.layout == "chapter" %}
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@graph": [
+    {"@type": "Article", "headline": {{ page.title | jsonify }}, "inLanguage": {{ lang | jsonify }}, "url": {{ canonical | jsonify }},
+     "image": {{ '/assets/share.jpg' | absolute_url | jsonify }}, "description": {{ desc | strip | jsonify }},
+     "about": {"@type": "Person", "name": {% if lang == "ar" %}"عبدالعزيز بن عبدالرحمن آل سعود"{% else %}"Abdulaziz bin Abdulrahman Al Saud"{% endif %}},
+     "isBasedOn": {"@type": "PodcastEpisode", "name": {{ site.podcast['episode_' | append: lang] | jsonify }}, "url": {{ site.podcast.url | jsonify }}},
+     "publisher": {"@type": "Organization", "name": {{ short | jsonify }}, "url": {{ '/' | absolute_url | jsonify }}}},
+    {"@type": "BreadcrumbList", "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": {% if lang == "ar" %}"الرئيسية"{% else %}"Home"{% endif %}, "item": {{ '/' | append: lang | append: '/' | absolute_url | jsonify }}},
+      {"@type": "ListItem", "position": 2, "name": {{ page.title | jsonify }}, "item": {{ canonical | jsonify }}}]}
+  ]}
+  </script>
+  {%- endif %}

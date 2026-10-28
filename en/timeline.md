@@ -1,15 +1,19 @@
 ---
 layout: page
 lang: en
+permalink: /:path/:basename
 ref: timeline
 title: "Timeline"
+description: "Key dates in the life of King Abdulaziz and the founding of the Third Saudi State, from 1293 AH to 1351 AH (1932), with an overview map of the regions as they joined."
 ---
 
 # Timeline
 
 Dates are given in the Hijri calendar (AH), as the sources use it. A Gregorian date is added where the source gives one. {% comment %}Each row is from facts.yml; ids in the comment at the end of the row.{% endcomment %}
 
+{::nomarkdown}
 {% include chapter-map.html %}
+{:/}
 
 | Year | Event |
 |---|---|

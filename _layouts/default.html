@@ -4,16 +4,13 @@
 {%- assign chapters = site.pages | where: "lang", lang | where: "layout", "chapter" | sort: "order" -%}
 {%- assign twin = site.pages | where: "lang", other | where: "ref", page.ref | first -%}
 {%- assign tl = site.pages | where: "lang", lang | where: "ref", "timeline" | first -%}
-<!doctype html>
+{%- assign about = site.pages | where: "lang", lang | where: "ref", "about" | first -%}
+<!DOCTYPE html>
 <html lang="{{ lang }}" dir="{{ dir }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site_title }}</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gloock&family=Markazi+Text:wght@400..700&family=Reem+Kufi:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+{% include head.html lang=lang twin=twin %}
 </head>
 <body class="layout-{{ page.layout }} ref-{{ page.ref }}">
   <header class="site-header">
@@ -38,8 +35,18 @@
     <div class="crenels crenels-up" aria-hidden="true"></div>
     <div class="wrap footer-row">
       <span>{{ site_title }}</span>
-      {%- if tl %}<a href="{{ tl.url | relative_url }}">{% if lang == "ar" %}الخط الزمني{% else %}Timeline{% endif %}</a>{% endif %}
+      <nav class="footer-links" aria-label="{% if lang == 'ar' %}روابط الموقع{% else %}Site links{% endif %}">
+        {%- if tl %}<a href="{{ tl.url | relative_url }}">{% if lang == "ar" %}الخط الزمني{% else %}Timeline{% endif %}</a>{% endif %}
+        {%- if about %}<a href="{{ about.url | relative_url }}">{% if lang == "ar" %}المصادر وعن الموقع{% else %}Sources &amp; About{% endif %}</a>{% endif %}
+      </nav>
     </div>
+    <p class="wrap footer-credit">
+      {%- if lang == "ar" -%}
+      مبني على حلقة «<a href="{{ site.podcast.url }}" rel="noopener noreferrer">{{ site.podcast.episode_ar }}</a>» من {{ site.podcast.ar }} مع {{ site.podcast.guest_ar }}.
+      {%- else -%}
+      Based on “<a href="{{ site.podcast.url }}" rel="noopener noreferrer">{{ site.podcast.episode_en }}</a>”, an episode of {{ site.podcast.en }} with {{ site.podcast.guest_en }}.
+      {%- endif -%}
+    </p>
   </footer>
 </body>
 </html>

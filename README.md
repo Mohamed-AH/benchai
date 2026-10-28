@@ -72,6 +72,15 @@ Settings used in Cloudflare (Workers & Pages → the project → Settings → Bu
 | Build command | `jekyll build` |
 | Build output directory | `_site` |
 
+### Domain, security and search
+
+- The site lives at https://imamabdulaziz.com (set as `url` in `_config.yml`). `benchai.pages.dev` and `www.imamabdulaziz.com` redirect there through Cloudflare Bulk Redirects.
+- `_headers` sets the security headers and how long browsers keep fonts and map files. The security policy only allows the site's own files (plus Cloudflare Web Analytics), so do not add inline `style="..."` or `onclick="..."` attributes, or fonts and scripts from other sites: browsers will block them.
+- Page addresses have no `.html` (for example `/en/chapters/06-qassim`). Link to pages that way.
+- `_includes/head.html` writes each page's title, description, link-preview tags and the English/Arabic pairing. Pages without a `description:` line use the opening of the chapter text.
+- `sitemap.xml`, `robots.txt` and `404.html` are built from the files of the same name. The fonts are in `assets/fonts/`, with their licences.
+- The podcast credit in the footer and on the Sources page comes from `podcast:` in `_config.yml`.
+
 ## Preview locally (optional)
 
 ```bash

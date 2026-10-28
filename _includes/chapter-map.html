@@ -11,9 +11,11 @@
   <div class="map-stage">
     <picture class="map-fallback">
       <source srcset="{{ fallback_dark | relative_url }}" media="(prefers-color-scheme: dark)">
-      <img src="{{ fallback | relative_url }}" alt="" loading="lazy" width="1400" height="1000" onerror="this.parentNode.remove()">
+      <img src="{{ fallback | relative_url }}" alt="" loading="lazy" width="1400" height="1000">
     </picture>
   </div>
+  {%- comment -%} Only what the map draws: fact codes, sources and notes stay out of the page. {%- endcomment %}
+  <script type="application/json" class="map-data">{"lang": {{ lang | jsonify }}, "map": {"overview": {% if m.overview %}true{% else %}false{% endif %}, "places": [{% for i in m.places %}{"id": {{ i.id | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}], "events": [{% for e in m.events %}{"kind": {{ e.kind | jsonify }}, "place": {{ e.place | jsonify }}, "year": {{ e.year | jsonify }}, "en": {{ e.en | jsonify }}, "ar": {{ e.ar | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}], "routes": [{% for r in m.routes %}{"path": {{ r.path | jsonify }}, "approximate": {% if r.approximate %}true{% else %}false{% endif %}}{% unless forloop.last %},{% endunless %}{% endfor %}]}, "places": { {%- for kv in site.data.places %}{% assign p = kv[1] %}{{ kv[0] | jsonify }}: {"en": {{ p.en | jsonify }}, "ar": {{ p.ar | jsonify }}, "lat": {{ p.lat }}, "lon": {{ p.lon }}, "approximate": {% if p.approximate %}true{% else %}false{% endif %}, "city": {% if p.city %}true{% else %}false{% endif %}, "reference": {% if p.reference %}true{% else %}false{% endif %}}{% unless forloop.last %},{% endunless %}{% endfor -%} }{% if m.overview %}, "regions": [{% for r in site.data.regions %}{"id": {{ r.id | jsonify }}, "en": {{ r.en | jsonify }}, "ar": {{ r.ar | jsonify }}, "year": {{ r.year | jsonify }}, "centre": {{ r.centre | jsonify }}, "radius_km": {{ r.radius_km }}}{% unless forloop.last %},{% endunless %}{% endfor %}]{% endif %}}</script>
   <figcaption>
     {%- if m.events %}
     <ol class="map-legend">
@@ -22,13 +24,11 @@
       {%- endfor %}
     </ol>
     {%- endif %}
-    <span class="map-note">{% if lang == "ar" %}الخطوط المتقطعة وعلامة ≈ تعني مسارًا أو موقعًا تقريبيًا. الأسماء الرمادية مدن اليوم، للاسترشاد.{% else %}Dashed lines and ≈ mark approximate routes and positions. Grey names are today's cities, for orientation.{% endif %}</span>
+    <span class="map-note">{% if lang == "ar" %}الخطوط المتقطعة وعلامة ≈ تعني مسارًا أو موقعًا تقريبيًا. الأسماء الرمادية مدن اليوم، للاسترشاد. مواقع الأماكن: GeoNames (CC BY 4.0).{% else %}Dashed lines and ≈ mark approximate routes and positions. Grey names are today's cities, for orientation. Place positions: GeoNames (CC BY 4.0).{% endif %}</span>
     <span class="visually-hidden">{% if lang == "ar" %}على الخريطة: {% else %}On the map: {% endif %}
       {%- if m.overview %}{% for r in site.data.regions %}{{ r[lang] }} ({{ r.year }}{% if lang == "ar" %}هـ{% else %} AH{% endif %}){% unless forloop.last %}{% if lang == "ar" %}، {% else %}; {% endif %}{% endunless %}{% endfor %}{% endif %}
       {%- for i in m.places %}{% assign p = site.data.places[i.id] %}{{ p[lang] }}{% unless forloop.last %}{% if lang == "ar" %}، {% else %}, {% endif %}{% endunless %}{% endfor %}.</span>
   </figcaption>
-  {%- comment -%} Only what the map draws: fact codes, sources and notes stay out of the page. {%- endcomment %}
-  <script type="application/json" class="map-data">{"lang": {{ lang | jsonify }}, "map": {"overview": {% if m.overview %}true{% else %}false{% endif %}, "places": [{% for i in m.places %}{"id": {{ i.id | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}], "events": [{% for e in m.events %}{"kind": {{ e.kind | jsonify }}, "place": {{ e.place | jsonify }}, "year": {{ e.year | jsonify }}, "en": {{ e.en | jsonify }}, "ar": {{ e.ar | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}], "routes": [{% for r in m.routes %}{"path": {{ r.path | jsonify }}, "approximate": {% if r.approximate %}true{% else %}false{% endif %}}{% unless forloop.last %},{% endunless %}{% endfor %}]}, "places": { {%- for kv in site.data.places %}{% assign p = kv[1] %}{{ kv[0] | jsonify }}: {"en": {{ p.en | jsonify }}, "ar": {{ p.ar | jsonify }}, "lat": {{ p.lat }}, "lon": {{ p.lon }}, "approximate": {% if p.approximate %}true{% else %}false{% endif %}, "city": {% if p.city %}true{% else %}false{% endif %}, "reference": {% if p.reference %}true{% else %}false{% endif %}}{% unless forloop.last %},{% endunless %}{% endfor -%} }{% if m.overview %}, "regions": [{% for r in site.data.regions %}{"id": {{ r.id | jsonify }}, "en": {{ r.en | jsonify }}, "ar": {{ r.ar | jsonify }}, "year": {{ r.year | jsonify }}, "centre": {{ r.centre | jsonify }}, "radius_km": {{ r.radius_km }}}{% unless forloop.last %},{% endunless %}{% endfor %}]{% endif %}}</script>
 </figure>
 <script type="module" src="{{ '/assets/map.js' | relative_url }}"></script>
 {%- endif -%}
