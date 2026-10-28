@@ -2,7 +2,7 @@
 
 A bilingual (English / Arabic) history website, published free with Cloudflare Pages.
 
-## How to edit the text
+## How to edit the text 
 
 Every chapter is a plain Markdown file:
 
