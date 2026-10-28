@@ -219,6 +219,61 @@ html[dir="rtl"] .pager small { letter-spacing: 0; font-size: .95rem; }
 .ref-timeline td:last-child { padding-inline-start: 28px; border-inline-start: 2px solid var(--clay); line-height: 1.45; }
 .ref-timeline tr:hover td:first-child::after { background: var(--adobe); }
 
+/* ---------- chapter map ---------- */
+.chapter-map { margin: 6px 0 44px; }
+.map-stage {
+  position: relative; height: clamp(320px, 64vw, 500px); overflow: hidden;
+  background: radial-gradient(ellipse at 50% 45%, var(--sand-2), var(--sand) 75%);
+  border-block: 1.5px solid var(--ink);
+}
+.map-stage canvas {
+  display: block; width: 100%; height: 100%; cursor: grab;
+  -webkit-mask-image: radial-gradient(ellipse 72% 64% at 50% 58%, #000 60%, transparent 100%);
+          mask-image: radial-gradient(ellipse 72% 64% at 50% 58%, #000 60%, transparent 100%);
+}
+.map-stage canvas:active { cursor: grabbing; }
+.map-fallback, .map-fallback img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.chapter-map.is-live .map-fallback { display: none; }
+.map-labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.map-label {
+  position: absolute; left: 0; top: 0; margin-top: -8px;
+  display: flex; flex-direction: column; align-items: center; line-height: 1.2; white-space: nowrap;
+  font-family: var(--f-label); font-size: .82rem; color: var(--ink);
+  background: color-mix(in srgb, var(--sand) 90%, transparent);
+  border: 1px solid var(--clay); border-radius: 2px; padding: 2px 8px 3px;
+  opacity: 0; transition: opacity .35s ease;
+}
+.map-label::after {
+  content: ""; position: absolute; bottom: -5px; left: 50%; width: 8px; height: 8px; margin-left: -4px;
+  background: inherit; border: inherit; border-width: 0 1px 1px 0; transform: rotate(45deg);
+}
+.map-label.is-on { opacity: 1; }
+.map-label:not(.is-event) { /* plain place names: text with a halo, no box */
+  background: none; border: 0; padding: 0 2px; font-size: .78rem; font-weight: 500;
+  text-shadow: 0 0 3px var(--sand), 0 0 3px var(--sand), 0 0 6px var(--sand);
+}
+.map-label:not(.is-event)::after { display: none; }
+.map-label.is-event { font-weight: 600; font-size: .88rem; box-shadow: inset 0 2.5px 0 var(--ink); }
+.map-label.kind-battle { box-shadow: inset 0 2.5px 0 var(--adobe); }
+.map-label.kind-siege { box-shadow: inset 0 2.5px 0 var(--gold); }
+.map-label.kind-taken, .map-label.kind-surrender, .map-label.kind-settlement { box-shadow: inset 0 2.5px 0 var(--palm); }
+.ml-t + .ml-t { margin-top: 4px; padding-top: 4px; border-top: 1px dotted var(--clay); }
+.ml-y { font-family: var(--f-body); font-weight: 500; font-size: .85rem; color: var(--ink-soft); }
+@media (max-width: 520px) {
+  .map-label { font-size: .7rem; padding: 1px 6px 2px; }
+  .map-label.is-event { font-size: .74rem; }
+  .ml-y { font-size: .74rem; }
+}
+.map-ui { position: absolute; bottom: 10px; inset-inline-end: 10px; }
+.map-reset {
+  font-family: var(--f-label); font-size: .8rem; color: var(--ink); cursor: pointer;
+  background: var(--sand); border: 1.5px solid var(--ink); border-radius: 2px; padding: 2px 10px 4px;
+  box-shadow: 3px 3px 0 var(--clay);
+}
+.map-reset:hover { box-shadow: 4px 4px 0 var(--adobe); }
+.chapter-map figcaption { margin-top: 8px; font-size: .95rem; color: var(--ink-soft); line-height: 1.5; }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
 /* ---------- home ---------- */
 .hero { position: relative; overflow: hidden; padding: 64px 0 0; }
 .hero-inner { position: relative; z-index: 1; padding-bottom: 8px; }

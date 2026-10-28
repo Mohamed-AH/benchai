@@ -1,0 +1,26 @@
+{%- comment -%}
+  The chapter's 3D map. Shown when the chapter's ref is listed in `maps_enabled`
+  in _config.yml. What it shows comes from _data/maps.yml and _data/places.yml.
+{%- endcomment -%}
+{%- assign m = site.data.maps[page.ref] -%}
+{%- if m and site.maps_enabled contains page.ref -%}
+{%- assign lang = page.lang | default: "en" -%}
+{%- capture fallback %}/assets/maps/fallback/{{ page.ref }}-{{ lang }}.jpg{% endcapture -%}
+{%- capture fallback_dark %}/assets/maps/fallback/{{ page.ref }}-{{ lang }}-dark.jpg{% endcapture -%}
+<figure class="chapter-map">
+  <div class="map-stage">
+    <picture class="map-fallback">
+      <source srcset="{{ fallback_dark | relative_url }}" media="(prefers-color-scheme: dark)">
+      <img src="{{ fallback | relative_url }}" alt="" loading="lazy" width="1400" height="1000" onerror="this.parentNode.remove()">
+    </picture>
+  </div>
+  <figcaption>
+    <span class="map-note">{% if lang == "ar" %}الخطوط المتقطعة وعلامة ≈ تعني مسارًا أو موقعًا تقريبيًا.{% else %}Dashed lines and ≈ mark approximate routes and positions.{% endif %}</span>
+    <span class="visually-hidden">{% if lang == "ar" %}على الخريطة: {% else %}On the map: {% endif %}
+      {%- for e in m.events %}{% assign p = site.data.places[e.place] %}{{ e[lang] }}{% if e.year != "" %} ({{ e.year }}{% if lang == "ar" %}هـ{% else %} AH{% endif %}){% endif %}{% if lang == "ar" %}، {% else %}; {% endif %}{% endfor %}
+      {%- for i in m.places %}{% assign p = site.data.places[i.id] %}{{ p[lang] }}{% unless forloop.last %}{% if lang == "ar" %}، {% else %}, {% endif %}{% endunless %}{% endfor %}.</span>
+  </figcaption>
+  <script type="application/json" class="map-data">{"lang": {{ lang | jsonify }}, "map": {{ m | jsonify }}, "places": {{ site.data.places | jsonify }}}</script>
+</figure>
+<script type="module" src="{{ '/assets/map.js' | relative_url }}"></script>
+{%- endif -%}

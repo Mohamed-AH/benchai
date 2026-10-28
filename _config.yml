@@ -16,6 +16,9 @@ subtitle_ar: "سيرة وتاريخ"
 title_en: "King Abdulaziz bin Abdulrahman Al Saud, may Allah have mercy on him"
 title_ar: "الملك عبدالعزيز بن عبدالرحمن آل سعود رحمه الله"
 markdown: kramdown
+# Chapters whose 3D map is switched on (by `ref`). Map content is in _data/maps.yml.
+maps_enabled:
+  - riyadh
 
 # Folders and files that are kept in the repository but NOT published on the site.
 # research/ holds the sources, transcripts and fact base (internal only).
