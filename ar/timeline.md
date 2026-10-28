@@ -1,15 +1,19 @@
 ---
 layout: page
 lang: ar
+permalink: /:path/:basename
 ref: timeline
 title: "الخط الزمني"
+description: "أبرز التواريخ في سيرة الملك عبدالعزيز وتأسيس الدولة السعودية الثالثة، من سنة 1293هـ إلى 1351هـ (1932م)، مع خريطة للمناطق بحسب ترتيب انضمامها."
 ---
 
 # الخط الزمني
 
 التواريخ بالتقويم الهجري كما تذكرها المصادر، ويُضاف التاريخ الميلادي حيث يذكره المصدر. {% comment %}Each row is from facts.yml; ids in the comment at the end of the row.{% endcomment %}
 
+{::nomarkdown}
 {% include chapter-map.html %}
+{:/}
 
 | السنة | الحدث |
 |---|---|

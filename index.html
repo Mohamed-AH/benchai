@@ -1,19 +1,16 @@
 ---
+description: "سيرة الملك عبدالعزيز وتأسيس الدولة السعودية الثالثة، بالعربية والإنجليزية. The history of King Abdulaziz and the founding of the Third Saudi State, in Arabic and English."
 layout: null
 ---
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ site.title_ar }} · {{ site.subtitle_ar }}</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gloock&family=Markazi+Text:wght@400..700&family=Reem+Kufi:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+{% include head.html lang="ar" %}
 </head>
 <body>
-  <div class="landing">
+  <main class="landing">
     <div class="landing-inner">
       <h1 class="t-ar king-name">{% include king-name.html lang="ar" %}</h1>
       <p class="t-en king-name" dir="ltr" lang="en">{% include king-name.html lang="en" %}</p>
@@ -24,6 +21,6 @@ layout: null
       </div>
     </div>
     {% include masmak.svg %}
-  </div>
+  </main>
 </body>
 </html>

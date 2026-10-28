@@ -12,7 +12,12 @@ king:
     honorific: "رحمه الله"
 subtitle_en: "A History"
 subtitle_ar: "سيرة وتاريخ"
-# Used in the browser tab and the footer.
+# The site's address (used for canonical links, the sitemap and link previews).
+url: "https://imamabdulaziz.com"
+# Short name used in browser tabs and search results (the full name is long).
+short_title_en: "King Abdulaziz: A History"
+short_title_ar: "الملك عبدالعزيز: سيرة وتاريخ"
+# Used in the footer.
 title_en: "King Abdulaziz bin Abdulrahman Al Saud, may Allah have mercy on him"
 title_ar: "الملك عبدالعزيز بن عبدالرحمن آل سعود رحمه الله"
 markdown: kramdown
@@ -38,9 +43,36 @@ maps_enabled:
 # research/ holds the sources, transcripts and fact base (internal only).
 exclude:
   - research/
+  - functions/
+  - workers/
   - README.md
   - Gemfile
   - Gemfile.lock
   - vendor/
+# Contact form: the public site key of the Cloudflare Turnstile widget. Leave empty to hide the form.
+turnstile_sitekey: "0x4AAAAAAFpvyvQYC3lsJPJM"
+
+# Cloudflare Pages settings files (Jekyll skips files starting with "_" unless listed).
+include:
+  - _headers
+
 # The site is served from the root of its domain.
 baseurl: ""
+
+# The podcast this history is based on (credited in the footer and on the About page).
+podcast:
+  en: "Thmanyah's Fnjan podcast"
+  ar: "بودكاست فنجان (ثمانية)"
+  episode_en: "Al-Hukm Lillah Thumma Li-Abdulaziz"
+  episode_ar: "الحكم لله ثم لعبدالعزيز"
+  guest_en: "Dr. Talal Al-Tarifi"
+  guest_ar: "د. طلال الطريفي"
+  url: "https://www.youtube.com/watch?v=HwVwgIBFj_4"
+
+# Addresses without ".html": Cloudflare Pages redirects /x.html to /x, so links,
+# canonical tags and the sitemap use the short form directly.
+defaults:
+  - scope: { path: "en/chapters" }
+    values: { permalink: "/:path/:basename" }
+  - scope: { path: "ar/chapters" }
+    values: { permalink: "/:path/:basename" }

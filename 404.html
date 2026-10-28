@@ -1,0 +1,29 @@
+---
+noindex: true
+description: "الصفحة غير موجودة. Page not found."
+layout: null
+permalink: /404.html
+---
+{%- comment -%} Cloudflare Pages serves this page for any address that does not exist. {%- endcomment -%}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+{% include head.html lang="ar" %}
+</head>
+<body>
+  <main class="landing not-found">
+    <div class="landing-inner">
+      <p class="t-sub">404</p>
+      <h1 class="t-ar">الصفحة غير موجودة</h1>
+      <p class="t-en" dir="ltr" lang="en">Page not found</p>
+      <div class="choices">
+        <a href="{{ '/ar/' | relative_url }}" lang="ar">الصفحة الرئيسية</a>
+        <a href="{{ '/en/' | relative_url }}" lang="en">Home page</a>
+      </div>
+    </div>
+    {% include masmak.svg %}
+  </main>
+</body>
+</html>

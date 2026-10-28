@@ -1,0 +1,22 @@
+---
+layout: null
+permalink: /sitemap.xml
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{%- assign listed = site.pages | where_exp: "p", "p.lang" | where_exp: "p", "p.noindex != true" -%}
+{%- for p in listed %}
+  {%- assign other = "ar" -%}{%- if p.lang == "ar" -%}{%- assign other = "en" -%}{%- endif -%}
+  {%- assign twin = site.pages | where: "lang", other | where: "ref", p.ref | first %}
+  <url>
+    <loc>{{ p.url | replace: "index.html", "" | absolute_url }}</loc>
+    <xhtml:link rel="alternate" hreflang="{{ p.lang }}" href="{{ p.url | replace: 'index.html', '' | absolute_url }}"/>
+    {%- if twin %}
+    <xhtml:link rel="alternate" hreflang="{{ other }}" href="{{ twin.url | replace: 'index.html', '' | absolute_url }}"/>
+    {%- endif %}
+  </url>
+{%- endfor %}
+  <url>
+    <loc>{{ '/' | absolute_url }}</loc>
+  </url>
+</urlset>

@@ -38,6 +38,10 @@ Every chapter and the timeline page has a 3D map, driven by three files in `_dat
 
 Close-up maps also get a small inset of the whole peninsula with the area shown outlined, and markers keep the same size on screen at any zoom, so a small town never looks as big as a city.
 
+On a computer the mouse wheel scrolls the page until the visitor clicks a map; after that it zooms the map until the pointer leaves it. On phones one finger scrolls the page and two fingers turn and zoom the map.
+
+Visitors whose browser cannot draw 3D see a still image of each map from `assets/maps/fallback/`, with separate images for phones (`-m`) and for dark mode (`-dark`). The maps load a trimmed copy of three.js (`assets/three/three-r160-map.min.js`) holding only the parts they use; `research/maps/three-entry.js` lists those parts and explains how to rebuild it. After changing a map, remake its images with `research/maps/make_fallbacks.js` (run it once as is and once with `PHONE=1`; instructions are at the top of the file).
+
 After editing them, run `python3 research/check_maps.py`. It checks that every item has fact codes, that those facts are cited in the chapter text in both languages, that no left-out fact is used, and that every place exists.
 
 ### Adding a chapter
@@ -71,6 +75,36 @@ Settings used in Cloudflare (Workers & Pages → the project → Settings → Bu
 | Framework preset | Jekyll |
 | Build command | `jekyll build` |
 | Build output directory | `_site` |
+
+### Domain, security and search
+
+- The site lives at https://imamabdulaziz.com (set as `url` in `_config.yml`). `benchai.pages.dev` and `www.imamabdulaziz.com` redirect there through Cloudflare Bulk Redirects.
+- `_headers` sets the security headers and how long browsers keep fonts and map files. The security policy only allows the site's own files (plus Cloudflare Web Analytics), so do not add inline `style="..."` or `onclick="..."` attributes, or fonts and scripts from other sites: browsers will block them.
+- Page addresses have no `.html` (for example `/en/chapters/06-qassim`). Link to pages that way.
+- `_includes/head.html` writes each page's title, description, link-preview tags and the English/Arabic pairing. Pages without a `description:` line use the opening of the chapter text.
+- `sitemap.xml`, `robots.txt` and `404.html` are built from the files of the same name. The fonts are in `assets/fonts/`, with their licences.
+- The podcast credit in the footer and on the Sources page comes from `podcast:` in `_config.yml`.
+
+### Contact form
+
+The Contact Us page (`en/contact.md`, `ar/contact.md`) posts to `/api/contact`. That address is a small Pages Function (`functions/api/contact.js`) that hands the message to a separate Worker in `workers/contact/`. The Worker checks the Cloudflare Turnstile answer and the fields, then emails the message through Cloudflare Email Routing and sends the visitor to the "sent" or "not sent" page.
+
+What has to be set up in Cloudflare (once):
+
+1. Email Routing on the domain, with the receiving address verified as a destination address.
+2. A Turnstile widget for `imamabdulaziz.com`. Its site key goes in `turnstile_sitekey` in `_config.yml`; the form and its footer link appear only when that is filled in.
+3. The Worker in `workers/contact/`, deployed from this repository, with two secrets: `CONTACT_TO` (the receiving address) and `TURNSTILE_SECRET` (the widget's secret key).
+4. A service binding named `CONTACT` from the Pages project to that Worker.
+
+The receiving address is kept only in the Worker's secrets, never in this repository.
+
+### Visitor statistics
+
+Cloudflare Web Analytics (cookie-free) is switched on in the Pages project's settings; Cloudflare adds its script to every page. The security policy in `_headers` already allows it.
+
+### Automatic checks
+
+Every pull request and every change to `main` runs `.github/workflows/checks.yml` on GitHub: it builds the site, runs the three research checks, `research/check_site.py` (broken links, page titles and descriptions, no fact codes or inline styles in the pages) and an HTML validator. A red cross on a pull request means one of them found a problem; the log names the page and the line.
 
 ## Preview locally (optional)
 

@@ -1,0 +1,32 @@
+{%- comment -%}
+  The contact form. It posts to /api/contact (functions/api/contact.js and workers/contact), which
+  checks the Turnstile answer, emails the message and sends the visitor to contact-sent or contact-error.
+{%- endcomment -%}
+{%- assign lang = page.lang | default: "en" -%}
+{%- if site.turnstile_sitekey != "" -%}
+<form class="contact-form" method="post" action="/api/contact">
+  <input type="hidden" name="lang" value="{{ lang }}">
+  <p class="field">
+    <label for="cf-name">{% if lang == "ar" %}الاسم{% else %}Your name{% endif %}</label>
+    <input id="cf-name" name="name" type="text" required maxlength="100" autocomplete="name">
+  </p>
+  <p class="field">
+    <label for="cf-email">{% if lang == "ar" %}بريدك الإلكتروني{% else %}Your email{% endif %}</label>
+    <input id="cf-email" name="email" type="email" required maxlength="200" autocomplete="email" dir="ltr">
+  </p>
+  <p class="field">
+    <label for="cf-message">{% if lang == "ar" %}الرسالة{% else %}Message{% endif %}</label>
+    <textarea id="cf-message" name="message" required minlength="10" maxlength="5000" rows="8"></textarea>
+  </p>
+  <p class="field-trap" aria-hidden="true">
+    <label for="cf-website">Website</label>
+    <input id="cf-website" name="website" type="text" tabindex="-1" autocomplete="off">
+  </p>
+  <div class="cf-turnstile" data-sitekey="{{ site.turnstile_sitekey }}" data-language="{{ lang }}"></div>
+  <p class="form-note">{% if lang == "ar" %}نستخدم بريدك للرد عليك فقط.{% else %}We use your email only to reply to you.{% endif %}</p>
+  <button type="submit">{% if lang == "ar" %}إرسال{% else %}Send{% endif %}</button>
+</form>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+{%- else -%}
+<p class="form-note">{% if lang == "ar" %}نموذج التواصل غير متاح بعد.{% else %}The contact form is not open yet.{% endif %}</p>
+{%- endif -%}

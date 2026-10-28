@@ -5,19 +5,19 @@ layout: default
 {%- assign chapters = site.pages | where: "lang", lang | where: "layout", "chapter" | sort: "order" -%}
 {%- assign tl = site.pages | where: "lang", lang | where: "ref", "timeline" | first -%}
 <div class="wrap layout">
-  <aside class="toc">
-    <h2>{% if lang == "ar" %}الفصول{% else %}Chapters{% endif %}</h2>
+  <nav class="toc" id="chapters" aria-labelledby="toc-title">
+    <h2 id="toc-title">{% if lang == "ar" %}الفصول{% else %}Chapters{% endif %}</h2>
     <ol>
       {%- for c in chapters -%}
-      <li{% if c.url == page.url %} class="current"{% endif %}><a href="{{ c.url | relative_url }}"><span class="toc-n">{{ c.order }}</span><span class="toc-t">{{ c.title }}</span></a></li>
+      <li{% if c.url == page.url %} class="current"{% endif %}><a href="{{ c.url | relative_url }}"{% if c.url == page.url %} aria-current="page"{% endif %}><span class="toc-n">{{ c.order }}</span><span class="toc-t">{{ c.title }}</span></a></li>
       {%- endfor -%}
     </ol>
     {%- if tl %}
-    <p class="toc-extra{% if tl.url == page.url %} current{% endif %}"><a href="{{ tl.url | relative_url }}">{% if lang == "ar" %}الخط الزمني{% else %}Timeline{% endif %}</a></p>
+    <p class="toc-extra{% if tl.url == page.url %} current{% endif %}"><a href="{{ tl.url | relative_url }}"{% if tl.url == page.url %} aria-current="page"{% endif %}>{% if lang == "ar" %}الخط الزمني{% else %}Timeline{% endif %}</a></p>
     {%- endif %}
-  </aside>
+  </nav>
 
-  <main class="content">
-    {{ content }}
+  <main class="content" id="main" tabindex="-1">
+    {{ content | replace: '<th>', '<th scope="col">' }}
   </main>
 </div>

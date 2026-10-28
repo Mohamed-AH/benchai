@@ -1,0 +1,21 @@
+# The Worker that sends the site's contact form to the site owner by email.
+# The site's /api/contact address (functions/api/contact.js) hands each message to this Worker.
+# It has no public address of its own.
+name = "imamabdulaziz-contact"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = false
+preview_urls = false
+
+# Sends through Cloudflare Email Routing. The recipient must be a verified destination address
+# in Email Routing; it is set as the secret CONTACT_TO, not here, so it stays out of the repository.
+[[send_email]]
+name = "MAIL"
+
+[vars]
+CONTACT_FROM = "contact@imamabdulaziz.com"
+SITE = "https://imamabdulaziz.com"
+
+# Secrets (set in the dashboard: the Worker → Settings → Variables and Secrets):
+#   CONTACT_TO        the address that receives the messages
+#   TURNSTILE_SECRET  the secret key of the site's Turnstile widget

@@ -16,7 +16,7 @@ layout: page
   </div>
 </article>
 
-<nav class="pager">
+<nav class="pager" aria-label="{% if lang == 'ar' %}الفصل السابق والتالي{% else %}Previous and next chapter{% endif %}">
   {%- for c in chapters -%}
     {%- if c.url == page.url -%}
       {%- assign i = forloop.index0 -%}
