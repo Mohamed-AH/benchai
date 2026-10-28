@@ -102,6 +102,10 @@ The receiving address is kept only in the Worker's secrets, never in this reposi
 
 Cloudflare Web Analytics (cookie-free) is switched on in the Pages project's settings; Cloudflare adds its script to every page. The security policy in `_headers` already allows it.
 
+### Automatic checks
+
+Every pull request and every change to `main` runs `.github/workflows/checks.yml` on GitHub: it builds the site, runs the three research checks, `research/check_site.py` (broken links, page titles and descriptions, no fact codes or inline styles in the pages) and an HTML validator. A red cross on a pull request means one of them found a problem; the log names the page and the line.
+
 ## Preview locally (optional)
 
 ```bash

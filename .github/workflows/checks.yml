@@ -1,0 +1,50 @@
+# Runs on every pull request and every push to main: builds the site and runs the checks.
+# Cloudflare Pages still does the real build and publishing; this only reports problems.
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install pyyaml
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Build the site
+        run: bundle exec jekyll build
+
+      - name: Facts quoted correctly from the transcript
+        run: python3 research/check_facts.py
+
+      - name: Chapters cite their facts in both languages
+        run: python3 research/check_chapters.py
+
+      - name: Maps rest on cited facts
+        run: python3 research/check_maps.py
+
+      - name: Built pages (links, titles, no leaked codes, no inline styles)
+        run: python3 research/check_site.py _site
+
+      - name: HTML is valid
+        run: npx --yes html-validate@8.24.1 "_site/**/*.html"
