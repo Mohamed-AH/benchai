@@ -1,0 +1,12 @@
+# Historical regions for the overview map (timeline page and the last chapter).
+# Shapes are deliberately soft: a centre and a rough radius in kilometres, drawn as
+# a glow, because the borders of the time were not fixed lines.
+#   year:  the Hijri year the chapter gives for the region joining (see facts)
+#   centre / radius_km: my estimate, for drawing only
+
+- {id: riyadh,  en: "Riyadh and southern Najd", ar: "الرياض وجنوب نجد", year: "1319", facts: [F077, F084], centre: [24.3, 46.8], radius_km: 220}
+- {id: qassim,  en: "Al-Qassim",                ar: "القصيم",          year: "1324", facts: [F114],       centre: [26.1, 43.8], radius_km: 140}
+- {id: ahsa,    en: "Al-Ahsa",                  ar: "الأحساء",         year: "1331", facts: [F127, F132], centre: [25.6, 49.6], radius_km: 180}
+- {id: hail,    en: "Ha'il",                    ar: "حائل",            year: "1340", facts: [F157],       centre: [27.6, 41.8], radius_km: 200}
+- {id: asir,    en: "Asir",                     ar: "عسير",            year: "1341", facts: [F167],       centre: [18.4, 42.6], radius_km: 150}
+- {id: hijaz,   en: "The Hijaz",                ar: "الحجاز",          year: "1344", facts: [F174, F175, F176], centre: [22.6, 39.7], radius_km: 300}

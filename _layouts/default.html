@@ -19,7 +19,7 @@
   <header class="site-header">
     <div class="wrap header-row">
       <a class="brand" href="{{ '/' | append: lang | append: '/' | relative_url }}">
-        <span class="brand-mark" aria-hidden="true"></span>{{ site_title }}
+        <span class="brand-mark" aria-hidden="true"></span><span class="brand-text">{% include king-name.html lang=lang %}</span>
       </a>
       <nav class="lang-switch">
         {%- if twin -%}

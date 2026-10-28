@@ -10,6 +10,7 @@ layout: page
     <h1>{{ page.title }}</h1>
     {%- if page.period != "" and page.period %}<p class="period"><span>{{ page.period }}</span></p>{% endif %}
   </header>
+  {% include chapter-map.html %}
   <div class="prose">
     {{ content }}
   </div>

@@ -1,7 +1,24 @@
 # Site settings. Cloudflare Pages builds this site with Jekyll on every push to main.
-title_en: "King Abdulaziz: A History"
-title_ar: "الملك عبدالعزيز: سيرة وتاريخ"
+# The King's name as shown in the main title. "first" is the large line,
+# "rest" the rest of the name, "honorific" the line under it.
+king:
+  en:
+    first: "King Abdulaziz"
+    rest: "bin Abdulrahman Al Saud"
+    honorific: "may Allah have mercy on him"
+  ar:
+    first: "الملك عبدالعزيز"
+    rest: "بن عبدالرحمن آل سعود"
+    honorific: "رحمه الله"
+subtitle_en: "A History"
+subtitle_ar: "سيرة وتاريخ"
+# Used in the browser tab and the footer.
+title_en: "King Abdulaziz bin Abdulrahman Al Saud, may Allah have mercy on him"
+title_ar: "الملك عبدالعزيز بن عبدالرحمن آل سعود رحمه الله"
 markdown: kramdown
+# Chapters whose 3D map is switched on (by `ref`). Map content is in _data/maps.yml.
+maps_enabled:
+  - riyadh
 
 # Folders and files that are kept in the repository but NOT published on the site.
 # research/ holds the sources, transcripts and fact base (internal only).
