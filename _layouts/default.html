@@ -5,6 +5,7 @@
 {%- assign twin = site.pages | where: "lang", other | where: "ref", page.ref | first -%}
 {%- assign tl = site.pages | where: "lang", lang | where: "ref", "timeline" | first -%}
 {%- assign about = site.pages | where: "lang", lang | where: "ref", "about" | first -%}
+{%- assign contact = site.pages | where: "lang", lang | where: "ref", "contact" | first -%}
 <!DOCTYPE html>
 <html lang="{{ lang }}" dir="{{ dir }}">
 <head>
@@ -42,6 +43,7 @@
       <nav class="footer-links" aria-label="{% if lang == 'ar' %}روابط الموقع{% else %}Site links{% endif %}">
         {%- if tl %}<a href="{{ tl.url | relative_url }}"{% if tl.url == page.url %} aria-current="page"{% endif %}>{% if lang == "ar" %}الخط الزمني{% else %}Timeline{% endif %}</a>{% endif %}
         {%- if about %}<a href="{{ about.url | relative_url }}"{% if about.url == page.url %} aria-current="page"{% endif %}>{% if lang == "ar" %}المصادر وعن الموقع{% else %}Sources &amp; About{% endif %}</a>{% endif %}
+        {%- if contact and site.turnstile_sitekey != "" %}<a href="{{ contact.url | relative_url }}"{% if contact.url == page.url %} aria-current="page"{% endif %}>{% if lang == "ar" %}تواصل معنا{% else %}Contact Us{% endif %}</a>{% endif %}
       </nav>
     </div>
     <p class="wrap footer-credit">

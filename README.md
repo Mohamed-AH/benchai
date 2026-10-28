@@ -85,6 +85,23 @@ Settings used in Cloudflare (Workers & Pages → the project → Settings → Bu
 - `sitemap.xml`, `robots.txt` and `404.html` are built from the files of the same name. The fonts are in `assets/fonts/`, with their licences.
 - The podcast credit in the footer and on the Sources page comes from `podcast:` in `_config.yml`.
 
+### Contact form
+
+The Contact Us page (`en/contact.md`, `ar/contact.md`) posts to `/api/contact`. That address is a small Pages Function (`functions/api/contact.js`) that hands the message to a separate Worker in `workers/contact/`. The Worker checks the Cloudflare Turnstile answer and the fields, then emails the message through Cloudflare Email Routing and sends the visitor to the "sent" or "not sent" page.
+
+What has to be set up in Cloudflare (once):
+
+1. Email Routing on the domain, with the receiving address verified as a destination address.
+2. A Turnstile widget for `imamabdulaziz.com`. Its site key goes in `turnstile_sitekey` in `_config.yml`; the form and its footer link appear only when that is filled in.
+3. The Worker in `workers/contact/`, deployed from this repository, with two secrets: `CONTACT_TO` (the receiving address) and `TURNSTILE_SECRET` (the widget's secret key).
+4. A service binding named `CONTACT` from the Pages project to that Worker.
+
+The receiving address is kept only in the Worker's secrets, never in this repository.
+
+### Visitor statistics
+
+Cloudflare Web Analytics (cookie-free) is switched on in the Pages project's settings; Cloudflare adds its script to every page. The security policy in `_headers` already allows it.
+
 ## Preview locally (optional)
 
 ```bash

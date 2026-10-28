@@ -44,10 +44,14 @@ maps_enabled:
 exclude:
   - research/
   - functions/
+  - workers/
   - README.md
   - Gemfile
   - Gemfile.lock
   - vendor/
+# Contact form: the public site key of the Cloudflare Turnstile widget. Leave empty to hide the form.
+turnstile_sitekey: ""
+
 # Cloudflare Pages settings files (Jekyll skips files starting with "_" unless listed).
 include:
   - _headers
