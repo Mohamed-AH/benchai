@@ -1,6 +1,6 @@
 # King Abdulaziz: A History · الملك عبدالعزيز: سيرة وتاريخ
 
-A bilingual (English / Arabic) history website, published free with Cloudflare Pages.
+A bilingual (English / Arabic) history website, published free with Cloudflare Pages .
 
 ## How to edit the text 
 
