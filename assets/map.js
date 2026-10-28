@@ -14,12 +14,12 @@ const V_EXAG = 1.25;                // height units per 1000 m
 const BASE = new URL('.', import.meta.url).pathname;
 
 const TEXT = {
-  en: { approx: 'approximate', reset: 'Reset view', hint: 'Drag to turn the map. Dashed lines and ≈ mark approximate routes and positions. Grey names are today\'s cities, for orientation.',
+  en: { approx: 'approximate', reset: 'Reset view', hint: 'Drag to turn the map; click it, then scroll to zoom. Dashed lines and ≈ mark approximate routes and positions. Grey names are today\'s cities, for orientation.',
         hintTouch: 'Use two fingers to turn the map. Dashed lines and ≈ mark approximate routes and positions. Grey names are today\'s cities, for orientation.',
-        credit: 'Terrain: AWS Terrain Tiles (SRTM, ETOPO1); places: GeoNames', year: y => `${y} AH` },
-  ar: { approx: 'تقريبي', reset: 'إعادة العرض', hint: 'اسحب لتدوير الخريطة. الخطوط المتقطعة وعلامة ≈ تعني مسارًا أو موقعًا تقريبيًا. الأسماء الرمادية مدن اليوم، للاسترشاد.',
+        credit: 'Terrain: AWS Terrain Tiles (SRTM, ETOPO1); places: GeoNames', wheel: 'Click the map to zoom with the scroll wheel', year: y => `${y} AH` },
+  ar: { approx: 'تقريبي', reset: 'إعادة العرض', hint: 'اسحب لتدوير الخريطة، وانقر عليها ثم مرّر عجلة الفأرة للتكبير. الخطوط المتقطعة وعلامة ≈ تعني مسارًا أو موقعًا تقريبيًا. الأسماء الرمادية مدن اليوم، للاسترشاد.',
         hintTouch: 'استخدم إصبعين لتدوير الخريطة. الخطوط المتقطعة وعلامة ≈ تعني مسارًا أو موقعًا تقريبيًا. الأسماء الرمادية مدن اليوم، للاسترشاد.',
-        credit: 'التضاريس: AWS Terrain Tiles (SRTM, ETOPO1)؛ الأماكن: GeoNames', year: y => `${y}هـ` },
+        credit: 'التضاريس: AWS Terrain Tiles (SRTM, ETOPO1)؛ الأماكن: GeoNames', wheel: 'انقر على الخريطة للتكبير بعجلة الفأرة', year: y => `${y}هـ` },
 };
 
 const KIND_COLOUR = { battle: '--adobe', siege: '--gold', taken: '--palm', surrender: '--palm', settlement: '--palm', event: '--ink' };
@@ -373,6 +373,29 @@ async function build(fig) {
   controls.touches = { ONE: null, TWO: 2 /* TOUCH.DOLLY_ROTATE */ };
   renderer.domElement.style.touchAction = 'pan-y';
   controls.enabled = false;
+
+  // The mouse wheel scrolls the page, not the map, until the visitor clicks the map.
+  // Leaving the map with the pointer hands the wheel back to the page.
+  let wheelOn = false;
+  const wheelHint = document.createElement('div');
+  wheelHint.className = 'map-wheel-hint';
+  wheelHint.setAttribute('aria-hidden', 'true');
+  wheelHint.textContent = T.wheel;
+  stage.appendChild(wheelHint);
+  let hintTimer = 0;
+  stage.addEventListener('wheel', e => {
+    if (wheelOn) return;
+    e.stopPropagation();
+    wheelHint.classList.add('is-shown');
+    clearTimeout(hintTimer);
+    hintTimer = setTimeout(() => wheelHint.classList.remove('is-shown'), 1400);
+  }, { capture: true });
+  renderer.domElement.addEventListener('pointerdown', e => {
+    if (e.pointerType !== 'mouse') return;
+    wheelOn = true;
+    wheelHint.classList.remove('is-shown');
+  });
+  stage.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') wheelOn = false; });
 
   const intro = { t0: 0, dur: reduceMotion ? 0 : 2600, done: false };
   if (intro.dur === 0) { camera.position.copy(endPos); controls.target.copy(endTarget); }

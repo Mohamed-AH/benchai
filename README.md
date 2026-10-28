@@ -38,6 +38,10 @@ Every chapter and the timeline page has a 3D map, driven by three files in `_dat
 
 Close-up maps also get a small inset of the whole peninsula with the area shown outlined, and markers keep the same size on screen at any zoom, so a small town never looks as big as a city.
 
+On a computer the mouse wheel scrolls the page until the visitor clicks a map; after that it zooms the map until the pointer leaves it. On phones one finger scrolls the page and two fingers turn and zoom the map.
+
+Visitors whose browser cannot draw 3D see a still image of each map from `assets/maps/fallback/`, with separate images for phones (`-m`) and for dark mode (`-dark`). After changing a map, remake its images with `research/maps/make_fallbacks.js` (run it once as is and once with `PHONE=1`; instructions are at the top of the file).
+
 After editing them, run `python3 research/check_maps.py`. It checks that every item has fact codes, that those facts are cited in the chapter text in both languages, that no left-out fact is used, and that every place exists.
 
 ### Adding a chapter

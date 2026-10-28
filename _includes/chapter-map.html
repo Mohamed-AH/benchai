@@ -7,11 +7,16 @@
 {%- assign lang = page.lang | default: "en" -%}
 {%- capture fallback %}/assets/maps/fallback/{{ page.ref }}-{{ lang }}.jpg{% endcapture -%}
 {%- capture fallback_dark %}/assets/maps/fallback/{{ page.ref }}-{{ lang }}-dark.jpg{% endcapture -%}
+{%- capture fallback_m %}/assets/maps/fallback/{{ page.ref }}-{{ lang }}-m.jpg{% endcapture -%}
+{%- capture fallback_m_dark %}/assets/maps/fallback/{{ page.ref }}-{{ lang }}-m-dark.jpg{% endcapture -%}
 <figure class="chapter-map">
   <div class="map-stage">
     <picture class="map-fallback">
+      {%- comment -%} Phones get an image rendered at phone width, so nothing is cropped away. {%- endcomment %}
+      <source srcset="{{ fallback_m_dark | relative_url }}" media="(max-width: 520px) and (prefers-color-scheme: dark)">
+      <source srcset="{{ fallback_m | relative_url }}" media="(max-width: 520px)">
       <source srcset="{{ fallback_dark | relative_url }}" media="(prefers-color-scheme: dark)">
-      <img src="{{ fallback | relative_url }}" alt="" loading="lazy" width="1400" height="1000">
+      <img src="{{ fallback | relative_url }}" alt="" loading="lazy" width="1272" height="896">
     </picture>
   </div>
   {%- comment -%} Only what the map draws: fact codes, sources and notes stay out of the page. {%- endcomment %}

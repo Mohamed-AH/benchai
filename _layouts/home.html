@@ -3,6 +3,7 @@ layout: default
 ---
 {%- assign lang = page.lang | default: "en" -%}
 {%- assign chapters = site.pages | where: "lang", lang | where: "layout", "chapter" | sort: "order" -%}
+<main id="main" tabindex="-1">
 <section class="hero">
   <span class="hero-ghost" aria-hidden="true">عبدالعزيز</span>
   <div class="wrap hero-inner">
@@ -15,8 +16,8 @@ layout: default
   {% include masmak.svg %}
 </section>
 
-<section class="wrap chapters-section">
-  <h2 class="section-title">{% if lang == "ar" %}الفصول{% else %}Chapters{% endif %}</h2>
+<section class="wrap chapters-section" id="chapters" aria-labelledby="chapters-title">
+  <h2 class="section-title" id="chapters-title">{% if lang == "ar" %}الفصول{% else %}Chapters{% endif %}</h2>
   <ol class="chapter-grid">
     {%- for c in chapters %}
     <li>
@@ -29,3 +30,4 @@ layout: default
     {%- endfor %}
   </ol>
 </section>
+</main>
