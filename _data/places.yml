@@ -9,11 +9,16 @@
 #                estimate  = my estimate from the surrounding towns; please check
 #   approximate: true = the map draws it as "approximate area", not an exact point
 #   note:      why a position is uncertain
+#   city:      true = a major city today; drawn with a larger marker so small towns and
+#              battle sites never look as big as cities
+#   reference: true = shown faintly on every map (when in view) so readers can see where
+#              a close-up sits in the country. Reference cities are today's cities, for
+#              orientation only; they say nothing about the history.
 #
 # Positions are geography, not history: they are not facts from the podcast and are
 # not tagged with fact codes. Everything a map says ABOUT a place lives in maps.yml.
 
-riyadh:          {en: "Riyadh",           ar: "الرياض",          lat: 24.68773, lon: 46.72185, source: geonames}
+riyadh:          {en: "Riyadh",           ar: "الرياض",          lat: 24.68773, lon: 46.72185, source: geonames, city: true, reference: true}
 masmak:          {en: "Al-Masmak",        ar: "المصمك",          lat: 24.6312,  lon: 46.7135,  source: estimate, note: "The fort in old Riyadh."}
 diriyah:         {en: "Diriyah",          ar: "الدرعية",         lat: 24.73333, lon: 46.57556, source: wikipedia}
 hijr-yamamah:    {en: "Hijr Al-Yamamah",  ar: "حجر اليمامة",     lat: 24.63,    lon: 46.72,    source: estimate, approximate: true, note: "Old Hajr, on the site of today's Riyadh."}
@@ -33,16 +38,17 @@ artawiyah:       {en: "Al-Artawiyah",     ar: "الأرطاوية",       lat: 2
 ghatghat:        {en: "Al-Ghatghat",      ar: "الغطغط",          lat: 24.45,    lon: 46.30,    source: estimate, approximate: true, note: "West of Riyadh. Please check."}
 jarrab:          {en: "Jarrab",           ar: "جراب",            lat: 26.45,    lon: 45.35,    source: estimate, approximate: true, note: "Wikipedia gives only 'north of Al-Majma'ah', no coordinates."}
 
-kuwait:          {en: "Kuwait",           ar: "الكويت",          lat: 29.36972, lon: 47.97833, source: geonames}
-bahrain:         {en: "Bahrain",          ar: "البحرين",         lat: 26.22787, lon: 50.58565, source: geonames, note: "Placed at Manama."}
-ahsa:            {en: "Al-Ahsa",          ar: "الأحساء",         lat: 25.36467, lon: 49.58764, source: geonames, note: "Placed at Al-Hofuf."}
+kuwait:          {en: "Kuwait",           ar: "الكويت",          lat: 29.36972, lon: 47.97833, source: geonames, city: true, reference: true}
+bahrain:         {en: "Bahrain",          ar: "البحرين",         lat: 26.22787, lon: 50.58565, source: geonames, note: "Placed at Manama.", city: true}
+dammam:          {en: "Dammam",           ar: "الدمام",          lat: 26.43442, lon: 50.10326, source: geonames, city: true, reference: true}
+ahsa:            {en: "Al-Ahsa",          ar: "الأحساء",         lat: 25.36467, lon: 49.58764, source: geonames, note: "Placed at Al-Hofuf.", city: true, reference: true}
 ibrahim-palace:  {en: "Ibrahim's Palace", ar: "قصر إبراهيم",     lat: 25.382,   lon: 49.588,   source: estimate, approximate: true, note: "In Al-Hofuf."}
 uqair:           {en: "Al-Uqair",         ar: "العقير",          lat: 25.65,    lon: 50.21,    source: estimate, approximate: true}
 qatif:           {en: "Al-Qatif",         ar: "القطيف",          lat: 26.56542, lon: 50.0089,  source: geonames}
 darin:           {en: "Darin",            ar: "دارين",           lat: 26.55,    lon: 50.07,    source: estimate, approximate: true, note: "On Tarut island."}
 kanzan:          {en: "Kanzan",           ar: "كنزان",           lat: 25.567,   lon: 49.700,   source: wikipedia, approximate: true, note: "Wikipedia: Jabal Kanzan, Al-Ahsa."}
 
-buraidah:        {en: "Buraidah",         ar: "بريدة",           lat: 26.32599, lon: 43.97497, source: geonames}
+buraidah:        {en: "Buraidah",         ar: "بريدة",           lat: 26.32599, lon: 43.97497, source: geonames, city: true, reference: true}
 unaizah:         {en: "Unaizah",          ar: "عنيزة",           lat: 26.08793, lon: 43.96368, source: geonames}
 rass:            {en: "Al-Rass",          ar: "الرس",            lat: 25.86944, lon: 43.4973,  source: geonames}
 bukairiyah:      {en: "Al-Bukairiyah",    ar: "البكيرية",        lat: 26.13915, lon: 43.65782, source: geonames}
@@ -53,16 +59,16 @@ tarfiyah:        {en: "Al-Tarfiyah",      ar: "الطرفية",         lat: 26.
 mulayda:         {en: "Al-Mulayda",       ar: "المليداء",        lat: 26.30,    lon: 43.80,    source: estimate, approximate: true, note: "Near Buraidah. Wikipedia's coordinates (29.7N, 39.5E) are far outside Al-Qassim, so not used."}
 sarif:           {en: "Al-Sarif",         ar: "الصريف",          lat: 26.40,    lon: 43.65,    source: estimate, approximate: true, note: "In Al-Qassim. Please check."}
 faidhat-alser:   {en: "Faidhat Al-Ser",   ar: "فيضة السر",       lat: 25.55,    lon: 43.75,    source: estimate, approximate: true, note: "Unsure; shown only as an approximate area. Please check."}
-hail:            {en: "Ha'il",            ar: "حائل",            lat: 27.52188, lon: 41.69073, source: geonames}
+hail:            {en: "Ha'il",            ar: "حائل",            lat: 27.52188, lon: 41.69073, source: geonames, city: true, reference: true}
 
 turabah:         {en: "Turabah",          ar: "تربة",            lat: 21.21406, lon: 41.6331,  source: geonames}
 khurmah:         {en: "Al-Khurmah",       ar: "الخرمة",          lat: 21.92,    lon: 42.04,    source: estimate, approximate: true}
-taif:            {en: "Taif",             ar: "الطائف",          lat: 21.27028, lon: 40.41583, source: geonames}
+taif:            {en: "Taif",             ar: "الطائف",          lat: 21.27028, lon: 40.41583, source: geonames, city: true}
 hawiyah:         {en: "Al-Hawiyah",       ar: "الهوية",          lat: 21.44,    lon: 40.53,    source: estimate, approximate: true, note: "North-east of Taif."}
-makkah:          {en: "Makkah",           ar: "مكة المكرمة",     lat: 21.42664, lon: 39.82563, source: geonames}
-jeddah:          {en: "Jeddah",           ar: "جدة",             lat: 21.49012, lon: 39.18624, source: geonames}
-medina:          {en: "Medina",           ar: "المدينة المنورة", lat: 24.46861, lon: 39.61417, source: geonames}
-abha:            {en: "Abha",             ar: "أبها",            lat: 18.21639, lon: 42.50528, source: geonames}
+makkah:          {en: "Makkah",           ar: "مكة المكرمة",     lat: 21.42664, lon: 39.82563, source: geonames, city: true, reference: true}
+jeddah:          {en: "Jeddah",           ar: "جدة",             lat: 21.49012, lon: 39.18624, source: geonames, city: true, reference: true}
+medina:          {en: "Medina",           ar: "المدينة المنورة", lat: 24.46861, lon: 39.61417, source: geonames, city: true, reference: true}
+abha:            {en: "Abha",             ar: "أبها",            lat: 18.21639, lon: 42.50528, source: geonames, city: true, reference: true}
 hajla:           {en: "Hajla",            ar: "حجلة",            lat: 18.17,    lon: 42.58,    source: estimate, approximate: true, note: "Near Abha. Please check."}
 harmala:         {en: "Harmala",          ar: "حرملة",           lat: 18.25,    lon: 42.45,    source: estimate, approximate: true, note: "Al Aidh's palace near Abha. Please check."}
-jazan:           {en: "Jazan",            ar: "جازان",           lat: 16.88917, lon: 42.55111, source: geonames}
+jazan:           {en: "Jazan",            ar: "جازان",           lat: 16.88917, lon: 42.55111, source: geonames, city: true}

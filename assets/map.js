@@ -14,11 +14,11 @@ const V_EXAG = 1.25;                // height units per 1000 m
 const BASE = new URL('.', import.meta.url).pathname;
 
 const TEXT = {
-  en: { approx: 'approximate', reset: 'Reset view', hint: 'Drag to turn the map. Dashed lines and ≈ mark approximate routes and positions.',
-        hintTouch: 'Use two fingers to turn the map. Dashed lines and ≈ mark approximate routes and positions.',
+  en: { approx: 'approximate', reset: 'Reset view', hint: 'Drag to turn the map. Dashed lines and ≈ mark approximate routes and positions. Grey names are today\'s cities, for orientation.',
+        hintTouch: 'Use two fingers to turn the map. Dashed lines and ≈ mark approximate routes and positions. Grey names are today\'s cities, for orientation.',
         credit: 'Terrain: AWS Terrain Tiles (SRTM, ETOPO1)', year: y => `${y} AH` },
-  ar: { approx: 'تقريبي', reset: 'إعادة العرض', hint: 'اسحب لتدوير الخريطة. الخطوط المتقطعة وعلامة ≈ تعني مسارًا أو موقعًا تقريبيًا.',
-        hintTouch: 'استخدم إصبعين لتدوير الخريطة. الخطوط المتقطعة وعلامة ≈ تعني مسارًا أو موقعًا تقريبيًا.',
+  ar: { approx: 'تقريبي', reset: 'إعادة العرض', hint: 'اسحب لتدوير الخريطة. الخطوط المتقطعة وعلامة ≈ تعني مسارًا أو موقعًا تقريبيًا. الأسماء الرمادية مدن اليوم، للاسترشاد.',
+        hintTouch: 'استخدم إصبعين لتدوير الخريطة. الخطوط المتقطعة وعلامة ≈ تعني مسارًا أو موقعًا تقريبيًا. الأسماء الرمادية مدن اليوم، للاسترشاد.',
         credit: 'التضاريس: AWS Terrain Tiles (SRTM, ETOPO1)', year: y => `${y}هـ` },
 };
 
@@ -129,40 +129,46 @@ async function build(fig) {
   const markers = [];   // { obj, top: Vector3, el, priority }
   const mats = [];      // [material, cssVar] so colours follow the theme
   const mat = v => { const m = new THREE.MeshStandardMaterial({ color: cssColour(v), roughness: .6 }); mats.push([m, v]); return m; };
-  const pillarGeo = new THREE.CylinderGeometry(0.09, 0.09, 1, 10);
-  const capGeo = new THREE.OctahedronGeometry(0.26);
-  const discGeo = new THREE.CircleGeometry(0.75, 40).rotateX(-Math.PI / 2);
+  const pillarGeo = new THREE.CylinderGeometry(0.06, 0.06, 1, 8);
+  const cityGeo = new THREE.BoxGeometry(0.44, 0.44, 0.44);
+  const townGeo = new THREE.OctahedronGeometry(0.2);
+  const refGeo = new THREE.BoxGeometry(0.24, 0.24, 0.24);
+  const discGeo = new THREE.CircleGeometry(1, 40).rotateX(-Math.PI / 2);
 
-  // marker size follows the size of the area the chapter covers
-
+  // Markers keep the same size on screen at any zoom (scaled each frame by the camera
+  // distance), and their size says what the place is: a big square for a major city, a
+  // small diamond for a town or battle site, a faint square for a reference city. So a
+  // village on a close-up map never looks as big as Riyadh on the kingdom map.
+  const UNIT = 40;   // camera distance at which one marker unit = one world unit
   function addMarker(p, opts) {
     const [x, z] = toXZ(p.lat, p.lon);
     const y = groundAt(p.lat, p.lon);
     const g = new THREE.Group();
     g.position.set(x, y, z);
-    g.userData.s = S;
-    const height = (opts.event ? 2.2 : 1.3) * S;
-    if (p.approximate) {
-      const disc = new THREE.Mesh(discGeo, new THREE.MeshBasicMaterial({ color: cssColour(opts.colour), transparent: true, opacity: .28, depthWrite: false }));
+    const type = opts.ref ? 'ref' : p.city ? 'city' : 'town';
+    const height = { city: 1.5, town: opts.event ? 1.05 : 0.75, ref: 0.55 }[type];
+    let disc = null;
+    if (p.approximate && !opts.ref) {
+      // the "approximate area" disc is geographic: about 10 km across, larger only when far away
+      disc = new THREE.Mesh(discGeo, new THREE.MeshBasicMaterial({ color: cssColour(opts.colour), transparent: true, opacity: .28, depthWrite: false }));
       mats.push([disc.material, opts.colour]);
-      disc.position.y = 0.06;
-      disc.scale.setScalar(S);
-      g.add(disc);
+      disc.position.set(x, y + 0.06, z);
+      scene.add(disc);
     }
-    const pillar = new THREE.Mesh(pillarGeo, mat('--ink'));
-    pillar.scale.set(S * 1.6, height, S * 1.6); pillar.position.y = height / 2;
+    const pillar = new THREE.Mesh(pillarGeo, mat(opts.ref ? '--clay' : '--ink'));
+    pillar.scale.y = height; pillar.position.y = height / 2;
     g.add(pillar);
-    const cap = new THREE.Mesh(capGeo, mat(opts.colour));
-    cap.position.y = height + 0.18 * S;
-    cap.scale.setScalar(S * (opts.event ? 1 : 0.6));
+    const cap = new THREE.Mesh({ city: cityGeo, town: townGeo, ref: refGeo }[type], mat(opts.ref ? '--clay' : opts.colour));
+    cap.position.y = height + 0.12;
+    if (type === 'town' && !opts.event) cap.scale.setScalar(0.7);
     g.add(cap);
     scene.add(g);
     const el = document.createElement('div');
-    el.className = 'map-label' + (opts.event ? ' is-event kind-' + opts.kind : '');
+    el.className = 'map-label' + (opts.event ? ' is-event kind-' + opts.kind : '') + ' is-' + type;
     for (const line of opts.lines) {
       const t = document.createElement('span');
       t.className = 'ml-t';
-      t.textContent = (p.approximate ? '≈ ' : '') + line.label;
+      t.textContent = (p.approximate && !opts.ref ? '≈ ' : '') + line.label;
       el.appendChild(t);
       if (line.year) {
         const yr = document.createElement('span');
@@ -172,7 +178,16 @@ async function build(fig) {
       }
     }
     overlay.appendChild(el);
-    markers.push({ obj: g, top: new THREE.Vector3(x, y + height + 0.6 * S, z), el, priority: opts.event ? 2 : 1, born: markers.length });
+    markers.push({ p, obj: g, base: new THREE.Vector3(x, y, z), lift: height + 0.5, top: new THREE.Vector3(x, y + (height + 0.5) * 2, z),
+                   disc, el, ref: !!opts.ref, priority: opts.ref ? 0 : p.city ? 2.5 : opts.event ? 2 : 1, born: opts.ref ? 0 : markers.filter(k => !k.ref).length });
+  }
+  // keep markers the same size on screen; `rise` is the grow-in animation (0..1)
+  function sizeMarker(k, rise) {
+    if (!k.base) return;   // region labels have no marker
+    const u = camera.position.distanceTo(k.base) / UNIT;
+    k.obj.scale.set(u, Math.max(0.001, u * rise), u);
+    k.top.copy(k.base); k.top.y += k.lift * u;
+    if (k.disc) k.disc.scale.setScalar(Math.max(0.6, 0.35 * u));
   }
 
   // events at the same spot (or a few km apart, like Al-Masmak and Riyadh) share one marker
@@ -195,7 +210,8 @@ async function build(fig) {
   const nearEvent = p => groups.some(g => Math.abs(g.p.lat - p.lat) + Math.abs(g.p.lon - p.lon) < 0.15);
   for (const item of m.places || []) {
     const p = places[item.id];
-    if (p && !eventPlaces.has(item.id) && !nearEvent(p)) addMarker(p, { colour: '--ink-soft', lines: [{ label: p[lang] }] });
+    // (a major city is always shown: it is what readers find the place by)
+    if (p && !eventPlaces.has(item.id) && (p.city || !nearEvent(p))) addMarker(p, { colour: '--ink-soft', lines: [{ label: p[lang] }] });
   }
   // places that only appear as route stops get a small label too
   for (const r of m.routes || []) for (const id of r.path) {
@@ -203,6 +219,14 @@ async function build(fig) {
       addMarker(places[id], { colour: '--ink-soft', lines: [{ label: places[id][lang] }] });
       markers[markers.length - 1].id = id;
     }
+  }
+
+  // reference cities (today's major cities, faint) so a close-up shows where it sits
+  // (skipped when a chapter marker already stands on the city, like Al-Masmak in Riyadh)
+  const ownLL = markers.map(k => k.p);
+  const near = (p, d) => ownLL.some(q => Math.abs(q.lat - p.lat) + Math.abs(q.lon - p.lon) < d);
+  for (const p of Object.values(places)) {
+    if (p.reference && !ownLL.includes(p) && !near(p, 0.03)) addMarker(p, { ref: true, colour: '--clay', lines: [{ label: p[lang] }] });
   }
 
   // ---------- routes ----------
@@ -294,12 +318,22 @@ async function build(fig) {
   }
 
   // ---------- camera: overview, then glide to the chapter ----------
-  const focusPts = markers.map(k => k.obj.position);
+  // the view frames the chapter's own markers plus the nearest reference city, so every
+  // close-up includes at least one city the reader knows
+  const own = markers.filter(k => !k.ref);
+  const focusPts = own.map(k => k.obj.position);
   if (!focusPts.length) { const [rx, rz] = toXZ(24.7, 46.7); focusPts.push(new THREE.Vector3(rx, 0, rz)); }
+  const ownBox = new THREE.Box3().setFromPoints(focusPts);
+  const ownCentre = ownBox.getCenter(new THREE.Vector3());
+  const framed = new Set(own);
+  if (!m.overview) {
+    const refs = markers.filter(k => k.ref).sort((a, b) => a.base.distanceTo(ownCentre) - b.base.distanceTo(ownCentre));
+    if (refs.length && refs[0].base.distanceTo(ownCentre) < 32) { focusPts.push(refs[0].obj.position); framed.add(refs[0]); }
+  }
   const box = new THREE.Box3().setFromPoints(focusPts);
   const centre = box.getCenter(new THREE.Vector3());
   const size = box.getSize(new THREE.Vector3());
-  const span = Math.max(size.x, size.z, 22);
+  const span = Math.max(size.x, size.z, m.overview ? 22 : 36);   // close-ups stay at least 3.5 degrees across, so they keep some surroundings
   const dir = new THREE.Vector3(0, 1.15, 1).normalize();
   const endTarget = centre.clone();
   const endPos = centre.clone().add(dir.clone().multiplyScalar(span * (m.overview ? 2.5 : 1.0) + 4));
@@ -313,7 +347,8 @@ async function build(fig) {
       camera.position.copy(endPos);
       camera.lookAt(endTarget);
       camera.updateMatrixWorld();
-      const inside = markers.every(k => {
+      const inside = markers.filter(k => framed.has(k)).every(k => {
+        sizeMarker(k, 1);
         pv.copy(k.top).project(camera);
         return Math.abs(pv.x) < 0.8 && pv.y > -0.8 && pv.y < 0.6;
       });
@@ -355,6 +390,50 @@ async function build(fig) {
   const note = fig.querySelector('.map-note');
   if (note) note.textContent = (coarse ? T.hintTouch : T.hint) + ' ' + T.credit + '.';
 
+  // ---------- locator inset (close-ups only): the whole peninsula with the view outlined ----------
+  let drawInset = () => {};
+  if (!m.overview) {
+    const box = document.createElement('div');
+    box.className = 'map-inset';
+    box.setAttribute('aria-hidden', 'true');
+    const ic = document.createElement('canvas');
+    box.appendChild(ic);
+    stage.appendChild(box);
+    const imgs = {};
+    const ray = new THREE.Raycaster(), ground = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0), hit = new THREE.Vector3(), ndc = new THREE.Vector2();
+    let lastKey = '';
+    drawInset = () => {
+      const theme = isDark() ? 'dark' : 'light';
+      if (!imgs[theme]) { imgs[theme] = 'loading'; loadImage(BASE + `maps/arabia-${theme}.jpg`).then(i => { imgs[theme] = i; lastKey = ''; }); }
+      const img = imgs[theme];
+      if (img === 'loading') return;
+      const cw = ic.clientWidth, ch = ic.clientHeight;
+      const key = [...camera.position.toArray(), ...controls.target.toArray()].map(n => n.toFixed(2)).join() + theme + cw;
+      if (key === lastKey || !cw) return;
+      lastKey = key;
+      const dpr = Math.min(devicePixelRatio, 2);
+      ic.width = Math.round(cw * dpr); ic.height = Math.round(ch * dpr);
+      const g = ic.getContext('2d');
+      g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      g.drawImage(img, 0, 0, cw, ch);
+      // where the four corners of the view meet the ground
+      const pts = [];
+      for (const [nx, ny] of [[-1, -1], [1, -1], [1, 0.75], [-1, 0.75]]) {   // the top edge reaches the horizon, so stop short of it
+        ndc.set(nx, ny);
+        ray.setFromCamera(ndc, camera);
+        if (!ray.ray.intersectPlane(ground, hit)) return;
+        const lon = hit.x / (COS * K) + LON_C, lat = LAT_C - hit.z / K;
+        pts.push([(lon - BOUNDS.lon0) / (BOUNDS.lon1 - BOUNDS.lon0) * cw, (BOUNDS.lat1 - lat) / (BOUNDS.lat1 - BOUNDS.lat0) * ch]);
+      }
+      g.beginPath();
+      pts.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y));
+      g.closePath();
+      g.fillStyle = cssColour('--adobe');
+      g.globalAlpha = 0.22; g.fill();
+      g.globalAlpha = 1; g.lineWidth = 1.5; g.strokeStyle = cssColour('--adobe'); g.stroke();
+    };
+  }
+
   // ---------- theme ----------
   const applyTheme = () => {
     terrainMat.map = texture(isDark() ? 'dark' : 'light');
@@ -379,7 +458,17 @@ async function build(fig) {
   const v = new THREE.Vector3();
   function placeLabels(reveal) {
     const w = stage.clientWidth, h = stage.clientHeight;
-    const shown = [];
+    // labels keep clear of the inset and the reset button
+    const shown = [...stage.querySelectorAll('.map-inset, .map-ui')].map(b => ({ l: b.offsetLeft, r: b.offsetLeft + b.offsetWidth, t: b.offsetTop, b: b.offsetTop + b.offsetHeight }));
+    // ...and clear of the pins themselves, so a name never hides another place's marker
+    for (const k of markers) {
+      if (!k.base || !k.obj.visible) continue;
+      v.copy(k.top).project(camera);
+      if (v.z >= 1) continue;
+      const px = (v.x + 1) / 2 * w, py = (1 - v.y) / 2 * h;
+      v.copy(k.base).project(camera);
+      shown.push({ l: px - 5, r: px + 5, t: py - 4, b: Math.min(py + 22, (1 - v.y) / 2 * h) });
+    }
     const order = markers.slice().sort((a, b) => b.priority - a.priority || a.born - b.born);
     for (const k of order) {
       v.copy(k.top).project(camera);
@@ -388,10 +477,11 @@ async function build(fig) {
       let ok = visible && reveal >= k.born && (!k.region || k.region.on);
       let pos = 'above', lx = x - (k.w || 0) / 2, ly = y - (k.h || 0);
       if (ok) {
-        // try above the pin, then below, right and left; hide the label only if all four collide
+        // try above the pin, then below, right, left and the four diagonals; hide the label only if all collide
         if (!k.w) { k.w = k.el.offsetWidth; k.h = k.el.offsetHeight; }
         const { w: bw, h: bh } = k;
-        const tries = [['above', x - bw / 2, y - bh - 8], ['below', x - bw / 2, y + 30], ['right', x + 14, y - bh / 2 + 10], ['left', x - bw - 14, y - bh / 2 + 10]];
+        const tries = [['above', x - bw / 2, y - bh - 8], ['below', x - bw / 2, y + 30], ['right', x + 14, y - bh / 2 + 10], ['left', x - bw - 14, y - bh / 2 + 10],
+                       ['above-right', x + 10, y - bh - 4], ['above-left', x - bw - 10, y - bh - 4], ['below-right', x + 10, y + 24], ['below-left', x - bw - 10, y + 24]];
         ok = false;
         for (const [name, tx, ty] of tries) {
           const box = { l: tx - 3, r: tx + bw + 3, t: ty - 3, b: ty + bh + 3 };
@@ -424,13 +514,10 @@ async function build(fig) {
     }
     // markers rise after the glide, then routes draw in
     const after = intro.dur ? Math.max(0, elapsed - intro.dur * 0.7) : 1e9;
-    markers.forEach((k, i) => {
-      const s = Math.min(1, Math.max(0, (after - i * 140) / 380));
-      k.obj.scale.set(1, Math.max(0.001, ease(s)), 1);
-    });
+    for (const k of markers) sizeMarker(k, ease(Math.min(1, Math.max(0, (after - k.born * 140) / 380))));
     const reveal = intro.dur ? Math.floor(after / 140) - 2 : 1e9;
     routes.forEach((r, i) => {
-      const p = Math.min(1, Math.max(0, (after - markers.length * 140 - i * 900) / 1400));
+      const p = Math.min(1, Math.max(0, (after - own.length * 140 - i * 900) / 1400));
       for (const piece of r.pieces) piece.tube.visible = piece.at <= p;
     });
     // overview: step through the years once after the glide, unless the visitor takes the slider
@@ -441,6 +528,7 @@ async function build(fig) {
     controls.update();
     renderer.render(scene, camera);
     placeLabels(reveal);
+    drawInset();
   }
   new IntersectionObserver(([en]) => {
     if (en.isIntersecting && !running) { running = true; clock.getDelta(); frame(); }

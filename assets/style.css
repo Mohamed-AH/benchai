@@ -226,12 +226,12 @@ html[dir="rtl"] .pager small { letter-spacing: 0; font-size: .95rem; }
   background: radial-gradient(ellipse at 50% 45%, var(--sand-2), var(--sand) 75%);
   border-block: 1.5px solid var(--ink);
 }
-.map-stage canvas {
+.map-stage > canvas {
   display: block; width: 100%; height: 100%; cursor: grab;
   -webkit-mask-image: radial-gradient(ellipse 72% 64% at 50% 58%, #000 60%, transparent 100%);
           mask-image: radial-gradient(ellipse 72% 64% at 50% 58%, #000 60%, transparent 100%);
 }
-.map-stage canvas:active { cursor: grabbing; }
+.map-stage > canvas:active { cursor: grabbing; }
 .map-fallback, .map-fallback img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .chapter-map.is-live .map-fallback { display: none; }
 .map-labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
@@ -265,6 +265,16 @@ html[dir="rtl"] .pager small { letter-spacing: 0; font-size: .95rem; }
   .map-label.is-event { font-size: .74rem; }
   .ml-y { font-size: .74rem; }
 }
+.map-label.is-city:not(.is-event) { font-size: .86rem; font-weight: 700; }
+.map-label.is-town.is-event { font-size: .76rem; padding: 1px 6px 2px; }
+.map-label.is-town.is-event .ml-y { font-size: .72rem; }
+.map-label.is-ref { color: var(--ink-soft); font-size: .72rem; font-weight: 500; letter-spacing: .02em; }
+.map-inset {
+  position: absolute; top: 10px; inset-inline-start: 10px; width: 132px; aspect-ratio: 1728 / 1500;
+  border: 1px solid var(--ink); background: var(--sand); box-shadow: 3px 3px 0 var(--clay); pointer-events: none;
+}
+.map-inset canvas { display: block; width: 100%; height: 100%; }
+@media (max-width: 520px) { .map-inset { width: 92px; } }
 .map-label.kind-region { box-shadow: inset 0 2.5px 0 var(--adobe); }
 .map-years { display: flex; align-items: center; gap: 14px; margin-top: 12px; }
 .map-years input { flex: 1; accent-color: var(--adobe); }
