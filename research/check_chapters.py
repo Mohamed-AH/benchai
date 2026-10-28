@@ -24,7 +24,7 @@ for page in pages:
     body = page.read_text(encoding="utf-8").split("---", 2)[2]
     for para in re.split(r"\n\s*\n", body):
         text = para.strip()
-        if not text or text.startswith("#") or text.startswith("|---") or text.startswith("| Year") or text.startswith("| السنة"):
+        if not text or text.startswith("{% include") or text.startswith("#") or text.startswith("|---") or text.startswith("| Year") or text.startswith("| السنة"):
             continue
         rows = text.splitlines() if text.startswith("|") else [text]
         for row in rows:

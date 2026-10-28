@@ -9,6 +9,8 @@ title: "الخط الزمني"
 
 التواريخ بالتقويم الهجري كما تذكرها المصادر، ويُضاف التاريخ الميلادي حيث يذكره المصدر. {% comment %}Each row is from facts.yml; ids in the comment at the end of the row.{% endcomment %}
 
+{% include chapter-map.html %}
+
 | السنة | الحدث |
 |---|---|
 | 850هـ (1446م) | استقرار مانع المريدي في المنطقة وتأسيس الدرعية {% comment %}F008{% endcomment %} |

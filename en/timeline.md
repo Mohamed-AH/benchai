@@ -9,6 +9,8 @@ title: "Timeline"
 
 Dates are given in the Hijri calendar (AH), as the sources use it. A Gregorian date is added where the source gives one. {% comment %}Each row is from facts.yml; ids in the comment at the end of the row.{% endcomment %}
 
+{% include chapter-map.html %}
+
 | Year | Event |
 |---|---|
 | 850 AH (1446 AD) | Mani Al-Muraydi settles in the region; Diriyah is founded {% comment %}F008{% endcomment %} |

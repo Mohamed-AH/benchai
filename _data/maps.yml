@@ -65,8 +65,6 @@ riyadh:
 
 qassim:
   places:
-    - {id: shaqra, facts: [F094]}
-    - {id: tharmada, facts: [F094]}
     - {id: shaihiyah, facts: [F102]}
     - {id: rass, facts: [F108]}
   events:
@@ -125,4 +123,8 @@ hijaz:
     - {path: [hawiyah, taif], approximate: true, facts: [F170]}
 
 kingdom:
+  overview: true
+
+# The overview map on the timeline page (regions from regions.yml).
+timeline:
   overview: true

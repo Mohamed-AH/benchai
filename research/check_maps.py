@@ -68,6 +68,8 @@ for pid, p in places.items():
         problems.append(f"places.yml {pid}: position outside the Arabian Peninsula")
 
 for ref, m in maps.items():
+    if m.get("overview") and set(m) == {"overview"}:
+        continue  # overview maps show regions.yml only, checked below
     if ref not in cited_en or ref not in cited_ar:
         problems.append(f"maps.yml: '{ref}' is not a chapter ref")
         continue

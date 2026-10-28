@@ -77,6 +77,15 @@ async function build(fig) {
   const data = JSON.parse(fig.querySelector('.map-data').textContent);
   const lang = data.lang === 'ar' ? 'ar' : 'en';
   const T = TEXT[lang];
+  const places = data.places;
+  // marker size and relief height follow the size of the area the chapter covers:
+  // close views get flatter relief, so the coarse elevation data does not look spiky
+  const m = data.map || {};
+  const ids = [...(m.events || []).map(e => e.place), ...(m.places || []).map(q => q.id), ...(m.routes || []).flatMap(r => r.path)];
+  const ll = ids.map(id => places[id]).filter(Boolean);
+  const extent = ll.length ? Math.max(...ll.map(p => p.lat)) - Math.min(...ll.map(p => p.lat)) + Math.max(...ll.map(p => p.lon)) - Math.min(...ll.map(p => p.lon)) : 12;
+  const S = Math.min(3, Math.max(0.9, extent / 4));
+  const RELIEF = Math.min(1, Math.max(0.35, extent / 8));
   const stage = fig.querySelector('.map-stage');
   const THREE = await import(BASE + 'three/three.module.min.js');
   const { OrbitControls } = await import(BASE + 'three/OrbitControls.js');
@@ -106,7 +115,7 @@ async function build(fig) {
   geo.rotateX(-Math.PI / 2);
   geo.translate((x0 + x1) / 2, 0, (z0 + z1) / 2);
   const pos = geo.attributes.position;
-  for (let i = 0; i < pos.count; i++) pos.setY(i, field.at(i % field.w, Math.floor(i / field.w)));
+  for (let i = 0; i < pos.count; i++) pos.setY(i, field.at(i % field.w, Math.floor(i / field.w)) * RELIEF);
   geo.computeVertexNormals();
 
   const loader = new THREE.TextureLoader();
@@ -116,8 +125,7 @@ async function build(fig) {
   scene.add(new THREE.Mesh(geo, terrainMat));
 
   // ---------- markers ----------
-  const places = data.places;
-  const groundAt = (lat, lon) => Math.max(0, field.sample(lat, lon));
+  const groundAt = (lat, lon) => Math.max(0, field.sample(lat, lon) * RELIEF);
   const markers = [];   // { obj, top: Vector3, el, priority }
   const mats = [];      // [material, cssVar] so colours follow the theme
   const mat = v => { const m = new THREE.MeshStandardMaterial({ color: cssColour(v), roughness: .6 }); mats.push([m, v]); return m; };
@@ -126,11 +134,6 @@ async function build(fig) {
   const discGeo = new THREE.CircleGeometry(0.75, 40).rotateX(-Math.PI / 2);
 
   // marker size follows the size of the area the chapter covers
-  const m = data.map || {};
-  const ids = [...(m.events || []).map(e => e.place), ...(m.places || []).map(q => q.id), ...(m.routes || []).flatMap(r => r.path)];
-  const ll = ids.map(id => places[id]).filter(Boolean);
-  const extent = ll.length ? Math.max(...ll.map(p => p.lat)) - Math.min(...ll.map(p => p.lat)) + Math.max(...ll.map(p => p.lon)) - Math.min(...ll.map(p => p.lon)) : 1;
-  const S = Math.min(3, Math.max(0.7, extent / 4));
 
   function addMarker(p, opts) {
     const [x, z] = toXZ(p.lat, p.lon);
@@ -183,7 +186,9 @@ async function build(fig) {
   }
   for (const g of groups) {
     addMarker(g.p, { event: true, kind: g.events[0].kind, colour: KIND_COLOUR[g.events[0].kind] || '--ink',
-                     lines: g.events.map(e => ({ label: e[lang], year: e.year })) });
+                     // the pin shows the place and year; the full captions are in the legend under the map
+                     lines: [{ label: [...new Set(g.events.map(e => places[e.place][lang]))].join(' · '),
+                               year: [...new Set(g.events.map(e => e.year).filter(Boolean))].join('–') }] });
   }
   // a place a few km from an event marker (Al-Shuqaib, Al-Swaidi next to Al-Masmak) is left to the
   // caption below the map, so the pins don't pile up
@@ -238,19 +243,87 @@ async function build(fig) {
     routes.push({ pieces });
   }
 
+  // ---------- regions (overview maps): soft glows that light up year by year ----------
+  const regions = [];
+  let years = [], yearIdx = 0, userMoved = false;
+  if (m.overview && data.regions) {
+    const c = document.createElement('canvas');
+    c.width = c.height = 128;
+    const g2 = c.getContext('2d');
+    const grad = g2.createRadialGradient(64, 64, 0, 64, 64, 64);
+    grad.addColorStop(0, 'rgba(255,255,255,0.85)');
+    grad.addColorStop(0.55, 'rgba(255,255,255,0.45)');
+    grad.addColorStop(1, 'rgba(255,255,255,0)');
+    g2.fillStyle = grad;
+    g2.fillRect(0, 0, 128, 128);
+    const glow = new THREE.CanvasTexture(c);
+    for (const r of data.regions) {
+      const [x, z] = toXZ(r.centre[0], r.centre[1]);
+      const size = r.radius_km / 111 * K * 2;
+      const rm = new THREE.MeshBasicMaterial({ map: glow, color: cssColour('--adobe'), transparent: true, opacity: 0, depthTest: false, depthWrite: false });
+      mats.push([rm, '--adobe']);
+      const disc = new THREE.Mesh(new THREE.PlaneGeometry(size, size).rotateX(-Math.PI / 2), rm);
+      disc.position.set(x, 4, z);
+      disc.renderOrder = 2;
+      scene.add(disc);
+      const holder = new THREE.Group();
+      holder.position.set(x, 0, z);
+      const el = document.createElement('div');
+      el.className = 'map-label is-event kind-region';
+      const t = document.createElement('span'); t.className = 'ml-t'; t.textContent = r[lang];
+      const yr = document.createElement('span'); yr.className = 'ml-y'; yr.textContent = T.year(r.year);
+      el.append(t, yr);
+      overlay.appendChild(el);
+      const region = { rm, year: r.year, on: false };
+      regions.push(region);
+      markers.push({ obj: holder, top: new THREE.Vector3(x, groundAt(r.centre[0], r.centre[1]) + 2, z), el, priority: 3, born: 0, region });
+    }
+    years = [...new Set(data.regions.map(r => r.year))].sort();
+    yearIdx = reduceMotion ? years.length - 1 : 0;
+    const bar = document.createElement('div');
+    bar.className = 'map-years';
+    bar.innerHTML = '<input type="range" min="0" step="1"><output></output>';
+    const range = bar.querySelector('input'), out = bar.querySelector('output');
+    range.max = years.length - 1;
+    range.setAttribute('aria-label', lang === 'ar' ? 'السنة' : 'Year');
+    const show = () => { range.value = yearIdx; out.textContent = T.year(years[yearIdx]); for (const r of regions) r.on = r.year <= years[yearIdx]; };
+    range.addEventListener('input', () => { userMoved = true; yearIdx = +range.value; show(); });
+    fig.insertBefore(bar, fig.querySelector('figcaption'));
+    show();
+    regions.show = show;
+  }
+
   // ---------- camera: overview, then glide to the chapter ----------
   const focusPts = markers.map(k => k.obj.position);
   if (!focusPts.length) { const [rx, rz] = toXZ(24.7, 46.7); focusPts.push(new THREE.Vector3(rx, 0, rz)); }
   const box = new THREE.Box3().setFromPoints(focusPts);
   const centre = box.getCenter(new THREE.Vector3());
   const size = box.getSize(new THREE.Vector3());
-  const span = Math.max(size.x, size.z, 9);
+  const span = Math.max(size.x, size.z, 22);
   const dir = new THREE.Vector3(0, 1.15, 1).normalize();
   const endTarget = centre.clone();
-  const endPos = centre.clone().add(dir.clone().multiplyScalar(span * 2.1 + 8));
+  const endPos = centre.clone().add(dir.clone().multiplyScalar(span * (m.overview ? 2.5 : 1.0) + 4));
   const startTarget = new THREE.Vector3((x0 + x1) / 2, 0, (z0 + z1) / 2 + 10);
   const startPos = startTarget.clone().add(new THREE.Vector3(0, 1.6, 1).normalize().multiplyScalar(330));
 
+  // back the camera off until every pin (and room for its label above) fits in the frame
+  function fit() {
+    const pv = new THREE.Vector3();
+    for (let i = 0; i < 40; i++) {
+      camera.position.copy(endPos);
+      camera.lookAt(endTarget);
+      camera.updateMatrixWorld();
+      const inside = markers.every(k => {
+        pv.copy(k.top).project(camera);
+        return Math.abs(pv.x) < 0.8 && pv.y > -0.8 && pv.y < 0.6;
+      });
+      if (inside) return;
+      endPos.sub(endTarget).multiplyScalar(1.1).add(endTarget);
+    }
+  }
+  camera.aspect = stage.clientWidth / stage.clientHeight;
+  camera.updateProjectionMatrix();
+  fit();
   const dist = endPos.distanceTo(endTarget);
   scene.fog.near = dist * 1.1; scene.fog.far = dist * 3.2;
 
@@ -312,14 +385,24 @@ async function build(fig) {
       v.copy(k.top).project(camera);
       const x = (v.x + 1) / 2 * w, y = (1 - v.y) / 2 * h;
       const visible = v.z < 1 && x > -40 && x < w + 40 && y > 0 && y < h;
-      let ok = visible && reveal >= k.born;
+      let ok = visible && reveal >= k.born && (!k.region || k.region.on);
+      let pos = 'above', lx = x - (k.w || 0) / 2, ly = y - (k.h || 0);
       if (ok) {
-        const r = k.el.getBoundingClientRect();
-        const box = { l: x - r.width / 2, r: x + r.width / 2, t: y - r.height, b: y };
-        ok = !shown.some(s => box.l < s.r && box.r > s.l && box.t < s.b && box.b > s.t);
-        if (ok) shown.push(box);
+        // try above the pin, then below, right and left; hide the label only if all four collide
+        if (!k.w) { k.w = k.el.offsetWidth; k.h = k.el.offsetHeight; }
+        const { w: bw, h: bh } = k;
+        const tries = [['above', x - bw / 2, y - bh - 8], ['below', x - bw / 2, y + 30], ['right', x + 14, y - bh / 2 + 10], ['left', x - bw - 14, y - bh / 2 + 10]];
+        ok = false;
+        for (const [name, tx, ty] of tries) {
+          const box = { l: tx - 3, r: tx + bw + 3, t: ty - 3, b: ty + bh + 3 };
+          if (box.l < 0 || box.r > w || box.t < 0 || box.b > h) continue;
+          if (!shown.some(s => box.l < s.r && box.r > s.l && box.t < s.b && box.b > s.t)) {
+            shown.push(box); ok = true; pos = name; lx = tx; ly = ty; break;
+          }
+        }
       }
-      k.el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -100%)`;
+      k.el.style.transform = `translate(${Math.round(lx)}px, ${Math.round(ly)}px)`;
+      k.el.dataset.pos = pos;
       k.el.classList.toggle('is-on', ok);
     }
   }
@@ -350,6 +433,11 @@ async function build(fig) {
       const p = Math.min(1, Math.max(0, (after - markers.length * 140 - i * 900) / 1400));
       for (const piece of r.pieces) piece.tube.visible = piece.at <= p;
     });
+    // overview: step through the years once after the glide, unless the visitor takes the slider
+    if (regions.length) {
+      if (!userMoved && intro.done && yearIdx < years.length - 1 && elapsed > intro.dur + 600 + yearIdx * 1100) { yearIdx++; regions.show(); }
+      for (const r of regions) r.rm.opacity += ((r.on ? 0.55 : 0) - r.rm.opacity) * 0.08;
+    }
     controls.update();
     renderer.render(scene, camera);
     placeLabels(reveal);
