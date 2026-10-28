@@ -111,8 +111,53 @@ main:focus { outline: none; }
           mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='20'%3E%3Cpath d='M11 0l5 9H6zM5 11l5 9H0zm12 0l5 9H12z'/%3E%3C/svg%3E") no-repeat center / contain;
 }
 .header-links { display: flex; align-items: center; gap: 14px; }
-.chapters-jump { display: none; font-family: var(--f-label); font-size: 1rem; color: var(--on-adobe); text-underline-offset: 4px; }
-.chapters-jump:hover { color: var(--on-adobe); }
+
+/* main links: in the header row on wide screens, behind the Menu button below 1100px */
+.site-nav ul { display: flex; flex-wrap: wrap; gap: 4px 22px; list-style: none; margin: 0; padding: 0; }
+.site-nav a {
+  font-family: var(--f-label); font-size: 1rem; color: var(--on-adobe); text-decoration: none;
+  padding: 4px 0; border-bottom: 2px solid transparent;
+}
+.site-nav a:hover { color: var(--on-adobe); border-bottom-color: color-mix(in srgb, var(--on-adobe) 60%, transparent); }
+.site-nav a[aria-current="page"] { border-bottom-color: var(--on-adobe); }
+.nav-menu { display: none; position: static; }
+.nav-menu summary {
+  display: inline-flex; align-items: center; gap: 8px; cursor: pointer; list-style: none;
+  font-family: var(--f-label); font-size: 1rem; color: var(--on-adobe);
+  border: 1.5px solid currentColor; border-radius: 2px; padding: 2px 12px 4px;
+}
+.nav-menu summary::-webkit-details-marker { display: none; }
+.nav-menu-icon { /* three bars; a cross while open */
+  width: 16px; height: 12px; flex: none;
+  background: linear-gradient(currentColor 0 0) top / 100% 2px no-repeat,
+              linear-gradient(currentColor 0 0) center / 100% 2px no-repeat,
+              linear-gradient(currentColor 0 0) bottom / 100% 2px no-repeat;
+}
+.nav-menu[open] .nav-menu-icon {
+  background: linear-gradient(45deg, transparent 45%, currentColor 45% 55%, transparent 55%),
+              linear-gradient(-45deg, transparent 45%, currentColor 45% 55%, transparent 55%);
+}
+.nav-panel {
+  position: absolute; inset-inline: 0; top: 100%; z-index: 20;
+  max-height: calc(100vh - 80px); overflow: auto;
+  background: var(--sand); color: var(--ink);
+  border-bottom: 2px solid var(--ink); box-shadow: 0 10px 24px color-mix(in srgb, var(--ink) 25%, transparent);
+  padding: 22px max(16px, calc((100% - 1180px) / 2)) 26px;
+}
+.nav-panel a { color: var(--ink); text-decoration: none; }
+.nav-panel a[aria-current="page"] { color: var(--adobe); font-weight: 600; }
+.nav-panel-links { list-style: none; margin: 0 0 18px; padding: 0 0 14px; border-bottom: 1px dashed var(--clay); display: flex; flex-wrap: wrap; gap: 6px 26px; }
+.nav-panel-links a { font-family: var(--f-label); font-size: 1.1rem; display: inline-block; padding: 6px 0; }
+.nav-panel-title { font-family: var(--f-label); font-size: .85rem; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 8px; }
+html[dir="rtl"] .nav-panel-title { letter-spacing: 0; font-size: 1rem; }
+.nav-panel-chapters { list-style: none; margin: 0; padding: 0; columns: 2 280px; column-gap: 32px; }
+.nav-panel-chapters li { break-inside: avoid; }
+.nav-panel-chapters a { display: flex; gap: 10px; align-items: baseline; padding: 6px 0; font-size: 1.02rem; line-height: 1.3; }
+.np-n { flex: none; min-width: 1.6em; font-family: var(--f-label); color: var(--adobe); }
+@media (max-width: 1099px) {
+  .site-nav { display: none; }
+  .nav-menu { display: block; }
+}
 .lang-switch a {
   display: inline-block;
   font-family: var(--f-label); font-size: 1rem;
@@ -477,7 +522,6 @@ html[dir="rtl"] .tile-t { font-family: var(--f-display-ar); font-weight: 500; fo
   .toc { position: static; max-height: none; overflow: visible; order: 2; border-top: 2px solid var(--ink); padding-top: 24px; }
   .ch-num { top: -28px; inset-inline-end: 0; }
   .chapter-head { overflow-x: clip; } /* the sliding chapter number must not widen the page */
-  .chapters-jump { display: inline; }
   .ref-timeline td:first-child { width: 30%; white-space: normal; padding-inline-end: 16px; font-size: .9rem; }
   .ref-timeline td:last-child { padding-inline-start: 18px; }
 }
