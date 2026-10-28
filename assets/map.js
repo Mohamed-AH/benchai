@@ -78,8 +78,8 @@ async function build(fig) {
   const lang = data.lang === 'ar' ? 'ar' : 'en';
   const T = TEXT[lang];
   const stage = fig.querySelector('.map-stage');
-  const THREE = await import(BASE + 'vendor/three.module.min.js');
-  const { OrbitControls } = await import(BASE + 'vendor/OrbitControls.js');
+  const THREE = await import(BASE + 'three/three.module.min.js');
+  const { OrbitControls } = await import(BASE + 'three/OrbitControls.js');
   const field = await heightField();
 
   // ---------- renderer, scene, camera ----------
