@@ -50,7 +50,7 @@ exclude:
   - Gemfile.lock
   - vendor/
 # Contact form: the public site key of the Cloudflare Turnstile widget. Leave empty to hide the form.
-turnstile_sitekey: ""
+turnstile_sitekey: "0x4AAAAAAFpvyvQYC3lsJPJM"
 
 # Cloudflare Pages settings files (Jekyll skips files starting with "_" unless listed).
 include:
