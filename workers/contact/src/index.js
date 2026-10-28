@@ -6,13 +6,14 @@ const LIMITS = { name: 100, email: 200, message: 5000 };
 
 export default {
   async fetch(request, env) {
-    const fail = lang => Response.redirect(`${env.SITE}/${lang}/contact-error`, 303);
+    // every refusal is logged with its reason (never the message itself), so the Worker's Logs tab shows why
+    const fail = (lang, reason) => { console.log('contact form refused:', reason); return Response.redirect(`${env.SITE}/${lang}/contact-error`, 303); };
     if (request.method !== 'POST') return new Response('Method not allowed', { status: 405, headers: { Allow: 'POST' } });
     const origin = request.headers.get('Origin');
     if (origin && origin !== env.SITE) return new Response('Forbidden', { status: 403 });
 
     let form;
-    try { form = await request.formData(); } catch { return fail('en'); }
+    try { form = await request.formData(); } catch { return fail('en', 'form data could not be read'); }
     const field = k => String(form.get(k) || '').trim();
     const lang = field('lang') === 'ar' ? 'ar' : 'en';
     const name = field('name'), email = field('email'), message = field('message');
@@ -20,13 +21,15 @@ export default {
     // "website" is hidden from people; only bots fill it in. Pretend it worked.
     if (field('website')) return Response.redirect(`${env.SITE}/${lang}/contact-sent`, 303);
     if (!name || name.length > LIMITS.name || email.length > LIMITS.email || !/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email)
-        || message.length < 10 || message.length > LIMITS.message) return fail(lang);
+        || message.length < 10 || message.length > LIMITS.message) return fail(lang, 'a field is missing, too long or not valid');
 
+    if (!env.TURNSTILE_SECRET) return fail(lang, 'the TURNSTILE_SECRET secret is not set');
     const check = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
       body: new URLSearchParams({ secret: env.TURNSTILE_SECRET, response: field('cf-turnstile-response'), remoteip: request.headers.get('CF-Connecting-IP') || '' }),
-    }).then(r => r.json()).catch(() => ({ success: false }));
-    if (!check.success) return fail(lang);
+    }).then(r => r.json()).catch(err => ({ success: false, 'error-codes': ['siteverify request failed: ' + err] }));
+    if (!check.success) return fail(lang, 'Turnstile check failed: ' + (check['error-codes'] || []).join(', '));
+    if (!env.CONTACT_TO) return fail(lang, 'the CONTACT_TO secret is not set');
 
     const text = `Name: ${name}\nEmail: ${email}\nPage language: ${lang}\n\n${message}\n`;
     const raw = [
@@ -46,8 +49,7 @@ export default {
     try {
       await env.MAIL.send(new EmailMessage(env.CONTACT_FROM, env.CONTACT_TO, raw));
     } catch (err) {
-      console.error('send failed', err);
-      return fail(lang);
+      return fail(lang, 'sending the email failed: ' + (err && err.message || err));
     }
     return Response.redirect(`${env.SITE}/${lang}/contact-sent`, 303);
   },

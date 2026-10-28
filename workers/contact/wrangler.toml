@@ -7,6 +7,11 @@ compatibility_date = "2026-10-01"
 workers_dev = false
 preview_urls = false
 
+# Keep request logs (shown in the Worker's Logs tab) so a failed message can be traced.
+[observability]
+enabled = true
+head_sampling_rate = 1
+
 # Sends through Cloudflare Email Routing. The recipient must be a verified destination address
 # in Email Routing; it is set as the secret CONTACT_TO, not here, so it stays out of the repository.
 [[send_email]]
