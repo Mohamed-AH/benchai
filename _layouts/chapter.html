@@ -1,13 +1,18 @@
 ---
-layout: default
+layout: page
 ---
 {%- assign lang = page.lang | default: "en" -%}
 {%- assign chapters = site.pages | where: "lang", lang | where: "layout", "chapter" | sort: "order" -%}
 <article class="chapter">
-  <p class="eyebrow">{% if lang == "ar" %}الفصل {{ page.order }}{% else %}Chapter {{ page.order }}{% endif %}</p>
-  <h1>{{ page.title }}</h1>
-  {%- if page.period %}<p class="period">{{ page.period }}</p>{% endif %}
-  {{ content }}
+  <header class="chapter-head">
+    <span class="ch-num" aria-hidden="true">{{ page.order }}</span>
+    <p class="eyebrow">{% if lang == "ar" %}الفصل {{ page.order }}{% else %}Chapter {{ page.order }}{% endif %}</p>
+    <h1>{{ page.title }}</h1>
+    {%- if page.period != "" and page.period %}<p class="period"><span>{{ page.period }}</span></p>{% endif %}
+  </header>
+  <div class="prose">
+    {{ content }}
+  </div>
 </article>
 
 <nav class="pager">
@@ -18,6 +23,6 @@ layout: default
   {%- endfor -%}
   {%- assign prev_i = i | minus: 1 -%}
   {%- assign next_i = i | plus: 1 -%}
-  {%- if i > 0 -%}{%- assign prev = chapters[prev_i] -%}<a class="prev" href="{{ prev.url | relative_url }}">{% if lang == "ar" %}→ {% else %}← {% endif %}{{ prev.title }}</a>{%- else -%}<span></span>{%- endif -%}
-  {%- if next_i < chapters.size -%}{%- assign next = chapters[next_i] -%}<a class="next" href="{{ next.url | relative_url }}">{{ next.title }}{% if lang == "ar" %} ←{% else %} →{% endif %}</a>{%- endif -%}
+  {%- if i > 0 -%}{%- assign prev = chapters[prev_i] -%}<a class="prev" href="{{ prev.url | relative_url }}"><small>{% if lang == "ar" %}السابق{% else %}Previous{% endif %}</small>{{ prev.title }}</a>{%- else -%}<span></span>{%- endif -%}
+  {%- if next_i < chapters.size -%}{%- assign next = chapters[next_i] -%}<a class="next" href="{{ next.url | relative_url }}"><small>{% if lang == "ar" %}التالي{% else %}Next{% endif %}</small>{{ next.title }}</a>{%- endif -%}
 </nav>

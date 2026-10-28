@@ -1,0 +1,30 @@
+---
+layout: default
+---
+{%- assign lang = page.lang | default: "en" -%}
+{%- assign chapters = site.pages | where: "lang", lang | where: "layout", "chapter" | sort: "order" -%}
+<section class="hero">
+  <span class="hero-ghost" aria-hidden="true">عبدالعزيز</span>
+  <div class="wrap hero-inner">
+    <p class="eyebrow">{% if lang == "ar" %}الرياض · 1319هـ{% else %}Riyadh · 1319 AH{% endif %}</p>
+    <div class="hero-text">
+      {{ content }}
+    </div>
+  </div>
+  {% include masmak.svg %}
+</section>
+
+<section class="wrap chapters-section">
+  <h2 class="section-title">{% if lang == "ar" %}الفصول{% else %}Chapters{% endif %}</h2>
+  <ol class="chapter-grid">
+    {%- for c in chapters %}
+    <li style="--i: {{ forloop.index }}">
+      <a href="{{ c.url | relative_url }}">
+        <span class="tile-n">{{ c.order }}</span>
+        <span class="tile-t">{{ c.title }}</span>
+        {%- if c.period != "" and c.period %}<span class="tile-p">{{ c.period }}</span>{% endif %}
+      </a>
+    </li>
+    {%- endfor %}
+  </ol>
+</section>

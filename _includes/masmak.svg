@@ -1,0 +1,35 @@
+<svg class="masmak" viewBox="0 0 1200 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="crenel" width="24" height="14" patternUnits="userSpaceOnUse">
+      <path d="M0 14 L6 2 L12 14 Z M12 14 L18 2 L24 14 Z" fill="currentColor"/>
+    </pattern>
+  </defs>
+  <g fill="currentColor">
+    <!-- long wall -->
+    <rect x="0" y="150" width="1200" height="70"/>
+    <rect x="0" y="136" width="1200" height="14" fill="url(#crenel)"/>
+    <!-- left tower -->
+    <path d="M300 60 L304 220 L376 220 L380 60 Z"/>
+    <rect x="296" y="46" width="88" height="14" fill="url(#crenel)"/>
+    <!-- gate block -->
+    <rect x="440" y="96" width="320" height="124"/>
+    <rect x="440" y="82" width="320" height="14" fill="url(#crenel)"/>
+    <!-- right tower -->
+    <path d="M820 60 L824 220 L896 220 L900 60 Z"/>
+    <rect x="816" y="46" width="88" height="14" fill="url(#crenel)"/>
+    <!-- far towers -->
+    <path d="M80 104 L83 220 L137 220 L140 104 Z"/>
+    <rect x="76" y="90" width="68" height="14" fill="url(#crenel)"/>
+    <path d="M1060 104 L1063 220 L1117 220 L1120 104 Z"/>
+    <rect x="1056" y="90" width="68" height="14" fill="url(#crenel)"/>
+  </g>
+  <!-- openings cut in the background colour -->
+  <g class="masmak-cut">
+    <path d="M565 220 L565 150 Q600 128 635 150 L635 220 Z"/>
+    <rect x="592" y="178" width="16" height="28" rx="2"/>
+    <path d="M330 92 l10 -16 l10 16 Z M330 122 l10 -16 l10 16 Z"/>
+    <path d="M850 92 l10 -16 l10 16 Z M850 122 l10 -16 l10 16 Z"/>
+    <path d="M480 124 l9 -14 l9 14 Z M500 124 l9 -14 l9 14 Z M490 106 l9 -14 l9 14 Z"/>
+    <path d="M700 124 l9 -14 l9 14 Z M720 124 l9 -14 l9 14 Z M710 106 l9 -14 l9 14 Z"/>
+  </g>
+</svg>
