@@ -226,17 +226,17 @@ html[dir="rtl"] .pager small { letter-spacing: 0; font-size: .95rem; }
   background: radial-gradient(ellipse at 50% 45%, var(--sand-2), var(--sand) 75%);
   border-block: 1.5px solid var(--ink);
 }
-.map-stage canvas {
+.map-stage > canvas {
   display: block; width: 100%; height: 100%; cursor: grab;
   -webkit-mask-image: radial-gradient(ellipse 72% 64% at 50% 58%, #000 60%, transparent 100%);
           mask-image: radial-gradient(ellipse 72% 64% at 50% 58%, #000 60%, transparent 100%);
 }
-.map-stage canvas:active { cursor: grabbing; }
+.map-stage > canvas:active { cursor: grabbing; }
 .map-fallback, .map-fallback img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .chapter-map.is-live .map-fallback { display: none; }
 .map-labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
 .map-label {
-  position: absolute; left: 0; top: 0; margin-top: -8px;
+  position: absolute; left: 0; top: 0;
   display: flex; flex-direction: column; align-items: center; line-height: 1.2; white-space: nowrap;
   font-family: var(--f-label); font-size: .82rem; color: var(--ink);
   background: color-mix(in srgb, var(--sand) 90%, transparent);
@@ -248,6 +248,7 @@ html[dir="rtl"] .pager small { letter-spacing: 0; font-size: .95rem; }
   background: inherit; border: inherit; border-width: 0 1px 1px 0; transform: rotate(45deg);
 }
 .map-label.is-on { opacity: 1; }
+.map-label:not([data-pos="above"])::after { display: none; }
 .map-label:not(.is-event) { /* plain place names: text with a halo, no box */
   background: none; border: 0; padding: 0 2px; font-size: .78rem; font-weight: 500;
   text-shadow: 0 0 3px var(--sand), 0 0 3px var(--sand), 0 0 6px var(--sand);
@@ -264,6 +265,20 @@ html[dir="rtl"] .pager small { letter-spacing: 0; font-size: .95rem; }
   .map-label.is-event { font-size: .74rem; }
   .ml-y { font-size: .74rem; }
 }
+.map-label.is-city:not(.is-event) { font-size: .86rem; font-weight: 700; }
+.map-label.is-town.is-event { font-size: .76rem; padding: 1px 6px 2px; }
+.map-label.is-town.is-event .ml-y { font-size: .72rem; }
+.map-label.is-ref { color: var(--ink-soft); font-size: .72rem; font-weight: 500; letter-spacing: .02em; }
+.map-inset {
+  position: absolute; top: 10px; inset-inline-start: 10px; width: 132px; aspect-ratio: 1728 / 1500;
+  border: 1px solid var(--ink); background: var(--sand); box-shadow: 3px 3px 0 var(--clay); pointer-events: none;
+}
+.map-inset canvas { display: block; width: 100%; height: 100%; }
+@media (max-width: 520px) { .map-inset { width: 92px; } }
+.map-label.kind-region { box-shadow: inset 0 2.5px 0 var(--adobe); }
+.map-years { display: flex; align-items: center; gap: 14px; margin-top: 12px; }
+.map-years input { flex: 1; accent-color: var(--adobe); }
+.map-years output { font-family: var(--f-label); font-size: 1rem; min-width: 6.5em; color: var(--adobe); }
 .map-ui { position: absolute; bottom: 10px; inset-inline-end: 10px; }
 .map-reset {
   font-family: var(--f-label); font-size: .8rem; color: var(--ink); cursor: pointer;
@@ -271,6 +286,13 @@ html[dir="rtl"] .pager small { letter-spacing: 0; font-size: .95rem; }
   box-shadow: 3px 3px 0 var(--clay);
 }
 .map-reset:hover { box-shadow: 4px 4px 0 var(--adobe); }
+.map-legend { list-style: none; margin: 4px 0 10px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 4px 24px; }
+.map-legend li { display: flex; align-items: baseline; gap: 10px; color: var(--ink); font-size: 1.02rem; line-height: 1.35; }
+.map-legend li::before { content: ""; flex: none; width: 9px; height: 9px; transform: rotate(45deg) translateY(-1px); background: var(--ink); }
+.map-legend .kind-battle::before { background: var(--adobe); }
+.map-legend .kind-siege::before { background: var(--gold); }
+.map-legend .kind-taken::before, .map-legend .kind-surrender::before, .map-legend .kind-settlement::before { background: var(--palm); }
+.lg-y { flex: none; font-family: var(--f-label); font-size: .85rem; color: var(--ink-soft); min-width: 5.2em; }
 .chapter-map figcaption { margin-top: 8px; font-size: .95rem; color: var(--ink-soft); line-height: 1.5; }
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 

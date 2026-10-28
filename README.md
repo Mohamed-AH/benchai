@@ -28,13 +28,15 @@ The King's name and the honorific (رحمه الله / may Allah have mercy on h
 
 ### Chapter maps
 
-The maps (coming in the next phases) are driven by three files in `_data/`:
+Every chapter and the timeline page has a 3D map, driven by three files in `_data/`:
 
 | File | What it holds |
 | --- | --- |
-| `places.yml` | Each place's English and Arabic name, its position, and where the position comes from. `approximate: true` draws it as an area, not a point. |
+| `places.yml` | Each place's English and Arabic name, its position, and where the position comes from. `approximate: true` draws it as an area, not a point. `city: true` gives a major city a larger marker. `reference: true` shows the city faintly in grey on every map, so close-ups show where they sit in the country (these are today's cities, for orientation only). |
 | `maps.yml` | For each chapter: the places, events (battles, sieges and so on, with captions in both languages) and routes to show. Every item lists the fact codes it rests on. |
 | `regions.yml` | The historical regions and the year each joined, for the overview map. |
+
+Close-up maps also get a small inset of the whole peninsula with the area shown outlined, and markers keep the same size on screen at any zoom, so a small town never looks as big as a city.
 
 After editing them, run `python3 research/check_maps.py`. It checks that every item has fact codes, that those facts are cited in the chapter text in both languages, that no left-out fact is used, and that every place exists.
 

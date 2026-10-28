@@ -1,7 +1,7 @@
 // Make the still images shown when a visitor's browser cannot draw the 3D maps.
 // Build the site and serve it first, e.g.
 //   bundle exec jekyll serve      (serves on http://localhost:4000)
-//   node research/maps/make_fallbacks.js http://localhost:4000 riyadh
+//   node research/maps/make_fallbacks.js http://localhost:4000 riyadh qassim timeline
 // Writes assets/maps/fallback/<ref>-<lang>.jpg and <ref>-<lang>-dark.jpg.
 const { chromium } = require('playwright');
 const fs = require('fs');
@@ -18,14 +18,16 @@ const path = require('path');
         const ctx = await browser.newContext({ viewport: { width: 700, height: 900 }, deviceScaleFactor: 2, colorScheme: scheme, reducedMotion: 'reduce' });
         const page = await ctx.newPage();
         const file = fs.readdirSync(path.join(__dirname, `../../${lang}/chapters`)).find(f => f.endsWith(`-${ref}.md`));
-        await page.goto(`${base}/${lang}/chapters/${file.replace(/\.md$/, '.html')}`, { waitUntil: 'networkidle' });
+        const url = file ? `${base}/${lang}/chapters/${file.replace(/\.md$/, '.html')}` : `${base}/${lang}/${ref}.html`;
+        await page.goto(url, { waitUntil: 'networkidle' });
         const stage = await page.$('.map-stage');
         await stage.scrollIntoViewIfNeeded();
         await page.waitForSelector('.chapter-map.is-live', { timeout: 60000 });
         await page.waitForTimeout(4000);
         await page.addStyleTag({ content: '.map-ui { display: none !important; }' });
         const name = `${ref}-${lang}${scheme === 'dark' ? '-dark' : ''}.jpg`;
-        await stage.screenshot({ path: path.join(out, name), type: 'jpeg', quality: 78 });
+        // a clip rather than an element shot: the live canvas never counts as "stable"
+        await page.screenshot({ path: path.join(out, name), type: 'jpeg', quality: 78, clip: await stage.boundingBox(), timeout: 120000 });
         console.log('wrote', name);
         await ctx.close();
       }
