@@ -40,7 +40,7 @@ Close-up maps also get a small inset of the whole peninsula with the area shown 
 
 On a computer the mouse wheel scrolls the page until the visitor clicks a map; after that it zooms the map until the pointer leaves it. On phones one finger scrolls the page and two fingers turn and zoom the map.
 
-Visitors whose browser cannot draw 3D see a still image of each map from `assets/maps/fallback/`, with separate images for phones (`-m`) and for dark mode (`-dark`). After changing a map, remake its images with `research/maps/make_fallbacks.js` (run it once as is and once with `PHONE=1`; instructions are at the top of the file).
+Visitors whose browser cannot draw 3D see a still image of each map from `assets/maps/fallback/`, with separate images for phones (`-m`) and for dark mode (`-dark`). The maps load a trimmed copy of three.js (`assets/three/three-r160-map.min.js`) holding only the parts they use; `research/maps/three-entry.js` lists those parts and explains how to rebuild it. After changing a map, remake its images with `research/maps/make_fallbacks.js` (run it once as is and once with `PHONE=1`; instructions are at the top of the file).
 
 After editing them, run `python3 research/check_maps.py`. It checks that every item has fact codes, that those facts are cited in the chapter text in both languages, that no left-out fact is used, and that every place exists.
 

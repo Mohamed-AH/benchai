@@ -87,8 +87,9 @@ async function build(fig) {
   const S = Math.min(3, Math.max(0.9, extent / 4));
   const RELIEF = Math.min(1, Math.max(0.35, extent / 8));
   const stage = fig.querySelector('.map-stage');
-  const THREE = await import(BASE + 'three/three.module.min.js');
-  const { OrbitControls } = await import(BASE + 'three/OrbitControls.js');
+  // only the parts of three.js the maps use (see research/maps/three-entry.js)
+  const THREE = await import(BASE + 'three/three-r160-map.min.js');
+  const { OrbitControls } = THREE;
   const field = await heightField();
 
   // ---------- renderer, scene, camera ----------

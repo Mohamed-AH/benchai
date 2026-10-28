@@ -16,7 +16,7 @@
       <source srcset="{{ fallback_m_dark | relative_url }}" media="(max-width: 520px) and (prefers-color-scheme: dark)">
       <source srcset="{{ fallback_m | relative_url }}" media="(max-width: 520px)">
       <source srcset="{{ fallback_dark | relative_url }}" media="(prefers-color-scheme: dark)">
-      <img src="{{ fallback | relative_url }}" alt="" loading="lazy" width="1272" height="896">
+      <img src="{{ fallback | relative_url }}" alt="" width="1272" height="896" decoding="async">
     </picture>
   </div>
   {%- comment -%} Only what the map draws: fact codes, sources and notes stay out of the page. {%- endcomment %}
