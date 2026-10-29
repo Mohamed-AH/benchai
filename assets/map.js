@@ -119,9 +119,10 @@ async function build(fig) {
   for (let i = 0; i < pos.count; i++) pos.setY(i, field.at(i % field.w, Math.floor(i / field.w)) * RELIEF);
   geo.computeVertexNormals();
 
+  let wake = () => {};   // redraws the map once it has settled; set up with the loop below
   const loader = new THREE.TextureLoader();
   const textures = {};
-  const texture = theme => textures[theme] || (textures[theme] = loader.load(BASE + `maps/arabia-${theme}.jpg`, t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; }));
+  const texture = theme => textures[theme] || (textures[theme] = loader.load(BASE + `maps/arabia-${theme}.jpg`, t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; wake(); }));
   const terrainMat = new THREE.MeshStandardMaterial({ map: texture(isDark() ? 'dark' : 'light'), roughness: 1, metalness: 0 });
   scene.add(new THREE.Mesh(geo, terrainMat));
 
@@ -428,7 +429,7 @@ async function build(fig) {
     let lastKey = '';
     drawInset = () => {
       const theme = isDark() ? 'dark' : 'light';
-      if (!imgs[theme]) { imgs[theme] = 'loading'; loadImage(BASE + `maps/arabia-${theme}.jpg`).then(i => { imgs[theme] = i; lastKey = ''; }); }
+      if (!imgs[theme]) { imgs[theme] = 'loading'; loadImage(BASE + `maps/arabia-${theme}.jpg`).then(i => { imgs[theme] = i; lastKey = ''; wake(); }); }
       const img = imgs[theme];
       if (img === 'loading') return;
       const cw = ic.clientWidth, ch = ic.clientHeight;
@@ -464,6 +465,7 @@ async function build(fig) {
     terrainMat.needsUpdate = true;
     for (const [mm, v] of mats) mm.color.set(cssColour(v));
     scene.fog.color.set(cssColour('--sand'));
+    wake();
   };
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
   new MutationObserver(applyTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
@@ -474,6 +476,7 @@ async function build(fig) {
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
+    wake();
   };
   new ResizeObserver(resize).observe(stage);
   resize();
@@ -521,13 +524,24 @@ async function build(fig) {
     }
   }
 
-  // ---------- loop (only while on screen) ----------
-  let running = false, raf = 0;
+  // ---------- loop (only while on screen, and only until the map stops moving) ----------
+  let running = false, sleeping = false, raf = 0, quietAt = 0;
   const clock = new THREE.Clock();
   let elapsed = 0;
+  // the intro, the markers rising and the routes drawing are all over by this time
+  const lastBorn = Math.max(0, ...markers.map(k => k.born));
+  const introEnd = intro.dur * 0.7 + Math.max((lastBorn + 3) * 140 + 380, own.length * 140 + routes.length * 900 + 1400);
+  const settled = () => intro.done && (!intro.dur || elapsed > introEnd) &&
+    (!regions.length || userMoved || yearIdx >= years.length - 1) &&
+    regions.every(r => Math.abs(r.rm.opacity - (r.on ? 0.55 : 0)) < 0.004);
+  wake = () => {
+    quietAt = performance.now() + 300;
+    if (running && sleeping) { sleeping = false; clock.getDelta(); raf = requestAnimationFrame(frame); }
+  };
+  controls.addEventListener('change', wake);
+  if (regions.length) fig.querySelector('.map-years input').addEventListener('input', wake);
   function frame() {
     if (!running) return;
-    raf = requestAnimationFrame(frame);
     elapsed += clock.getDelta() * 1000;
     if (!intro.done) {
       const t = intro.dur ? Math.min(1, elapsed / intro.dur) : 1;
@@ -549,13 +563,16 @@ async function build(fig) {
       if (!userMoved && intro.done && yearIdx < years.length - 1 && elapsed > intro.dur + 600 + yearIdx * 1100) { yearIdx++; regions.show(); }
       for (const r of regions) r.rm.opacity += ((r.on ? 0.55 : 0) - r.rm.opacity) * 0.08;
     }
-    controls.update();
+    const moving = controls.update();
     renderer.render(scene, camera);
     placeLabels(reveal);
     drawInset();
+    // nothing left to animate: keep the last picture and stop drawing until something changes
+    if (!moving && settled() && performance.now() > quietAt) { sleeping = true; return; }
+    raf = requestAnimationFrame(frame);
   }
   new IntersectionObserver(([en]) => {
-    if (en.isIntersecting && !running) { running = true; clock.getDelta(); frame(); }
+    if (en.isIntersecting && !running) { running = true; sleeping = false; clock.getDelta(); frame(); }
     else if (!en.isIntersecting) { running = false; cancelAnimationFrame(raf); }
   }, { threshold: 0.05 }).observe(stage);
 
