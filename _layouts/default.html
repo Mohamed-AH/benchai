@@ -20,15 +20,37 @@
       <a class="brand" href="{{ '/' | append: lang | append: '/' | relative_url }}">
         <span class="brand-mark" aria-hidden="true"></span><span class="brand-text">{% include king-name.html lang=lang %}</span>
       </a>
+      {%- assign home_url = '/' | append: lang | append: '/' -%}
+      {%- capture nav_links -%}
+        <li><a href="{{ home_url | relative_url }}"{% if page.url == home_url %} aria-current="page"{% endif %}>{% if lang == "ar" %}الرئيسية{% else %}Home{% endif %}</a></li>
+        {%- if tl %}<li><a href="{{ tl.url | relative_url }}"{% if tl.url == page.url %} aria-current="page"{% endif %}>{% if lang == "ar" %}الخط الزمني{% else %}Timeline{% endif %}</a></li>{% endif %}
+        {%- if about %}<li><a href="{{ about.url | relative_url }}"{% if about.url == page.url %} aria-current="page"{% endif %}>{% if lang == "ar" %}المصادر وعن الموقع{% else %}Sources &amp; About{% endif %}</a></li>{% endif %}
+        {%- if contact and site.turnstile_sitekey != "" %}<li><a href="{{ contact.url | relative_url }}"{% if contact.url == page.url %} aria-current="page"{% endif %}>{% if lang == "ar" %}تواصل معنا{% else %}Contact Us{% endif %}</a></li>{% endif %}
+      {%- endcapture %}
       <div class="header-links">
-      <a class="chapters-jump" href="#chapters">{% if lang == "ar" %}الفصول{% else %}Chapters{% endif %}</a>
-      <nav class="lang-switch" aria-label="{% if lang == 'ar' %}اللغة{% else %}Language{% endif %}">
-        {%- if twin -%}
-        <a href="{{ twin.url | relative_url }}" lang="{{ other }}">{% if other == "ar" %}العربية{% else %}English{% endif %}</a>
-        {%- else -%}
-        <a href="{{ '/' | append: other | append: '/' | relative_url }}" lang="{{ other }}">{% if other == "ar" %}العربية{% else %}English{% endif %}</a>
-        {%- endif -%}
-      </nav>
+        <nav class="site-nav" aria-label="{% if lang == 'ar' %}القائمة الرئيسية{% else %}Main{% endif %}">
+          <ul>{{ nav_links }}</ul>
+        </nav>
+        <nav class="lang-switch" aria-label="{% if lang == 'ar' %}اللغة{% else %}Language{% endif %}">
+          {%- if twin -%}
+          <a href="{{ twin.url | relative_url }}" lang="{{ other }}">{% if other == "ar" %}العربية{% else %}English{% endif %}</a>
+          {%- else -%}
+          <a href="{{ '/' | append: other | append: '/' | relative_url }}" lang="{{ other }}">{% if other == "ar" %}العربية{% else %}English{% endif %}</a>
+          {%- endif -%}
+        </nav>
+        {%- comment -%} Phones and tablets: the same links, plus the chapters, behind a Menu button. {%- endcomment %}
+        <details class="nav-menu">
+          <summary><span class="nav-menu-icon" aria-hidden="true"></span>{% if lang == "ar" %}القائمة{% else %}Menu{% endif %}</summary>
+          <nav class="nav-panel" aria-label="{% if lang == 'ar' %}قائمة الموقع{% else %}Site menu{% endif %}">
+            <ul class="nav-panel-links">{{ nav_links }}</ul>
+            <p class="nav-panel-title">{% if lang == "ar" %}الفصول{% else %}Chapters{% endif %}</p>
+            <ol class="nav-panel-chapters">
+              {%- for c in chapters %}
+              <li><a href="{{ c.url | relative_url }}"{% if c.url == page.url %} aria-current="page"{% endif %}><span class="np-n">{{ c.order }}</span>{{ c.title }}</a></li>
+              {%- endfor %}
+            </ol>
+          </nav>
+        </details>
       </div>
     </div>
     <div class="crenels" aria-hidden="true"></div>
@@ -54,5 +76,6 @@
       {%- endif -%}
     </p>
   </footer>
+  <script src="{{ '/assets/nav.js' | relative_url }}" defer></script>
 </body>
 </html>
