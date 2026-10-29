@@ -13,7 +13,7 @@ He compares the historian to a man standing on a hill, describing a scene on the
 
 ## A longer national story
 
-In this view, Saudi national history is the history of the Saudi person and place within Saudi geography. It reaches back to the ancient civilisations that lived on this land, such as the Nabataeans, the Minaeans, Madian and Kindah. {% comment %}F005{% endcomment %}
+In this view, Saudi national history is the history of the Saudi person and place within Saudi geography. It reaches back to the ancient civilisations that lived on this land, such as the Nabataeans, the Minaeans, Midian and Kindah. {% comment %}F005{% endcomment %}
 
 He rejects the idea that Saudi history is only a hundred years old. He traces the Saudi story some 1,600 years back, to the fifth century AD, when Obaid ibn Tha'laba migrated from the west of the Arabian Peninsula and settled in Hijr Al-Yamamah. He sees one line of similar projects, each gathering the people of Bani Hanifa into a community in this area, from Obaid ibn Tha'laba to Mani Al-Muraydi, Imam Mohammed ibn Saud, Imam Turki ibn Abdullah and King Abdulaziz. {% comment %}F006 F007{% endcomment %}
 

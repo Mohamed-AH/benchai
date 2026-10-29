@@ -9,7 +9,7 @@ period: "1328–1330 AH"
 
 Sharif Hussein bin Ali had recently been appointed by the Ottoman state to rule the Hijaz. The Ottomans hoped to end Abdulaziz's power, but their bet on Ibn Rashid had failed, and their small garrison in Al-Ahsa, surrounded by hostile powers, could do nothing. The Sharif had ambitions of his own: he wanted to be more than an Ottoman governor, and he would later lead the Arab Revolt. {% comment %}F115 F116{% endcomment %}
 
-At this time Abdulaziz held Najd, the Sharif the Hijaz, and Ibn Rashid Ha'il. There was an Ottoman garrison in Al-Ahsa, the Al Aidh family in Asir, and the Idrisis in the Sulaymani Mikhlaf (Jazan). The Ottomans cared about the Hijaz above the rest of the peninsula because it gave them religious authority, especially under Sultan Abdul-Hamid, when the idea of an Islamic caliphate was revived. {% comment %}F117 F118{% endcomment %}
+At this time Abdulaziz held Najd, the Sharif the Hijaz, and Ibn Rashid Ha'il. There was an Ottoman garrison in Al-Ahsa, the Al Aidh family in Asir, and the Idrisis in Al-Mikhlaf Al-Sulaymani (Jazan). The Ottomans cared about the Hijaz above the rest of the peninsula because it gave them religious authority, especially under Sultan Abdul-Hamid, when the idea of an Islamic caliphate was revived. {% comment %}F117 F118{% endcomment %}
 
 The Sharif supported Abdulaziz's enemies, including Ibn Rashid, with whom he kept up a steady correspondence. His army was partly organised and partly tribal: like any Ottoman province, it had a garrison alongside local forces and tribes whose loyalty to the governor varied. {% comment %}F119 F185{% endcomment %}
 
