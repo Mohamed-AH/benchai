@@ -16,6 +16,13 @@ layout: default
   {% include masmak.svg %}
 </section>
 
+<section class="wrap unify-section" aria-labelledby="unify-title">
+  <h2 class="section-title" id="unify-title">{% if lang == "ar" %}توحيد المملكة عامًا بعد عام{% else %}The unification, year by year{% endif %}</h2>
+  <p class="unify-intro">{% if lang == "ar" %}شاهد المناطق وهي تنضم، من الرياض عام 1319هـ إلى الحجاز عام 1344هـ. حرّك المؤشر للتوقف عند أي سنة.{% else %}Watch the regions join, from Riyadh in 1319 AH to the Hijaz in 1344 AH. Move the slider to stop at any year.{% endif %}</p>
+  {% include chapter-map.html ref="timeline" lazy=true %}
+  <p class="unify-more"><a href="{{ '/' | append: lang | append: '/timeline' | relative_url }}">{% if lang == "ar" %}كل التواريخ في الخط الزمني{% else %}Every date is on the timeline{% endif %}</a></p>
+</section>
+
 <section class="wrap chapters-section" id="chapters" aria-labelledby="chapters-title">
   <h2 class="section-title" id="chapters-title">{% if lang == "ar" %}الفصول{% else %}Chapters{% endif %}</h2>
   <ol class="chapter-grid">

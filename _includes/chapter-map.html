@@ -1,14 +1,16 @@
 {%- comment -%}
   The chapter's 3D map. Shown when the chapter's ref is listed in `maps_enabled`
   in _config.yml. What it shows comes from _data/maps.yml and _data/places.yml.
+  Another page can show a chapter's map with ref="..."; lazy=true delays its still image.
 {%- endcomment -%}
-{%- assign m = site.data.maps[page.ref] -%}
-{%- if m and site.maps_enabled contains page.ref -%}
+{%- assign mref = include.ref | default: page.ref -%}
+{%- assign m = site.data.maps[mref] -%}
+{%- if m and site.maps_enabled contains mref -%}
 {%- assign lang = page.lang | default: "en" -%}
-{%- capture fallback %}/assets/maps/fallback/{{ page.ref }}-{{ lang }}.jpg{% endcapture -%}
-{%- capture fallback_dark %}/assets/maps/fallback/{{ page.ref }}-{{ lang }}-dark.jpg{% endcapture -%}
-{%- capture fallback_m %}/assets/maps/fallback/{{ page.ref }}-{{ lang }}-m.jpg{% endcapture -%}
-{%- capture fallback_m_dark %}/assets/maps/fallback/{{ page.ref }}-{{ lang }}-m-dark.jpg{% endcapture -%}
+{%- capture fallback %}/assets/maps/fallback/{{ mref }}-{{ lang }}.jpg{% endcapture -%}
+{%- capture fallback_dark %}/assets/maps/fallback/{{ mref }}-{{ lang }}-dark.jpg{% endcapture -%}
+{%- capture fallback_m %}/assets/maps/fallback/{{ mref }}-{{ lang }}-m.jpg{% endcapture -%}
+{%- capture fallback_m_dark %}/assets/maps/fallback/{{ mref }}-{{ lang }}-m-dark.jpg{% endcapture -%}
 <figure class="chapter-map">
   <div class="map-stage">
     <picture class="map-fallback">
@@ -16,7 +18,7 @@
       <source srcset="{{ fallback_m_dark | relative_url }}" media="(max-width: 520px) and (prefers-color-scheme: dark)">
       <source srcset="{{ fallback_m | relative_url }}" media="(max-width: 520px)">
       <source srcset="{{ fallback_dark | relative_url }}" media="(prefers-color-scheme: dark)">
-      <img src="{{ fallback | relative_url }}" alt="" width="1272" height="896" decoding="async">
+      <img src="{{ fallback | relative_url }}" alt="" width="1272" height="896" decoding="async"{% if include.lazy %} loading="lazy"{% endif %}>
     </picture>
   </div>
   {%- comment -%} Only what the map draws: fact codes, sources and notes stay out of the page. {%- endcomment %}
