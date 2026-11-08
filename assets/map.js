@@ -16,10 +16,10 @@ const BASE = new URL('.', import.meta.url).pathname;
 const TEXT = {
   en: { approx: 'approximate', reset: 'Reset view', hint: 'Drag to turn the map; click it, then scroll to zoom. Dashed lines and ≈ mark approximate routes and positions. Grey names are today\'s cities, for orientation.',
         hintTouch: 'Use two fingers to turn the map. Dashed lines and ≈ mark approximate routes and positions. Grey names are today\'s cities, for orientation.',
-        credit: 'Terrain: AWS Terrain Tiles (SRTM, ETOPO1); places: GeoNames', wheel: 'Click the map to zoom with the scroll wheel', year: y => `${y} AH` },
+        credit: 'Terrain: AWS Terrain Tiles (SRTM, ETOPO1); places: GeoNames', wheel: 'Click the map to zoom with the scroll wheel', replay: 'Replay', year: y => `${y} AH` },
   ar: { approx: 'تقريبي', reset: 'إعادة العرض', hint: 'اسحب لتدوير الخريطة، وانقر عليها ثم مرّر عجلة الفأرة للتكبير. الخطوط المتقطعة وعلامة ≈ تعني مسارًا أو موقعًا تقريبيًا. الأسماء الرمادية مدن اليوم، للاسترشاد.',
         hintTouch: 'استخدم إصبعين لتدوير الخريطة. الخطوط المتقطعة وعلامة ≈ تعني مسارًا أو موقعًا تقريبيًا. الأسماء الرمادية مدن اليوم، للاسترشاد.',
-        credit: 'التضاريس: AWS Terrain Tiles (SRTM, ETOPO1)؛ الأماكن: GeoNames', wheel: 'انقر على الخريطة للتكبير بعجلة الفأرة', year: y => `${y}هـ` },
+        credit: 'التضاريس: AWS Terrain Tiles (SRTM, ETOPO1)؛ الأماكن: GeoNames', wheel: 'انقر على الخريطة للتكبير بعجلة الفأرة', replay: 'إعادة التشغيل', year: y => `${y}هـ` },
 };
 
 const KIND_COLOUR = { battle: '--adobe', siege: '--gold', taken: '--palm', surrender: '--palm', settlement: '--palm', event: '--ink' };
@@ -271,7 +271,7 @@ async function build(fig) {
 
   // ---------- regions (overview maps): soft glows that light up year by year ----------
   const regions = [];
-  let years = [], yearIdx = 0, userMoved = false;
+  let years = [], yearIdx = 0, userMoved = false, stepsFrom = null;   // stepsFrom: when the year steps (re)start
   if (m.overview && data.regions) {
     const c = document.createElement('canvas');
     c.width = c.height = 128;
@@ -308,8 +308,10 @@ async function build(fig) {
     yearIdx = reduceMotion ? years.length - 1 : 0;
     const bar = document.createElement('div');
     bar.className = 'map-years';
-    bar.innerHTML = '<input type="range" min="0" step="1"><output></output>';
-    const range = bar.querySelector('input'), out = bar.querySelector('output');
+    bar.innerHTML = '<input type="range" min="0" step="1"><output></output><button type="button" class="map-replay"></button>';
+    const range = bar.querySelector('input'), out = bar.querySelector('output'), replay = bar.querySelector('button');
+    replay.textContent = T.replay;
+    replay.addEventListener('click', () => { userMoved = false; yearIdx = 0; stepsFrom = elapsed + 500; show(); wake(); });
     range.max = years.length - 1;
     range.setAttribute('aria-label', lang === 'ar' ? 'السنة' : 'Year');
     const show = () => { range.value = yearIdx; out.textContent = T.year(years[yearIdx]); for (const r of regions) r.on = r.year <= years[yearIdx]; };
@@ -560,7 +562,7 @@ async function build(fig) {
     });
     // overview: step through the years once after the glide, unless the visitor takes the slider
     if (regions.length) {
-      if (!userMoved && intro.done && yearIdx < years.length - 1 && elapsed > intro.dur + 600 + yearIdx * 1100) { yearIdx++; regions.show(); }
+      if (!userMoved && intro.done && yearIdx < years.length - 1 && elapsed > (stepsFrom ?? intro.dur + 600) + yearIdx * 1100) { yearIdx++; regions.show(); }
       for (const r of regions) r.rm.opacity += ((r.on ? 0.55 : 0) - r.rm.opacity) * 0.08;
     }
     const moving = controls.update();
@@ -585,6 +587,6 @@ for (const fig of document.querySelectorAll('.chapter-map')) {
     if (!en.isIntersecting) return;
     obs.disconnect();
     build(fig).catch(err => { console.error('map failed', err); fig.classList.remove('is-live'); });
-  }, { rootMargin: '200px' });
-  io.observe(fig);
+  }, { threshold: 0.15 });   // build once the map itself is in view, so a page that opens above it stays light
+  io.observe(fig.querySelector('.map-stage'));
 }

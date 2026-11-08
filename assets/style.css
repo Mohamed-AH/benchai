@@ -343,9 +343,14 @@ html[dir="rtl"] .pager small { letter-spacing: 0; font-size: .95rem; }
 .map-inset canvas { display: block; width: 100%; height: 100%; }
 @media (max-width: 520px) { .map-inset { width: 92px; } }
 .map-label.kind-region { box-shadow: inset 0 2.5px 0 var(--adobe); }
-.map-years { display: flex; align-items: center; gap: 14px; margin-top: 12px; }
-.map-years input { flex: 1; accent-color: var(--adobe); }
+.map-years { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 12px; }
+.map-years input { flex: 1 1 160px; min-width: 0; accent-color: var(--adobe); }
 .map-years output { font-family: var(--f-label); font-size: 1rem; min-width: 6.5em; color: var(--adobe); }
+.map-replay {
+  flex: none; font-family: var(--f-label); font-size: .85rem; color: var(--ink); cursor: pointer;
+  background: var(--sand); border: 1.5px solid var(--ink); border-radius: 2px; padding: 2px 10px 4px;
+  box-shadow: 3px 3px 0 var(--clay);
+}
 .map-ui { position: absolute; bottom: 10px; inset-inline-end: 10px; }
 .map-reset {
   font-family: var(--f-label); font-size: .8rem; color: var(--ink); cursor: pointer;
@@ -399,6 +404,11 @@ html[dir="rtl"] .hero h1 { line-height: 1.3; letter-spacing: 0; }
 .masmak-cut { fill: var(--sand); }
 
 .layout-home main { flex: 1; display: flex; flex-direction: column; }
+.unify-section { padding-top: 48px; }
+.unify-intro { max-width: 60ch; font-size: 1.15rem; margin: 0 0 18px; }
+.unify-section .chapter-map { margin: 0; }
+.unify-section .map-stage { height: clamp(340px, 58vw, 640px); }
+.unify-more { margin: 14px 0 0; font-family: var(--f-label); }
 .chapters-section { padding-top: 48px; padding-bottom: 88px; flex: 1; }
 .chapter-grid {
   list-style: none; margin: 0; padding: 0;
