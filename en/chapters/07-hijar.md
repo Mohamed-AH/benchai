@@ -4,6 +4,7 @@ lang: en
 ref: hijar
 order: 7
 title: "The Sharif and the Hijar"
+description: "Sharif Hussein of the Hijaz backs Abdulaziz's rivals and captures his brother Sa'd at Al-Quwai'iyah in 1328 AH; in 1330 AH Abdulaziz begins the Hijar."
 period: "1328–1330 AH"
 ---
 

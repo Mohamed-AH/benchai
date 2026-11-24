@@ -4,6 +4,7 @@ lang: en
 ref: sarif
 order: 4
 title: "Al-Sarif and the First Attempt on Riyadh"
+description: "In 1318 AH Abdulaziz entered Riyadh while Mubarak Al-Sabah fought Ibn Rashid, until Mubarak's defeat at Al-Sarif forced him back to Kuwait."
 period: "1318 AH"
 ---
 

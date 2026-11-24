@@ -9,6 +9,7 @@
 {%- if page.ref == "home" or page.url == "/" -%}
   {%- if lang == "ar" -%}{%- capture title -%}{{ site.king.ar.first }} {{ site.king.ar.rest }} · {{ site.subtitle_ar }}{%- endcapture -%}
   {%- else -%}{%- capture title -%}{{ site.king.en.first }} {{ site.king.en.rest }} · {{ site.subtitle_en }}{%- endcapture -%}{%- endif -%}
+{%- elsif page.seo_title -%}{%- assign title = page.seo_title -%}
 {%- elsif page.title -%}{%- capture title -%}{{ page.title }} · {{ short }}{%- endcapture -%}
 {%- else -%}{%- assign title = short -%}{%- endif -%}
 {%- if page.description -%}{%- assign desc = page.description -%}
@@ -52,7 +53,7 @@
     {"@type": "Article", "headline": {{ page.title | jsonify }}, "inLanguage": {{ lang | jsonify }}, "url": {{ canonical | jsonify }},
      "image": {{ '/assets/share.jpg' | absolute_url | jsonify }}, "description": {{ desc | strip | jsonify }},
      "about": {"@type": "Person", "name": {% if lang == "ar" %}"عبدالعزيز بن عبدالرحمن آل سعود"{% else %}"Abdulaziz bin Abdulrahman Al Saud"{% endif %}},
-     "isBasedOn": {"@type": "PodcastEpisode", "name": {{ site.podcast['episode_' | append: lang] | jsonify }}, "url": {{ site.podcast.url | jsonify }}},
+     "isBasedOn": {"@type": "PodcastEpisode", "name": {% if lang == "ar" %}{{ site.podcast.episode_ar | jsonify }}{% else %}{{ site.podcast.episode_en | jsonify }}{% endif %}, "url": {{ site.podcast.url | jsonify }}},
      "publisher": {"@type": "Organization", "name": {{ short | jsonify }}, "url": {{ '/' | absolute_url | jsonify }}}},
     {"@type": "BreadcrumbList", "itemListElement": [
       {"@type": "ListItem", "position": 1, "name": {% if lang == "ar" %}"الرئيسية"{% else %}"Home"{% endif %}, "item": {{ '/' | append: lang | append: '/' | absolute_url | jsonify }}},

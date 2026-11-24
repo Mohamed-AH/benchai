@@ -4,6 +4,7 @@ lang: en
 ref: ahsa
 order: 8
 title: "Al-Ahsa"
+description: "In 1331 AH (1913 AD) Abdulaziz took Al-Ahsa from its Ottoman garrison without a drop of blood, ending about 43 years of Ottoman rule and opening a door to the Gulf."
 period: "1331 AH (1913 AD)"
 ---
 

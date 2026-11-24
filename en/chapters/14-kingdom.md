@@ -4,6 +4,7 @@ lang: en
 ref: kingdom
 order: 14
 title: "Why a Kingdom"
+description: "Why King Abdulaziz chose a kingdom, how his titles grew with his state, and the capable people from many countries who worked around him."
 period: ""
 ---
 

@@ -4,6 +4,7 @@ lang: en
 ref: hijaz
 order: 13
 title: "The Hijaz and the Kingdom of Saudi Arabia"
+description: "Taif falls in 1343 AH and Abdulaziz enters Makkah in ihram, then Jeddah and Medina. Jazan joins, and in 1932 AD the state becomes the Kingdom of Saudi Arabia."
 period: "1343 AH – 1932 AD"
 ---
 

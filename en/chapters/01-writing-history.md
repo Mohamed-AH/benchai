@@ -4,6 +4,7 @@ lang: en
 ref: writing-history
 order: 1
 title: "How Saudi History Is Written"
+description: "How the history of King Abdulaziz and the Saudi state has been written: the historian's method, the sources, and why the Saudi states were interrupted, not fallen."
 period: ""
 ---
 

@@ -4,6 +4,7 @@ lang: en
 ref: asir
 order: 12
 title: "Asir"
+description: "How Asir joined: the Ottoman garrison leaves in 1337 AH, Hasan ibn Aidh sides with the Sharif, the Battle of Hajla in 1338 AH, and Asir settled by 1341 AH."
 period: "1337–1341 AH"
 ---
 
