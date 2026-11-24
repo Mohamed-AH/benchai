@@ -4,6 +4,7 @@ lang: en
 ref: turabah
 order: 10
 title: "Turabah"
+description: "In 1337 AH the Ikhwan and Khalid ibn Luai surprised Abdullah ibn Hussein's army at Turabah, a heavy defeat for Sharif Hussein in his struggle with Abdulaziz."
 period: "1337 AH"
 ---
 

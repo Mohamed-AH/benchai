@@ -4,6 +4,7 @@ lang: en
 ref: qassim
 order: 6
 title: "Al-Qassim"
+description: "From 1320 to 1326 AH Abdulaziz won Al-Qassim from Ibn Rashid and his Ottoman battalions: Unaizah and Buraidah, Al-Bukairiyah, Al-Shananah and Rawdat Muhanna."
 period: "1320–1326 AH"
 ---
 

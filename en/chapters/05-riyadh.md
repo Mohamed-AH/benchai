@@ -4,6 +4,8 @@ lang: en
 ref: riyadh
 order: 5
 title: "Recovering Riyadh"
+seo_title: "Recovering Riyadh (1319 AH): King Abdulaziz Leaves Kuwait"
+description: "King Abdulaziz left Kuwait with forty men, grew to about sixty, and in Shawwal 1319 AH took Al-Masmak and recovered Riyadh. The night raid and how he held the city."
 period: "1319–1320 AH"
 ---
 

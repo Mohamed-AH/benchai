@@ -61,7 +61,8 @@ The block at the top of each file (between the `---` lines) holds the settings:
 | `order` | Position in the chapter list and the menu |
 | `title` | Chapter title shown on the site |
 | `period` | Optional dates shown under the title, e.g. `1319–1320 AH` |
-| `description` | Optional text for search results and link previews. Without it, the opening of the chapter is used. |
+| `description` | Text for search results and link previews (about 150 characters). Every chapter has one; without it, the opening of the chapter is cut off and used. |
+| `seo_title` | Optional. The full title shown in Google and the browser tab, when it should differ from `title` (e.g. to match what people search for). At most 70 characters. |
 
 Markdown basics: `## Heading`, `**bold**`, `*italic*`, `> quotation`, and a blank line starts a new paragraph.
 

@@ -4,6 +4,7 @@ lang: en
 ref: hail
 order: 11
 title: "Ha'il"
+description: "From 1338 to 1340 AH Abdulaziz turned to Ha'il through raids, campaigns and negotiation, until Mohammed ibn Talal handed it over and the Al-Rashid emirate ended."
 period: "1335–1340 AH"
 ---
 

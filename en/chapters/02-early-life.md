@@ -4,10 +4,12 @@ lang: en
 ref: early-life
 order: 2
 title: "Early Life"
+seo_title: "When Was King Abdulaziz Born? Birth in 1293 AH and Early Life"
+description: "King Abdulaziz was born in 1293 AH (1876 or 1877 AD), by the most probable and official account. His early years as the Second Saudi State neared its end."
 period: "1293–1308 AH"
 ---
 
-King Abdulaziz was born during the Second Saudi State. According to the most probable and official account, he was born in 1293 AH (1876 or 1877 AD). {% comment %}F023{% endcomment %}
+King Abdulaziz was born during the Second Saudi State. According to the most probable and official account, he was born in 1293 AH (1876 or 1877 AD). Other years are also reported, but 1293 AH is the accepted date. {% comment %}F023{% endcomment %}
 
 He grew up in a time of rapid events, as the Second State neared its end, and he heard and saw what was happening within his own family. Imam Abdullah died in 1307 AH and Imam Abdulrahman, Abdulaziz's father, began his reign. With it came the conflict with Mohammad ibn Rashid. At that time there were political centres in Al-Qassim, in Ha'il and in Riyadh, all belonging to the Second Saudi State, but they began to shift their allegiances. {% comment %}F024 F025 F026{% endcomment %}
 

@@ -4,6 +4,8 @@ lang: en
 ref: jarrab-kanzan
 order: 9
 title: "Jarrab and Kanzan"
+seo_title: "Battle of Jarrab (1333 AH) and Kanzan · King Abdulaziz"
+description: "The Battle of Jarrab (1333 AH) between Abdulaziz and Ha'il, where Captain Shakespeare was killed, then the Battle of Kanzan, where Abdulaziz was badly wounded."
 period: "1332–1337 AH"
 ---
 

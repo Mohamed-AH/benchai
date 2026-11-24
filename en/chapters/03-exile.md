@@ -4,6 +4,7 @@ lang: en
 ref: exile
 order: 3
 title: "Leaving Riyadh: Exile in Kuwait"
+description: "In 1309 AH the Saudi family left Riyadh. Abdulaziz's years in Bahrain and Kuwait, the rise of Mubarak Al-Sabah, and the ambition that grew in exile until 1318 AH."
 period: "1309–1318 AH"
 ---
 
